@@ -1,6 +1,3 @@
-# Editor: Byron Williamson
-# John Leitch, sigining in for GitHub practice on 2/20/24
-
 # Old Dominion Humane Society (ODHS) Medicine Tracker
 ## Purpose
 This project is the result of a semesters' worth of collaboration among UMW students. The goal of the project was to create a web application that the Old Dominion Humane Society organization could utilize to make it easier to manage animals and the medicines/medical treatments/vaccines that these animals recieve at the ODHS. At-a-glance features include a web-based calendar of events, event sign up, volunteer registration & login system, reporting system, basic notification system, animal registration/archiving/report generation, and location and service creation.
@@ -14,9 +11,7 @@ A major overhaul to the existing system took place during the Spring 2023 semest
 
 The Gwyneth's Gifts VMS code was modified in the Fall of 2023, revamping the code into the present ODHS Medicine Tracker code. Many of the existing database tables were reused, and many other tables were added. Some portions of the software's functionality were reused from the Gwyneth's Gifts VMS code. Other functions were created to fill the needs of the ODHS Medicine Tracker. The team that made these modifications and changes consisted of Garrett Moore, Artis Hart, Riley Tugeau, Julia Barnes, Ryan Warren, and Collin Rugless.
 
-THE ODHS Medicine Tracker code was modified in the Spring of 2024 as an extension of the medicine tracker to revamp it back to a VMS to go along with the tracker, meant to help engage and manage volunteers for ODHS. The team that made these modifications and changes consisted of Matthew Kanter, ...
-Spring 2024 Joseph Vogtli
-Niko Toro
+THE ODHS Medicine Tracker code was modified in the Spring of 2024 as an extension of the medicine tracker to revamp it back to a VMS to go along with the tracker, meant to help engage and manage volunteers for ODHS. The team that made these modifications and changes consisted of Matthew Kanter, Byron Williamson, John Leitch, Joseph Vogtli, Niko Toro, and John Smith.
 
 ## User Types
 There are two types of users (also referred to as 'roles') within the ODHS.
