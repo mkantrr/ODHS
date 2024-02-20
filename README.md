@@ -16,7 +16,7 @@ The Gwyneth's Gifts VMS code was modified in the Fall of 2023, revamping the cod
 
 THE ODHS Medicine Tracker code was modified in the Spring of 2024 as an extension of the medicine tracker to revamp it back to a VMS to go along with the tracker, meant to help engage and manage volunteers for ODHS. The team that made these modifications and changes consisted of Matthew Kanter, ...
 Spring 2024 Joseph Vogtli
-
+Niko Toro
 
 ## User Types
 There are two types of users (also referred to as 'roles') within the ODHS.
