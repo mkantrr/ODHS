@@ -48,10 +48,7 @@
             // }
 
             $required = array(
-                'first-name', 'last-name', 'birthdate',
-                'address', 'city', 'state', 'zip', 
-                'email', 'phone', 'phone-type', 'contact-when', 'contact-method',
-                'start-date', 'password', 'gender'
+                'first-name', 'last-name','phone'
             );
             $errors = false;
             if (!wereRequiredFieldsSubmitted($args, $required)) {
@@ -59,109 +56,20 @@
             }
             $first = $args['first-name'];
             $last = $args['last-name'];
-            $dateOfBirth = validateDate($args['birthdate']);
-            if (!$dateOfBirth) {
-                $errors = true;
-                echo 'bad dob';
-            }
-
-            $address = $args['address'];
-            $city = $args['city'];
-            $state = $args['state'];
-            if (!valueConstrainedTo($state, array('AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA',
-                    'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME',
-                    'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM',
-                    'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX',
-                    'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'))) {
-                $errors = true;
-            }
-            $zipcode = $args['zip'];
-            if (!validateZipcode($zipcode)) {
-                $errors = true;
-                echo 'bad zip';
-            }
-            $email = strtolower($args['email']);
-            $email = validateEmail($email);
-            if (!$email) {
-                $errors = true;
-                echo 'bad email';
-            }
+            
             $phone = validateAndFilterPhoneNumber($args['phone']);
             if (!$phone) {
                 $errors = true;
                 echo 'bad phone';
             }
-            $phoneType = $args['phone-type'];
-            if (!valueConstrainedTo($phoneType, array('cellphone', 'home', 'work'))) {
-                $errors = true;
-                echo 'bad phone type';
-            }
-            $contactWhen = $args['contact-when'];
-            $contactMethod = $args['contact-method'];
-            if (!valueConstrainedTo($contactMethod, array('phone', 'text', 'email'))) {
-                $errors = true;
-                echo 'bad contact method';
-            }
-
-            $econtactName = $args['econtact-name'];
-            $econtactPhone = validateAndFilterPhoneNumber($args['econtact-phone']);
-            if (!$econtactPhone) {
-                $errors = true;
-                echo 'bad e-contact phone';
-            }
-            $econtactRelation = $args['econtact-relation'];
-
-            $startDate = validateDate($args['start-date']);
-            if (!$startDate) {
-                $errors = true;
-                echo 'bad start date';
-            }
-            $gender = $args['gender'];
-            if (!valueConstrainedTo($gender, ['Male', 'Female', 'Other'])) {
-                $errors = true;
-                echo 'bad gender';
-            }
-
-            // May want to enforce password requirements at this step
-            $password = password_hash($args['password'], PASSWORD_BCRYPT);
 
             if ($errors) {
                 echo '<p>Your form submission contained unexpected input.</p>';
                 die();
             }
-            // need to incorporate availability here
-            $newperson = new Person(
-//first, last venue
-		$first, $last, 'portland', 
-//address, city state, zip code, profile picture
-                $address, $city, $state, $zipcode, "",
-//phone1, phone type, phone 2, phonetype 2, email
-                $phone, $phoneType, null, null, $email, 
-//contact name, contact number, contact relation
-		$econtactName, $econtactPhone, $econtactRelation, 
-//ct=contact when, type=t, status = st, ct=contact method 
-        $contactWhen, 'admin', 'Active', $contactMethod,
-        //availability array, schedule array, hours array
-		'', '', '',
-//bd=date of birth, sd=start date, notes password
-                $dateOfBirth, $startDate, null, $password,
-                $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
-                $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
-                $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-                $saturdaysStart, $saturdaysEnd, 0, $gender
-            );
-            $result = add_person($newperson);
-            if (!$result) {
-                echo '<p>That e-mail address is already in use.</p>';
-            } else {
-                if ($loggedIn) {
-                    echo '<script>document.location = "index.php?registerSuccess";</script>';
-                } else {
-                    echo '<script>document.location = "login.php?registerSuccess";</script>';
-                }
-            }
+            
         } else {
-            require_once('registrationForm.php'); 
+            require_once('logHoursForm.php'); 
         }
     ?>
 </body>
