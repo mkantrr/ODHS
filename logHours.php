@@ -48,7 +48,7 @@
             // }
 
             $required = array(
-                'first-name', 'last-name','hours-vol'
+                'phone', 'first-name', 'last-name','hours-vol'
             );
             $errors = false;
             if (!wereRequiredFieldsSubmitted($args, $required)) {
@@ -56,9 +56,19 @@
             }
             $first = $args['first-name'];
             $last = $args['last-name'];
-
+            
+            $phone = validateAndFilterPhoneNumber($args['phone']);
+            if (!$phone){
+                $errors = true;
+                echo 'bad phone';
+            }
+            $id = retrieve_id($first, $last, $phone);
+            if (!$id) {
+                $errors = true;
+                echo 'bad input';
+            }
             //Only replaces the current amount of hours volunteers
-            $hours = update_hours("brianna@gmail.com", $args['hours-vol']);
+            $hours = update_hours($id, $args['hours-vol']);
             if (!$hours) {
                 $errors = true;
                 echo 'bad hours';

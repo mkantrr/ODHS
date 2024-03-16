@@ -46,13 +46,10 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
             <label for="hours-vol"><em>* </em>Hours Volunteered</label>
             <input type="text" id="hours-vol" name="hours-vol" required placeholder="Enter your volunteer hours">
-
-            <!--
-            Use this to connect users via phone number elsewhere 
             
             <label for="phone"><em>* </em>Phone Number</label>
             <input type="tel" id="phone" name="phone" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" required placeholder="Ex. (555) 555-5555"> 
-            -->
+    
 
 
         </fieldset>
