@@ -102,6 +102,24 @@ function remove_person($id) {
 }
 
 /*
+ * Return id by inputing users first/last name and phone number
+ */
+function retrieve_id($first_name, $last_name,$phone) {
+    $con=connect();
+    $query = 'SELECT * FROM dbPersons WHERE phone1 = '" . $phone . "' AND first_name = '" . $first_name . "' AND last_name = '" . $last_name . "'';
+    $result = mysqli_query($con,$query);
+    if (mysqli_num_rows($result) !== 1) {
+        mysqli_close($con);
+        return false;
+    }
+    $result_row = mysqli_fetch_assoc($result);
+    // var_dump($result_row);
+    $thePerson = make_a_person($result_row);
+//    mysqli_close($con);
+    return $thePerson;
+}
+
+/*
  * @return a Person from dbPersons table matching a particular id.
  * if not in table, return false
  */
