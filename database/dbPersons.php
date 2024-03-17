@@ -107,7 +107,7 @@ function remove_person($id) {
 function retrieve_id($first_name, $last_name, $phone) {
     $persons = array();
     $con=connect();
-    $query = 'SELECT id FROM dbPersons WHERE phone1 = ' . $phone . ' AND first_name = ' . $first_name . ' AND last_name = ' . $last_name . '';
+    $query = "SELECT id FROM dbPersons WHERE phone1 = '" . $phone . "' AND first_name = '" . $first_name . "' AND last_name = '" . $last_name . "'";
     $result = mysqli_query($con,$query);
     while ($result_row = mysqli_fetch_assoc($result)) {
         $the_person = make_a_person($result_row);
