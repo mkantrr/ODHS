@@ -25,7 +25,7 @@
 <html>
     <head>
         <?php require('universal.inc'); ?>
-        <title>ODHS Medicine Tracker | Dashboard</title>
+        <title>ODHS Volunteer Management System | Dashboard</title>
     </head>
     <body>
         <?php require('header.php'); ?>
@@ -131,10 +131,6 @@
                         <span>View My Hours</span>
                     </div>
                 <?php endif ?>
-                <div class="dashboard-item" data-link="VMS_index.php">
-                    <img src="images/change-password.svg">
-                    <span>Volunteer Management System</span>
-                </div>
                 <div class="dashboard-item" data-link="changePassword.php">
                     <img src="images/change-password.svg">
                     <span>Change Password</span>
