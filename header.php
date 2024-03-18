@@ -94,7 +94,7 @@
         $permission_array['centralMenu.php'] = 2;   // admin/main users choose between VMS and Medtracker Dashboard
 
         //Check if they're at a valid page for their access level.
-        $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHgitP_SELF'], '/') + 1));
+        $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
         $current_page = substr($current_page, strpos($current_page,"/"));
         
         if($permission_array[$current_page]>$_SESSION['access_level']){
