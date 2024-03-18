@@ -79,6 +79,8 @@
                 echo '<p>Your form submission contained unexpected input.</p>';
                 die();
             }
+
+            echo "<h3> Hours successfully updated! </h3>";
             
         } else {
             require_once('logHoursForm.php'); 
