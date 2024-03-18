@@ -132,7 +132,7 @@
                     </div>
                 <?php endif ?>
                 <div class="dashboard-item" data-link="VMS_index.php">
-                    <img src="images/change-password.svg">
+                    <img src="images/vms_index.svg">
                     <span>Volunteer Management System</span>
                 </div>
                 <div class="dashboard-item" data-link="changePassword.php">
