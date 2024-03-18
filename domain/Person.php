@@ -101,7 +101,7 @@ class Person {
 		$this->cMethod = $cntm;
 		$this->mustChangePassword = $mcp;
 		$this->type = $t !== "" ? explode(',', $t) : array();
-		$this->access_level = $accessLevelsByRole;
+		$this->access_level = $accessLevelsByRole[$t];
 		//if ($t !== "") {
 			//$this->type = explode(',', $t);
 			//global $accessLevelsByRole;
