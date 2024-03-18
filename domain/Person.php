@@ -101,7 +101,7 @@ class Person {
 		$this->cMethod = $cntm;
 		$this->mustChangePassword = $mcp;
 		$this->type = $t !== "" ? explode(',', $t) : array();
-		if (get_type() == 'volunteer'){
+		if (get_type().equals('volunteer')){
 			$this->access_level = 1;
 		} else if (get_type() == 'admin'){
 			$this->access_level == 2;
@@ -109,7 +109,6 @@ class Person {
 			$this->access_level == 3;
 		} else {
 			$this->access_level == 0;
-		}
 		}
 		//$this->access_level = $accessLevelsByRole[$t];
 		//if ($t !== "") {
