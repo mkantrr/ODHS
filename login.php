@@ -56,6 +56,7 @@
                 $_SESSION['venue'] = $user->get_venue();
                 $_SESSION['type'] = $user->get_type();
                 $_SESSION['_id'] = $user->get_id();
+                $_SESSION['access_level'] = $user->get_access_level();
                 // hard code root privileges
                 if ($user->get_id() == 'vmsroot') {
                     $_SESSION['access_level'] = 3;
