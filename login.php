@@ -14,7 +14,7 @@
         //if ($_SESSION['access_level'] = 1){
         //    header('Location: vms_index.php');
         //} else{
-        header('Location: index.php');
+        header('Location: centralMenu.php');
         //}
         die();
     }
