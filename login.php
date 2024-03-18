@@ -11,11 +11,11 @@
 
     // redirect to index if already logged in
     if (isset($_SESSION['_id'])) {
-        if ($_SESSION['access_level'] = 1){
-            header('Location: vms_index.php');
-        } else{
-            header('Location: index.php');
-        }
+        //if ($_SESSION['access_level'] = 1){
+        //    header('Location: vms_index.php');
+        //} else{
+        header('Location: index.php');
+        //}
         die();
     }
     $badLogin = false;
@@ -64,8 +64,10 @@
                     $_SESSION['change-password'] = true;
                     header('Location: changePassword.php');
                     die();
+                } else if ($_SESSION['access_level'] = 1){
+                    header('Location: vms_index.php');
                 } else {
-                    header('Location: index.php');
+                    header('Location: centralMenu.php');
                     die();
                 }
                 die();

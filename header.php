@@ -54,7 +54,7 @@
         $permission_array['register.php'] = 0;
         $permission_array['findanimal.php'] = 0;
         //pages volunteers can view
-        $permission_array['vms_index.php']= 1;
+        $permission_array['vms_index.php']= 1;         // Volunteer Management Service
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1;
         $permission_array['calendar.php'] = 1;
@@ -91,9 +91,10 @@
         $permission_array['viewarchived.php'] = 2;
         $permission_array['animal.php'] = 2;
         $permission_array['editanimal.php'] = 2;
+        $permission_array['centralMenu.php'] = 2;   // admin/main users choose between VMS and Medtracker Dashboard
 
         //Check if they're at a valid page for their access level.
-        $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
+        $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHgitP_SELF'], '/') + 1));
         $current_page = substr($current_page, strpos($current_page,"/"));
         
         if($permission_array[$current_page]>$_SESSION['access_level']){
