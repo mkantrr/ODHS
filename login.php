@@ -68,7 +68,7 @@
                     die();
                 } else {
                     if ($_SESSION['access_level'] = 1){
-                        header('Location: vms_index.php');
+                        header('Location: centralMenu.php');
                     } else if ($_SESSION['access_level'] > 1){
                         header('Location: centralMenu.php');
                     } else {
