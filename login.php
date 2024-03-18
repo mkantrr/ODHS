@@ -44,12 +44,12 @@
                     $_SESSION['logged_in'] = true;
                 }
                 $types = $user->get_type();
-                if (in_array('superadmin', $types)) {
-                    $_SESSION['access_level'] = 3;
+                if (in_array('volunteer', $types)){
+                        $_SESSION['access_level'] = 1;
                 } else if (in_array('admin', $types)) {
                     $_SESSION['access_level'] = 2;
-                } else if (in_array('volunteer', $types)){
-                    $_SESSION['access_level'] = 1;
+                } else if (in_array('superadmin', $types)) {
+                    $_SESSION['access_level'] = 3;
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();
