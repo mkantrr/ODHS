@@ -11,12 +11,13 @@
 
     // redirect to index if already logged in
     if (isset($_SESSION['_id'])) {
-        //if ($_SESSION['access_level'] = 1){
-        //    header('Location: vms_index.php');
-        //} else{
+        if ($_SESSION['access_level'] = 1){
+            header('Location: vms_index.php');
+        } else if ($_SESSION['access_level'] > 1){
         header('Location: centralMenu.php');
-        //}
+        } else {
         die();
+        }
     }
     $badLogin = false;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -47,7 +48,7 @@
                     $_SESSION['access_level'] = 3;
                 } else if (in_array('admin', $types)) {
                     $_SESSION['access_level'] = 2;
-                } else {
+                } else if (in_array('volunteer')){
                     $_SESSION['access_level'] = 1;
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
@@ -64,13 +65,15 @@
                     $_SESSION['change-password'] = true;
                     header('Location: changePassword.php');
                     die();
-                } else if ($_SESSION['access_level'] = 1){
-                    header('Location: vms_index.php');
                 } else {
-                    header('Location: centralMenu.php');
+                    if ($_SESSION['access_level'] = 1){
+                        header('Location: vms_index.php');
+                    } else if ($_SESSION['access_level'] > 1){
+                        header('Location: centralMenu.php');
+                    } else {
+                        header('Location: index.php');
+                    }
                     die();
-                }
-                die();
             } else {
                 $badLogin = true;
             }
