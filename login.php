@@ -14,7 +14,7 @@
         if ($_SESSION['access_level'] = 1){
             header('Location: vms_index.php');
         } else if ($_SESSION['access_level'] > 1){
-        header('Location: centralMenu.php');
+            header('Location: centralMenu.php');
         } else {
         die();
         }
@@ -74,6 +74,7 @@
                         header('Location: index.php');
                     }
                     die();
+                }
             } else {
                 $badLogin = true;
             }
