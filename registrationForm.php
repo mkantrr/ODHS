@@ -47,7 +47,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 <main class="signup-form">
     <form class="signup-form" method="post">
         <h2>Registration Form</h2>
-        <p>Please fill out each section of the following form to add a person to the volunteer management system.</p>
+        <p>Please fill out each section of the following form to add a person to the VMS.</p>
         <p>An asterisk (<em>*</em>) indicates a required field.</p>
         <fieldset>
             <legend>Personal Information</legend>
@@ -176,7 +176,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
         </fieldset>
         <fieldset>
             <legend>Volunteer Information</legend>
-            <p>The following information will be used to help us determine your availability and skillset.</p>
+            <p>The following information will be used to help us determine your availability.</p>
             <label for="start-date"><em>* </em>I will be available to volunteer starting</label>
             <input type="date" id="start-date" name="start-date" value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d'); ?>">
         </fieldset>
