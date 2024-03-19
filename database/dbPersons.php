@@ -109,11 +109,9 @@ function retrieve_id($first_name, $last_name, $phone) {
     $con=connect();
     $query = "SELECT id FROM dbPersons WHERE phone1 = '" . $phone . "' AND first_name = '" . $first_name . "' AND last_name = '" . $last_name . "'";
     $result = mysqli_query($con,$query);
-    while ($result_row = mysqli_fetch_assoc($result)) {
-        $the_person = make_a_person($result_row);
-        $persons[] = $the_person;
+    while ($row = $result->fetch_assoc()) {
+        return $row['id'];
     }
-    return $persons;
     
 }
 

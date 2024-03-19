@@ -62,14 +62,14 @@
                 $errors = true;
                 echo 'bad phone';
             }
-            /*$id = retrieve_id($first, $last, $phone);
+            $id = retrieve_id($first, $last, $phone);
             if (!$id) {
                 $errors = true;
                 echo 'bad input';
             }
-            */
+            
             //Only replaces the current amount of hours volunteers
-            $hours = update_hours('tom@gmail.com', $args['hours-vol']);
+            $hours = update_hours($id, $args['hours-vol']);
             if (!$hours) {
                 $errors = true;
                 echo 'bad hours';
