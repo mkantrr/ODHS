@@ -243,7 +243,11 @@
                 }
             }
         } else {
-            require_once('registrationForm.php'); 
+            if ($accessLevel < 3) {
+                require_once('registrationForm.php'); 
+            } else {
+                require_once('mainRegistrationForm.php');
+            }
         }
     ?>
 </body>
