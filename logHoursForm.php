@@ -36,21 +36,15 @@ function buildSelect($name, $disabled=false, $selected=null) {
         <p>Please fill out each section of the following form if you would like to volunteer for the organization.</p>
         <p>An asterisk (<em>*</em>) indicates a required field.</p>
         <fieldset>
+            
             <legend>Personal Information</legend>
             <p>The following information will help us identify you within our system.</p>
-            <label for="first-name"><em>* </em>First Name</label>
-            <input type="text" id="first-name" name="first-name" required placeholder="Enter your first name">
-
-            <label for="last-name"><em>* </em>Last Name</label>
-            <input type="text" id="last-name" name="last-name" required placeholder="Enter your last name">
+            <label for="email"><em>* </em>Email Address</Address></label>
+            <input type="text" id="email" name="email" required placeholder="Enter your email address">
 
             <label for="hours-vol"><em>* </em>Hours Volunteered</label>
             <input type="text" id="hours-vol" name="hours-vol" required placeholder="Enter your volunteer hours">
             
-            <label for="phone"><em>* </em>Phone Number</label>
-            <input type="tel" id="phone" name="phone" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" required placeholder="Ex. (555) 555-5555"> 
-    
-
 
         </fieldset>
 
