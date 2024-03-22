@@ -33,12 +33,10 @@ function buildSelect($name, $disabled=false, $selected=null) {
 <main class="signup-form">
     <form class="signup-form" method="post">
         <h2>Log Hours Form</h2>
-        <p>Please fill out each section of the following form if you would like to volunteer for the organization.</p>
+        <p>Please fill out each section of the following form if you would like to update your volunteer hours.</p>
         <p>An asterisk (<em>*</em>) indicates a required field.</p>
         <fieldset>
             
-            <legend>Personal Information</legend>
-            <p>The following information will help us identify you within our system.</p>
             <label for="email"><em>* </em>Email Address</Address></label>
             <input type="text" id="email" name="email" required placeholder="Enter your email address">
 

@@ -1,6 +1,7 @@
 <?php
-// Author: Lauren Knight
-    // Description: Registration page for new volunteers
+// Original Author: Lauren Knight
+// Modified by: Joseph Vogtli (3/22/2024)
+    // Description: Logging Hours that a Volunteer has worked
     session_cache_expire(30);
     session_start();
     
@@ -56,9 +57,10 @@
             }
             
             $id = $args['email'];
-            
-            //Only replaces the current amount of hours volunteers
-            $hours = update_hours($id, $args['hours-vol']);
+
+            //Compunds new hours with hours already in database
+            $sum_hours = retrieve_hours($id) + $args['hours-vol'];
+            $hours = update_hours($id, $sum_hours);
             if (!$hours) {
                 $errors = true;
                 echo 'bad hours';

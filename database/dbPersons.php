@@ -104,13 +104,13 @@ function remove_person($id) {
 /*
  * Return id by inputing users first/last name and phone number
  */
-function retrieve_id($first_name, $last_name, $phone) {
+function retrieve_hours($id) {
     $persons = array();
     $con=connect();
-    $query = "SELECT id FROM dbPersons WHERE phone1 = '" . $phone . "' AND first_name = '" . $first_name . "' AND last_name = '" . $last_name . "'";
+    $query = "SELECT hours FROM dbPersons WHERE id = '" . $id . "'";
     $result = mysqli_query($con,$query);
     while ($row = $result->fetch_assoc()) {
-        return $row['id'];
+        return $row['hours'];
     }
     
 }
