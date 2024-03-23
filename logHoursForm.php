@@ -41,7 +41,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <input type="text" id="email" name="email" required placeholder="Enter your email address">
 
             <label for="hours-vol"><em>* </em>Hours Volunteered</label>
-            <input type="text" id="hours-vol" name="hours-vol" required placeholder="Enter your volunteer hours">
+            <input type="number" id="hours-vol" name="hours-vol" required placeholder="Enter your volunteer hours">
             
 
         </fieldset>
