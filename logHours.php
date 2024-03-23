@@ -57,6 +57,9 @@
             }
             
             $id = $args['email'];
+            if(!validateEmail($id)){
+                $errors = true;
+            }
 
             //Compunds new hours with hours already in database
             $sum_hours = retrieve_hours($id) + $args['hours-vol'];
