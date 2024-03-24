@@ -1,5 +1,8 @@
+
 <?php
 
+// Modified by: Joseph Vogtli (3/22/2024)
+// Provides a form for volunteers to log their hours
 function buildSelect($name, $disabled=false, $selected=null) {
     global $times;
     global $values;
