@@ -59,14 +59,32 @@
             $id = $args['email'];
             if(!validateEmail($id)){
                 $errors = true;
+                echo 'Bad input in Volunteer Email';
+            }
+
+            //Error checks have to be after every validation check or else they won't work.
+            if ($errors) {
+                echo '<p>Your form submission contained unexpected input.</p>';
+                die();
             }
 
             //Compunds new hours with hours already in database
+            $hours = $args['hours-vol'];
+            if ($hours < 0) {
+                $errors = true;
+                echo 'Bad input in Volunteer Hours';
+            }
+
+            if ($errors) {
+                echo '<p>Your form submission contained unexpected input.</p>';
+                die();
+            }
+
             $sum_hours = retrieve_hours($id) + $args['hours-vol'];
             $hours = update_hours($id, $sum_hours);
             if (!$hours) {
                 $errors = true;
-                echo 'bad hours';
+                echo 'Bad input in Volunteer Hours';
             }
 
             if ($errors) {
