@@ -11,13 +11,8 @@
 
     // redirect to index if already logged in
     if (isset($_SESSION['_id'])) {
-        //if ($_SESSION['access_level'] == 1){
-        header('Location: vms_index.php');
-        //} else if ($_SESSION['access_level'] > 1){
-        //    header('Location: centralMenu.php');
-        //} else {
+        header('Location: index.php');
         die();
-        //}
     }
     $badLogin = false;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -44,11 +39,11 @@
                     $_SESSION['logged_in'] = true;
                 }
                 $types = $user->get_type();
-                if (in_array('superadmin', $types)){
-                        $_SESSION['access_level'] = 3;
+                if (in_array('superadmin', $types)) {
+                    $_SESSION['access_level'] = 3;
                 } else if (in_array('admin', $types)) {
                     $_SESSION['access_level'] = 2;
-                } else if (in_array('volunteer', $types)) {
+                } else {
                     $_SESSION['access_level'] = 1;
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
@@ -56,11 +51,9 @@
                 $_SESSION['venue'] = $user->get_venue();
                 $_SESSION['type'] = $user->get_type();
                 $_SESSION['_id'] = $user->get_id();
-                $_SESSION['access_level'] = $user->get_access_level();
                 // hard code root privileges
                 if ($user->get_id() == 'vmsroot') {
                     $_SESSION['access_level'] = 3;
-                    header('Location: centralMenu.php');
                 }
                 if ($changePassword) {
                     $_SESSION['access_level'] = 0;
@@ -68,15 +61,10 @@
                     header('Location: changePassword.php');
                     die();
                 } else {
-                    if ($_SESSION['access_level'] == 1){
-                        header('Location: vms_index.php');
-                    } else if ($_SESSION['access_level'] > 1){
-                        header('Location: centralMenu.php');
-                    } else {
-                        header('Location: index.php');
-                    }
+                    header('Location: index.php');
                     die();
                 }
+                die();
             } else {
                 $badLogin = true;
             }
@@ -89,12 +77,12 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>ODHS | Log In</title>
+        <title>ODHS Medicine Tracker | Log In</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
         <main class="login">
-            <h1>ODHS Login</h1>
+            <h1>ODHS MedTracker Login</h1>
             <?php if (isset($_GET['registerSuccess'])): ?>
                 <div class="happy-toast">
                     Your registration was successful! Please log in below.
