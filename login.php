@@ -11,13 +11,13 @@
 
     // redirect to index if already logged in
     if (isset($_SESSION['_id'])) {
-        if ($_SESSION['access_level'] == 1){
-            header('Location: vms_index.php');
-        } else if ($_SESSION['access_level'] > 1){
-            header('Location: centralMenu.php');
-        } else {
+        //if ($_SESSION['access_level'] == 1){
+        header('Location: vms_index.php');
+        //} else if ($_SESSION['access_level'] > 1){
+        //    header('Location: centralMenu.php');
+        //} else {
         die();
-        }
+        //}
     }
     $badLogin = false;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -44,12 +44,12 @@
                     $_SESSION['logged_in'] = true;
                 }
                 $types = $user->get_type();
-                if (in_array('volunteer', $types)){
-                        $_SESSION['access_level'] = 1;
+                if (in_array('superadmin', $types)){
+                        $_SESSION['access_level'] = 3;
                 } else if (in_array('admin', $types)) {
                     $_SESSION['access_level'] = 2;
-                } else if (in_array('superadmin', $types)) {
-                    $_SESSION['access_level'] = 3;
+                } else if (in_array('volunteer', $types)) {
+                    $_SESSION['access_level'] = 1;
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();
