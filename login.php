@@ -68,7 +68,6 @@
             } else {
                 $badLogin = true;
             }
-            echo $_SESSION['access_level']
         }
     }
     //<p>Or <a href="register.php">register as a new volunteer</a>!</p>

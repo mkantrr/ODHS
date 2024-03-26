@@ -155,7 +155,7 @@
                     }
                     if (!$range24h) {
                         $errors = true;
-                        echo/ "bad $day availability";
+                        echo "bad $day availability";
                     }
                     $availability[$day] = $range24h;
                     $availabilityCount++;
