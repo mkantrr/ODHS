@@ -68,6 +68,7 @@
             } else {
                 $badLogin = true;
             }
+            echo $_SESSION['access_level']
         }
     }
     //<p>Or <a href="register.php">register as a new volunteer</a>!</p>
@@ -86,9 +87,11 @@
             <?php if (isset($_GET['registerSuccess'])): ?>
                 <div class="happy-toast">
                     Your registration was successful! Please log in below.
+                    echo $_SESSION['access_level']
                 </div>
             <?php else: ?>
             <p>Welcome! Please log in below.</p>
+            
             <?php endif ?>
             <form method="post">
                 <?php
