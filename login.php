@@ -68,8 +68,8 @@
                     header('Location: changePassword.php');
                     die();
                 } else {
-                    if ($_SESSION['access_level'] = 1){
-                        header('Location: centralMenu.php');
+                    if ($_SESSION['access_level'] == 1){
+                        header('Location: vms_index.php');
                     } else if ($_SESSION['access_level'] > 1){
                         header('Location: centralMenu.php');
                     } else {
