@@ -41,10 +41,13 @@
                 $types = $user->get_type();
                 if (in_array('superadmin', $types)) {
                     $_SESSION['access_level'] = 3;
+                    header('Location:centralMenu.php');
                 } else if (in_array('admin', $types)) {
                     $_SESSION['access_level'] = 2;
+                    header('Location:centralMenu.php');
                 } else {
                     $_SESSION['access_level'] = 1;
+                    header('Location:vms_index.php');
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();
@@ -60,10 +63,13 @@
                     $_SESSION['change-password'] = true;
                     header('Location: changePassword.php');
                     die();
-                } else {
-                    header('Location: index.php');
-                    die();
-                }
+                } //else {
+                    //if ($_SESSION['access_level'] = 1){
+                    //    header('Location:vms_index.php');
+                    //} else if ()
+                    //header('Location: index.php');
+                    //die();
+                //}
                 die();
             } else {
                 $badLogin = true;
