@@ -15,7 +15,7 @@
  */
 
 $accessLevelsByRole = [
-	//'volunteer' => 1,
+	'volunteer' => 1,
 	'admin' => 2,
 	'superadmin' => 3
 ];
@@ -101,7 +101,16 @@ class Person {
 		$this->cMethod = $cntm;
 		$this->mustChangePassword = $mcp;
 		$this->type = $t !== "" ? explode(',', $t) : array();
-		$this->access_level = 2;
+		if ($t =='volunteer'){
+			$this->access_level = 1;
+		} else if ($t== 'admin'){
+			$this->access_level == 2;
+		} else if ($t == 'superadmin'){
+			$this->access_level == 3;
+		} else {
+			$this->access_level == 0;
+		}
+		//$this->access_level = $accessLevelsByRole[$t];
 		//if ($t !== "") {
 			//$this->type = explode(',', $t);
 			//global $accessLevelsByRole;
