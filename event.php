@@ -79,15 +79,15 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>ODHS Medicine Tracker | Create Appointment</title>
+        <title>ODHS VMS | Create Event</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
-        <h1>Create Appointment</h1>
+        <h1>Create Event</h1>
         <main class="date">
-            <h2>New Appointment Form</h2>
+            <h2>New Event Form</h2>
             <form id="new-event-form" method="post">
-                <label for="name">Appointment Name </label>
+                <label for="name">Event Name </label>
                 <input type="text" id="name" name="name" required placeholder="Enter name"> 
                 <label for="name">Abbreviated Name</label>
                 <input type="text" id="abbrev-name" name="abbrev-name" maxlength="11" required placeholder="Enter name that will appear on calendar">
@@ -98,10 +98,22 @@
                 <label for="name">Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description">
                 <label for="name">Location </label>
-                <input type="text" id="location" name="location" required placeholder="Enter location">
-                <label for="name">Animal ID </label>
-                <!-- TODO: change this to be dropdown list of current animals -->
-                <input type="text" id="animal" name="animal" required placeholder="Enter animal ID">
+                <select for="name" id="location" name="location" required>
+                    <option value="">--</option>
+                    <?php 
+                        // fetch data from the $all_locations variable
+                        // and individually display as an option
+                        while ($location = mysqli_fetch_array(
+                                $all_locations, MYSQLI_ASSOC)):; 
+                    ?>
+                    <option value="<?php echo $location['id'];?>">
+                        <?php echo $location['name'];?>
+                    </option>
+                    <?php 
+                        endwhile; 
+                        // terminate while loop
+                    ?>
+                </select><p></p>
                 <input type="submit" value="Create Event">
             </form>
                 <?php if ($date): ?>
