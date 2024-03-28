@@ -27,7 +27,7 @@
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once('include/input-validation.php');
-        require_once('database/dbAppointments.php');
+        require_once('database/dbEvents.php');
         $args = sanitize($_POST, null);
         $required = array(
             "name", "abbrev-name", "date", "start-time", "description", "location"
