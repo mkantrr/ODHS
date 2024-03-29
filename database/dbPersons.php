@@ -52,26 +52,11 @@ function add_person($person) {
             $person->get_cMethod() . '","' . 
             implode(',', $person->get_type()) . '","' .
             $person->get_status() . '","' .
-            implode(',', $person->get_availability()) . '","' .
-            implode(',', $person->get_schedule()) . '","' .
+            //implode(',', $person->get_availability()) . '","' .
+            //implode(',', $person->get_schedule()) . '","' .
             implode(',', $person->get_hours()) . '","' .
             $person->get_notes() . '","' .
             $person->get_password() . '","' .
-            $person->get_sunday_availability_start() . '","' .
-            $person->get_sunday_availability_end() . '","' .
-            $person->get_monday_availability_start() . '","' .
-            $person->get_monday_availability_end() . '","' .
-            $person->get_tuesday_availability_start() . '","' .
-            $person->get_tuesday_availability_end() . '","' .
-            $person->get_wednesday_availability_start() . '","' .
-            $person->get_wednesday_availability_end() . '","' .
-            $person->get_thursday_availability_start() . '","' .
-            $person->get_thursday_availability_end() . '","' .
-            $person->get_friday_availability_start() . '","' .
-            $person->get_friday_availability_end() . '","' .
-            $person->get_saturday_availability_start() . '","' .
-            $person->get_saturday_availability_end() . '","' .
-            $person->get_profile_pic() . '","' .
             $person->is_password_change_required() . '","' .
             $person->get_gender() .
             '");'
@@ -300,27 +285,11 @@ function make_a_person($result_row) {
                     $result_row['type'],
                     $result_row['status'],
                     $result_row['cMethod'],  
-                    $result_row['availability'],
-                    $result_row['schedule'],
                     $result_row['hours'],
                     $result_row['birthday'],
                     $result_row['start_date'],
                     $result_row['notes'],
                     $result_row['password'],
-                    $result_row['sundays_start'],
-                    $result_row['sundays_end'],
-                    $result_row['mondays_start'],
-                    $result_row['mondays_end'],
-                    $result_row['tuesdays_start'],
-                    $result_row['tuesdays_end'],
-                    $result_row['wednesdays_start'],
-                    $result_row['wednesdays_end'],
-                    $result_row['thursdays_start'],
-                    $result_row['thursdays_end'],
-                    $result_row['fridays_start'],
-                    $result_row['fridays_end'],
-                    $result_row['saturdays_start'],
-                    $result_row['saturdays_end'],
                     $result_row['force_password_change'],
                     $result_row['gender']
                 );   
