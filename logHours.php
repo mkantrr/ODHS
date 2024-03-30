@@ -80,7 +80,7 @@
                 die();
             }
 
-            $sum_hours = retrieve_hours($id) + $args['hours-vol'];
+            $sum_hours = intval(retrieve_hours($id)) + intval($args['hours-vol']);
             $hours = update_hours($id, $sum_hours);
             if (!$hours) {
                 $errors = true;
