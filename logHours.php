@@ -68,7 +68,7 @@
                 die();
             }
 
-            //Compunds new hours with hours already in database
+            //Put these hours into dbHours with their date
             $hours = $args['hours-vol'];
             if ($hours < 0) {
                 $errors = true;
@@ -80,6 +80,7 @@
                 die();
             }
 
+            //Compunds new hours with hours already in database
             $sum_hours = intval(retrieve_hours($id)) + intval($args['hours-vol']);
             $hours = update_hours($id, $sum_hours);
             if (!$hours) {
