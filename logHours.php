@@ -91,6 +91,10 @@
                 echo '<p>Your form submission contained unexpected input.</p>';
                 die();
             }
+            $date = date('d-m-y h:i:s');
+            //Use to insert the date and time user logged their hours
+            //$date = update_date($id, $date);
+
 
             echo "<h3> Hours successfully updated! </h3>";
             
