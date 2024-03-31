@@ -12,6 +12,10 @@ function __construct($timestamp, $duration) {
     $this->duration = $duration;
 }
 
+function get_id() {
+    return $this->id;
+}
+
 function get_email() {
     return $this->email;
 }
@@ -23,4 +27,5 @@ function get_timestamp() {
 function get_duration() {
     return $this->duration;
 }
+
 ?>
