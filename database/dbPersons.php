@@ -87,6 +87,20 @@ function remove_person($id) {
 }
 
 /*
+ * Return id by inputing users first/last name and phone number
+ */
+function retrieve_hours($id) {
+    $persons = array();
+    $con=connect();
+    $query = "SELECT hours FROM dbPersons WHERE id = '" . $id . "'";
+    $result = mysqli_query($con,$query);
+    while ($row = $result->fetch_assoc()) {
+        return $row['hours'];
+    }
+    
+}
+
+/*
  * @return a Person from dbPersons table matching a particular id.
  * if not in table, return false
  */
