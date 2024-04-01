@@ -31,7 +31,7 @@
         <?php require('header.php'); ?>
         <h1>ODHS Login</h1>
         <main class='dashboard'>
-            <p>Welcome back, <?php echo $person->get_first_name()?> access level <?php echo $person->get_access_level() ?>!</p>
+            <p>Welcome back, <?php echo $person->get_first_name()?> access level <?php echo $_SESSION['access_level'] ?>!</p>
             <p>Today is <?php echo date('l, F j, Y'); ?>.</p>
             <div id="dashboard">
                 <?php if ($_SESSION['access_level'] >= 2): ?>
