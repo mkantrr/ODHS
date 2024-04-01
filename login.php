@@ -11,12 +11,10 @@
 
     // redirect to index if already logged in
     if (isset($_SESSION['_id'])) {
-        if($SESSION['type'] == 0){
-            header('Location: login.php');
-        } elseif ($_SESSION['type'] == 1) {
+        if($_SESSION['access_level'] > 1){
+            header('Location: centralMenu.php');
+        } else if ($_SESSION['access_level'] == 1) {
             header('Location:vms_index.php');
-        } else{
-            header('Location:centralMenu.php');
         }
         die();
     }
