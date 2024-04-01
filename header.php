@@ -54,6 +54,7 @@
         $permission_array['register.php'] = 0;
         $permission_array['findanimal.php'] = 0;
         //pages volunteers can view
+        $permission_array['vms_index.php']= 1;         // Volunteer Management Service
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1;
         $permission_array['calendar.php'] = 1;
@@ -90,6 +91,8 @@
         $permission_array['viewarchived.php'] = 2;
         $permission_array['animal.php'] = 2;
         $permission_array['editanimal.php'] = 2;
+
+        $permission_array['centralmenu.php'] = 2;   // admin/main users choose between VMS and Medtracker Dashboard
         // pages adoption center can view
         $permission_array['loghours.php'] = 0;
         $permission_array['loghoursform.php'] = 0;
@@ -121,8 +124,11 @@
             echo('<a class="navbar-brand" id="vms-logo"> MedTracker </a></span><img id="menu-toggle" src="images/menu.png"></span>');
             echo('<ul>');
             //echo " <br><b>"."Gwyneth's Gift Homebase"."</b>|"; //changed: 'Homebase' to 'Gwyneth's Gift Homebase'
-
-            echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'index.php">Home</a></li>');
+            if ($_SESSION['access_level'] > 1){
+                echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'index.php">Home</a></li>');
+            } else {
+                echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'vms_index.php">Home</a></li>');
+            }
             //echo('<span class="nav-divider">|</span>');
 
             echo('<li class="nav-item dropdown">');

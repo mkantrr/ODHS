@@ -25,11 +25,11 @@
 <html>
     <head>
         <?php require('universal.inc'); ?>
-        <title>ODHS Medicine Tracker | Dashboard</title>
+        <title>ODHS Volunteer Management System | Dashboard</title>
     </head>
     <body>
         <?php require('header.php'); ?>
-        <h1>MedTracker Dashboard</h1>
+        <h1>Volunteer Management System Dashboard</h1>
         <main class='dashboard'>
             <?php if (isset($_GET['pcSuccess'])): ?>
                 <div class="happy-toast">Password changed successfully!</div>
@@ -131,14 +131,16 @@
                         <span>View My Hours</span>
                     </div>
                 <?php endif ?>
-                <div class="dashboard-item" data-link="VMS_index.php">
-                    <img src="images/vms_index.svg">
-                    <span>Volunteer Management System</span>
-                </div>
                 <div class="dashboard-item" data-link="changePassword.php">
                     <img src="images/change-password.svg">
                     <span>Change Password</span>
                 </div>
+                <?php if($_SESSION['access_level'] > 1) : ?>
+                    <div class="dashboard-item" data-link="index.php">
+                        <img src="images/index.svg">
+                        <span>Go to MedTracker Dashboard</span>
+                    </div>
+                <?php endif ?>
                 <div class="dashboard-item" data-link="logout.php">
                     <img src="images/logout.svg">
                     <span>Log out</span>

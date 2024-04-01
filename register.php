@@ -51,6 +51,7 @@
             // make every submitted field SQL-safe except for password
             $ignoreList = array('password');
             $args = sanitize($_POST, $ignoreList);
+            
 
             // echo "<p>The form was submitted:</p>";
             // foreach ($args as $key => $value) {
