@@ -11,7 +11,14 @@
 
     // redirect to index if already logged in
     if (isset($_SESSION['_id'])) {
-        header('Location: index.php');
+        if($SESSION['type'] == 0){
+            header('Location: login.php');
+        } elseif ($_SESSION['type'] == 1) {
+            header('Location:vms_index.php');
+        } else{
+            header('Location:centralMenu.php');
+        }
+        //header('Location: index.php');
         die();
     }
     $badLogin = false;
