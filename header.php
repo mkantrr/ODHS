@@ -33,8 +33,8 @@
         <nav>
             <span id="nav-top">
                 <span class="logo">
-                    <img src="images/gwynethsgift.png">
-                    <span id="vms-logo"> MedTracker </span>
+                    <img src="images/odhs.png">
+                    <span id="vms-logo"> ODHS </span>
                 </span>
                 <img id="menu-toggle" src="images/menu.png">
             </span>
@@ -341,7 +341,97 @@
                 echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'logout.php">Log out</a></li>');
                 echo '</ul></nav>';
             }
-            }   
+        } else {
+
+                /*         * Set our permission array.
+                 * anything a guest can do, a volunteer and manager can also do
+                 * anything a volunteer can do, a manager can do.
+                 *
+                 * If a page is not specified in the permission array, anyone logged into the system
+                 * can view it. If someone logged into the system attempts to access a page above their
+                 * permission level, they will be sent back to the home page.
+                 */
+                //pages guests are allowed to view
+                $permission_array['index.php'] = 0;
+                $permission_array['about.php'] = 0;
+                $permission_array['apply.php'] = 0;
+                $permission_array['logout.php'] = 0;
+                $permission_array['register.php'] = 0;
+                $permission_array['findanimal.php'] = 0;
+                //pages volunteers can view
+                $permission_array['vms_index.php']= 1;         // Volunteer Management Service
+                $permission_array['help.php'] = 1;
+                $permission_array['dashboard.php'] = 1;
+                $permission_array['calendar.php'] = 1;
+                $permission_array['eventsearch.php'] = 1;
+                $permission_array['changepassword.php'] = 1;
+                $permission_array['editprofile.php'] = 1;
+                $permission_array['inbox.php'] = 1;
+                $permission_array['date.php'] = 1;
+                $permission_array['event.php'] = 1;
+                $permission_array['viewprofile.php'] = 1;
+                $permission_array['viewnotification.php'] = 1;
+                $permission_array['volunteerreport.php'] = 1;
+                //pages only managers can view
+                $permission_array['personsearch.php'] = 2;
+                $permission_array['personedit.php'] = 0; // changed to 0 so that applicants can apply
+                $permission_array['viewschedule.php'] = 2;
+                $permission_array['addweek.php'] = 2;
+                $permission_array['log.php'] = 2;
+                $permission_array['reports.php'] = 2;
+                $permission_array['eventedit.php'] = 2;
+                $permission_array['modifyuserrole.php'] = 2;
+                $permission_array['addevent.php'] = 2;
+                $permission_array['editevent.php'] = 2;
+                $permission_array['roster.php'] = 2;
+                $permission_array['report.php'] = 2;
+                $permission_array['reportspage.php'] = 2;
+                $permission_array['resetpassword.php'] = 2;
+                $permission_array['addappointment.php'] = 2;
+                $permission_array['addanimal.php'] = 2;
+                $permission_array['addservice.php'] = 2;
+                $permission_array['addlocation.php'] = 2;
+                $permission_array['viewservice.php'] = 2;
+                $permission_array['viewlocation.php'] = 2;
+                $permission_array['viewarchived.php'] = 2;
+                $permission_array['animal.php'] = 2;
+                $permission_array['editanimal.php'] = 2;
+        
+                $permission_array['centralmenu.php'] = 2;   // admin/main users choose between VMS and Medtracker Dashboard
+                // pages adoption center can view
+                $permission_array['loghours.php'] = 0;
+                $permission_array['loghoursform.php'] = 0;
+        
+                //Check if they're at a valid page for their access level.
+                $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
+                $current_page = substr($current_page, strpos($current_page,"/"));
+                
+                if($permission_array[$current_page]>$_SESSION['access_level']){
+                    //in this case, the user doesn't have permission to view this page.
+                    //we redirect them to the index page.
+                    echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
+                    //note: if javascript is disabled for a user's browser, it would still show the page.
+                    //so we die().
+                    die();
+                }
+                //This line gives us the path to the html pages in question, useful if the server isn't installed @ root.
+                $path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
+                $venues = array("portland"=>"RMH Portland");
+                
+                //they're logged in and session variables are set.
+                if ($_SESSION['venue'] =="") { 
+                    echo(' <a href="' . $path . 'personEdit.php?id=' . 'new' . '">Apply</a>');
+                    echo(' | <a href="' . $path . 'logout.php">Logout</a><br>');
+                }
+                else {
+                    echo('<nav>');
+                    echo('<span id="nav-top"><span class="logo"><a class="navbar-brand"><img src="images/odhs.png"></a>');
+                    echo('<a class="navbar-brand" id="vms-logo"> ODHS Menu </a></span><img id="menu-toggle" src="images/menu.png"></span>');
+                    echo('<ul>');
+                    echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'logout.php">Log out</a></li>');
+                    echo '</ul></nav>';
+                }
+                }   
     }
     ?>
 </header>
