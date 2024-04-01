@@ -17,7 +17,7 @@
 $accessLevelsByRole = [
 	'volunteer' => 1,
 	'admin' => 2,
-	'superadmin' => 3
+	'main' => 3
 ];
 
 class Person {
@@ -105,7 +105,7 @@ class Person {
 			$this->access_level = 1;
 		} else if ($t== 'admin'){
 			$this->access_level == 2;
-		} else if ($t == 'superadmin'){
+		} else if ($t == 'main'){
 			$this->access_level == 3;
 		} else {
 			$this->access_level == 0;
