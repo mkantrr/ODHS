@@ -18,7 +18,6 @@
         } else{
             header('Location:centralMenu.php');
         }
-        //header('Location: index.php');
         die();
     }
     $badLogin = false;
@@ -71,13 +70,7 @@
                     $_SESSION['change-password'] = true;
                     header('Location: changePassword.php');
                     die();
-                } //else {
-                    //if ($_SESSION['access_level'] = 1){
-                    //    header('Location:vms_index.php');
-                    //} else if ()
-                    //header('Location: index.php');
-                    //die();
-                //}
+                } 
                 die();
             } else {
                 $badLogin = true;
