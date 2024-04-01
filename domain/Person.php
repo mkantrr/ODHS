@@ -30,7 +30,7 @@ class Person {
 	private $city;    // city - string
 	private $state;   // state - string
 	private $zip;    // zip code - integer
-  	private $profile_pic; // image link
+  private $profile_pic; // image link
 	private $phone1;   // primary phone -- home, cell, or work
 	private $phone1type; // home, cell, or work
 	private $phone2;   // secondary phone -- home, cell, or work
@@ -42,29 +42,13 @@ class Person {
 	private $relation;   // relation to emergency contact
 	private $contact_time; //best time to contact volunteer
 	private $cMethod;    // best contact method for volunteer (email, phone, text)
-	private $type;       // array of "volunteer", "weekendmgr", "sub", "guestchef", "events", "projects", "manager"
+	private $type;       // array of "volunteer", "admin", "main", "adoption center"
 	private $access_level;
 	private $status;     // a person may be "active" or "inactive"
-	private $availability; // array of day:hours:venue triples; e.g., Mon:9-12:bangor, Sat:afternoon:portland
-	private $schedule;     // array of scheduled shift ids; e.g., 15-01-05:9-12:bangor
+	//private $schedule;     // array of scheduled shift ids; e.g., 15-01-05:9-12:bangor
 	private $hours;        // array of actual hours logged; e.g., 15-01-05:0930-1300:portland:3.5
 	private $notes;        // notes that only the manager can see and edit
 	private $password;     // password for calendar and database access: default = $id
-	// Volunteer availability start and end for each week day in 24h format, hh:mm
-	private $sundaysStart;
-	private $sundaysEnd;
-	private $mondaysStart;
-	private $mondaysEnd;
-	private $tuesdaysStart;
-	private $tuesdaysEnd;
-	private $wednesdaysStart;
-	private $wednesdaysEnd;
-	private $thursdaysStart;
-	private $thursdaysEnd;
-	private $fridaysStart;
-	private $fridaysEnd;
-	private $saturdaysStart;
-	private $saturdaysEnd;
 	private $mustChangePassword;
 	private $gender;
 
@@ -73,11 +57,12 @@ class Person {
 			$cn, $cpn, $rel,
 			$ct, $t, $st, $cntm, 
 			//$pos, $credithours, $comm, $mot, $spe,$convictions, 
-			$av, $sch, $hrs, $bd, $sd, 
+			$hrs, $bd, $sd, 
 			//$hdyh, 
 			$notes, $pass,
-			$suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
-			$thus, $thue, $fris, $frie, $sats, $sate, $mcp, $gender) {
+			//$suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
+			//$thus, $thue, $fris, $frie, $sats, $sate, 
+			$mcp, $gender) {
 		$this->id = $e;
 		$this->start_date = $sd;
 		$this->venue = $v;
@@ -120,14 +105,14 @@ class Person {
 			//$this->access_level = 0;
 		//}
 		$this->status = $st;
-		if ($av == "")
-			$this->availability = array();
-		else
-			$this->availability = explode(',', $av);
-		if ($sch !== "")
-			$this->schedule = explode(',', $sch);
-		else
-			$this->schedule = array();
+		//if ($av == "")
+		//	$this->availability = array();
+		//else
+		//	$this->availability = explode(',', $av);
+		//if ($sch !== "")
+		//	$this->schedule = explode(',', $sch);
+		//else
+		//	$this->schedule = array();
 		if ($hrs !== "")
 			$this->hours = explode(',', $hrs);
 		else
@@ -136,21 +121,21 @@ class Person {
 		if ($pass == "")
 			$this->password = password_hash($this->id, PASSWORD_BCRYPT); // default password
 		else
-			$this->password = $pass;
-		$this->sundaysStart = $suns;
-		$this->sundaysEnd = $sune;
-		$this->mondaysStart = $mons;
-		$this->mondaysEnd = $mone;
-		$this->tuesdaysStart = $tues;
-		$this->tuesdaysEnd = $tuee;
-		$this->wednesdaysStart = $weds;
-		$this->wednesdaysEnd = $wede;
-		$this->thursdaysStart = $thus;
-		$this->thursdaysEnd = $thue;
-		$this->fridaysStart = $fris;
-		$this->fridaysEnd = $frie;
-		$this->saturdaysStart = $sats;
-		$this->saturdaysEnd = $sate;
+		$this->password = $pass;
+		//$this->sundaysStart = $suns;
+		//$this->sundaysEnd = $sune;
+		//$this->mondaysStart = $mons;
+		//$this->mondaysEnd = $mone;
+		//$this->tuesdaysStart = $tues;
+		//$this->tuesdaysEnd = $tuee;
+		//$this->wednesdaysStart = $weds;
+		//$this->wednesdaysEnd = $wede;
+		//$this->thursdaysStart = $thus;
+		//$this->thursdaysEnd = $thue;
+		//$this->fridaysStart = $fris;
+		//$this->fridaysEnd = $frie;
+		//$this->saturdaysStart = $sats;
+		//$this->saturdaysEnd = $sate;
 		$this->gender = $gender;
 	}
 
