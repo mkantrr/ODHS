@@ -164,6 +164,7 @@
             </fieldset>
             <fieldset>
                 <legend>Volunteer Information</legend>
+                <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
                 <label>Availability</label>
                 <?php if ($user->get_sunday_availability_start()): ?>
                     <label>Sundays</label>
@@ -193,6 +194,7 @@
                     <label>Saturdays</label>
                     <p><?php echo time24hTo12h($user->get_saturday_availability_start()) . ' - ' . time24hTo12h($user->get_saturday_availability_end()) ?></p>
                 <?php endif ?>
+                <?php } ?>
             </fieldset>
             <a class="button" href="editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>">Edit Profile</a>
             <?php if ($id != $userID): ?>
