@@ -197,6 +197,8 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="type"><em>* </em>Account Type</label>
             <select id="type" name="type" required>
                 <option value="volunteer">Volunteer</option>
+                <option value="admin">Admin</option>
+                <option value="main">Main</option>
             </select>
         </fieldset>
         <p>By pressing Submit below, you are agreeing to volunteer for the organization.</p>

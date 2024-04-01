@@ -91,6 +91,9 @@
         $permission_array['viewarchived.php'] = 2;
         $permission_array['animal.php'] = 2;
         $permission_array['editanimal.php'] = 2;
+        // pages adoption center can view
+        $permission_array['loghours.php'] = 0;
+        $permission_array['loghoursform.php'] = 0;
         $permission_array['centralmenu.php'] = 2;   // admin/main users choose between VMS and Medtracker Dashboard
 
         //Check if they're at a valid page for their access level.
