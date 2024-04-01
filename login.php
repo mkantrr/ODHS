@@ -117,10 +117,18 @@
         		<label for="password">Password</label>
                 <input type="password" name="password" placeholder="Enter your password" required>
                 <input type="submit" name="login" value="Log in">
-
+                <p><a href="#" onclick="showMessage()">Forgot username or password?</a></p>
             </form>
             <p></p>
             <p>Looking for <a href="https://www.olddominionhumanesociety.org">Old Dominion Humane Society</a>?</p>
+            <div id="forgotMessage" style="display: none;">
+                <p>Please contact your administrator for assistance with your username or password.</p>
+            </div>
         </main>
+        <script>
+        function showMessage() {
+            document.getElementById('forgotMessage').style.display = 'block';
+        }
+        </script>
     </body>
 </html>
