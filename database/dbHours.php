@@ -56,7 +56,19 @@ function retrieve_hours_by_email($email) {
     while ($result_row = mysqli_fetch_assoc($result)) {
         $hours[] = $result_row;
     }
+    mysqli_close($con);
     return $hours;	
+}
+
+/**
+ * Return the sum of all logged hour durations from a specific user
+ */
+function total_hours($email) {
+    $con=connect();
+    $query = "SELECT SUM(duration) FROM dbHours WHERE email = '" . $email;
+    $result = mysqli_query($con,$query);
+    mysqli_close($con);
+    return $result;
 }
 
 ?>
