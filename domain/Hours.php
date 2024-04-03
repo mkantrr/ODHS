@@ -7,7 +7,8 @@ class Hours {
     private $duration; //how many hours volunteered
 }
 
-function __construct($timestamp, $duration) {
+function __construct($email, $timestamp, $duration) {
+    $this->email = $email;
     $this->timestamp = $timestamp;
     $this->duration = $duration;
 }

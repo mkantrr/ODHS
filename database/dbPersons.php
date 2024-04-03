@@ -940,3 +940,16 @@ function find_user_names($name) {
         mysqli_close($connection);
         return $row['first_name'] . ' ' . $row['last_name'];
     }
+
+    function get_email_from_id($id) {
+        $query = "select email from dbPersons
+            where id='$id'";
+        $connection = connect();
+        $result = mysqli_query($connection, $query);
+        if (!$result) {
+            return null;
+        }
+
+        mysqli_close($connection);
+        return $result;
+    }

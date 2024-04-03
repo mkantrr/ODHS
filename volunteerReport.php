@@ -31,9 +31,10 @@
         $id = $_SESSION['_id'];
         $viewingSelf = true;
     }
-    $events = get_events_attended_by($id);
-    $totalHours = get_hours_volunteered_by($id);
+    //$events = get_events_attended_by($id);
+    //$totalHours = get_hours_volunteered_by($id);
     $volunteer = retrieve_person($id);
+    $email = get_email_from_id($id);
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,7 +57,8 @@
                 <h2 class="no-print">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
             <?php endif ?>
             <h2 class="print-only">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
-            <?php if (count($events)  > 0): ?>
+            
+            <!-- <?php if (count($events)  > 0): ?>
                 <div class="table-wrapper"><table class="general">
                     <thead>
                         <tr>
@@ -97,7 +99,7 @@
                     <a class="button cancel no-print" href="viewProfile.php">Return to Profile</a>
                 <?php else: ?>
                     <a class="button cancel no-print" href="viewProfile.php?id=<?php echo htmlspecialchars($_GET['id']) ?>">Return to Profile</a>
-                <?php endif ?>
+                <?php endif ?> -->
         </main>
     </body>
 </html>
