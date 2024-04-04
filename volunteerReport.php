@@ -22,6 +22,7 @@
     }
     $isAdmin = $accessLevel >= 2;
     require_once('database/dbPersons.php');
+    require_once('database/dbHours.php');
     if ($isAdmin && isset($_GET['id'])) {
         require_once('include/input-validation.php');
         $args = sanitize($_GET);
@@ -31,10 +32,10 @@
         $id = $_SESSION['_id'];
         $viewingSelf = true;
     }
-    //$events = get_events_attended_by($id);
-    //$totalHours = get_hours_volunteered_by($id);
     $volunteer = retrieve_person($id);
     $email = get_email_from_id($id);
+    $totalHours = total_hours($email);
+    $hours = retrieve_hours_by_email($email);
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,11 +53,11 @@
             <?php if (!$volunteer): ?>
                 <p class="error-toast">That volunteer does not exist!</p>
             <?php elseif ($viewingSelf): ?>
-                <h2 class="no-print">Your Volunteer Hours</h2>
+                <h1 class="no-print">Your Volunteer Hours</h2>
             <?php else: ?>
-                <h2 class="no-print">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
+                <h1 class="no-print">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
             <?php endif ?>
-            <h2 class="print-only">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
+            <h1 class="print-only">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
             
             <!-- <?php if (count($events)  > 0): ?>
                 <div class="table-wrapper"><table class="general">
