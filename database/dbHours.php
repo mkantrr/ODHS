@@ -48,17 +48,13 @@ function remove_hours($id) {
  * Return an array of hours logged by a given email
  */
 function retrieve_hours_by_email($email) {
-	$hours = array();
 	if (!isset($email) || $email == "" || $email == null) return $hours;
 	$con=connect();
     // Currently Hardcoded
     $query = "SELECT * FROM dbHours WHERE userEmail = 'email@email.com'  ORDER BY timestamp";
     $result = mysqli_query($con,$query);
-    while ($result_row = mysqli_fetch_assoc($result)) {
-        $hours[] = $result_row;
-    }
     mysqli_close($con);
-    return $hours;	
+    return $result;	
 }
 
 /**
