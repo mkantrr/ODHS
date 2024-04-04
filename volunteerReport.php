@@ -33,6 +33,7 @@
         $viewingSelf = true;
     }
     $volunteer = retrieve_person($id);
+    $volunteerName = get_name_from_id($id);
     $email = get_email_from_id($id);
     $totalHours = total_hours($email);
     $hours = retrieve_hours_by_email($email);
@@ -53,7 +54,7 @@
             <?php if (!$volunteer): ?>
                 <p class="error-toast">That volunteer does not exist!</p>
             <?php elseif ($viewingSelf): ?>
-                <h1 class="no-print">Your Volunteer Hours</h2>
+                <h1 class="no-print"><?php echo $volunteerName . "'s Volunteer Hours"?></h2>
             <?php else: ?>
                 <h1 class="no-print">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
             <?php endif ?>
