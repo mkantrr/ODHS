@@ -1,4 +1,5 @@
 <?php
+    //Created by Niko Toro
     // Template for new VMS pages. Base your new page on this one
 
     // Make session information accessible, allowing us to associate
@@ -65,6 +66,7 @@
                     <tr>
                         <th>Timestamp</th>
                         <th>Hours Logged</th>
+                        <th>Delete?</th>
                     </tr>
                 </thead>
                 <tbody class="standout">
@@ -75,12 +77,15 @@
                 $field1name = $result_row["timestamp"];
                 $field2name = $result_row["duration"];
                 
+                //Come back to "deleteHours.php" later, may cause future issues if not tested?
                 echo 
                 '<tr>
                     <td>' . $field1name . '</td>
                     <td>' . $field2name . '</td>
+                    <td><a href="deleteHours.php?id=' . $_SESSION['_id'] . '">Delete</a></td>
                 </tr>';
                 }
+
             while ($result_row = mysqli_fetch_assoc($totalHours)) {
                 $field1name = $result_row["SUM(duration)"];
                 echo 
