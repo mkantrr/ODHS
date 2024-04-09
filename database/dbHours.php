@@ -50,8 +50,7 @@ function remove_hours($id) {
 function retrieve_hours_by_email($email) {
 	if (!isset($email) || $email == "" || $email == null) return $hours;
 	$con=connect();
-    // Currently Hardcoded
-    $query = "SELECT * FROM dbHours WHERE userEmail = 'email@email.com'  ORDER BY timestamp";
+    $query = "SELECT * FROM dbHours WHERE userEmail = '" . $email .  "'  ORDER BY timestamp";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;	
@@ -62,8 +61,7 @@ function retrieve_hours_by_email($email) {
  */
 function total_hours($email) {
     $con=connect();
-    // Currently Hardcoded
-    $query = "SELECT SUM(duration) FROM dbHours WHERE userEmail = 'email@email.com'";
+    $query = "SELECT SUM(duration) FROM dbHours WHERE userEmail = '" . $email . "'";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;

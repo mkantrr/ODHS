@@ -949,7 +949,7 @@ function find_user_names($name) {
         if (!$result) {
             return null;
         }
-
-        mysqli_close($connection);
-        return $result;
+        while ($row = $result->fetch_assoc()) {
+            return $row['email'];
+        }
     }
