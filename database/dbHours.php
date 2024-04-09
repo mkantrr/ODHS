@@ -51,7 +51,7 @@ function remove_hours($id) {
 function retrieve_hours_by_email($email) {
 	if (!isset($email) || $email == "" || $email == null) return $hours;
 	$con=connect();
-    $query = "SELECT * FROM dbHours WHERE userEmail = '" . $email .  "'  ORDER BY timestamp";
+    $query = "SELECT * FROM dbHours WHERE userEmail = '" . $email .  "'  ORDER BY date, time";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;	

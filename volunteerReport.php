@@ -64,7 +64,8 @@
             <div class="table-wrapper"><table class="general">
                 <thead>
                     <tr>
-                        <th>Timestamp</th>
+                        <th>Date</th>
+                        <th>Time</th>
                         <th>Hours Logged</th>
                         <th>Delete?</th>
                     </tr>
@@ -74,14 +75,16 @@
             <?php
             require_once('include/output.php');
             while ($result_row = mysqli_fetch_assoc($hours)) {
-                $field1name = $result_row["timestamp"];
-                $field2name = $result_row["duration"];
+                $field1name = $result_row["date"];
+                $field2name = $result_row["time"];
+                $field3name = $result_row["duration"];
                 
                 //Come back to "deleteHours.php" later, may cause future issues if not tested?
                 echo 
                 '<tr>
                     <td>' . $field1name . '</td>
                     <td>' . $field2name . '</td>
+                    <td>' . $field3name . '</td>
                     <td><a href="deleteHours.php?id=' . $_SESSION['_id'] . '">Delete</a></td>
                 </tr>';
                 }
@@ -90,7 +93,7 @@
                 $field1name = $result_row["SUM(duration)"];
                 echo 
                 '<tr class="total-hours">
-                    <td class="total-hours">Total Hours</td>
+                    <td></td><td class="total-hours">Total Hours</td>
                     <td>' . $field1name . '</td>
                 </tr>';
             }
