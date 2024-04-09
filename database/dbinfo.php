@@ -16,13 +16,43 @@
  */
 
 function connect() {
+    if (isset($_SESSION) && $_SESSION['system_type'] == 'MedTracker') {
+        connect_md();
+    } else {
+        connect_vms();
+    }
+}
+
+function connect_md() {
+    $host = "localhost"; 
+    $database = "odhsmd";
+    $user = "odhsvms";
+    $pass = "odhsvms";
+    if ($_SERVER['SERVER_NAME'] == 'jenniferp122.sg-host.com') {
+        $user = 'uc1op8sb8zdqp';
+        $database = 'dbjyzu1z500h5e';
+        $pass = "7f8r0d57ltxn";
+    } else if ($_SERVER['SERVER_NAME'] == 'gwynethsgiftvms.org') {
+        $user = "uybhc603shfl5";
+        $pass = "f11kwvhy4yic";
+        $database = "dbwgyuabseaoih";
+    }
+    $con = mysqli_connect($host,$user,$pass,$database);
+    if (!$con) { echo "not connected to server"; return mysqli_error($con);}
+    $selected = mysqli_select_db($con,$database);
+    if (!$selected) { echo "database not selected"; return mysqli_error($con); }
+    else return $con;
+    
+}
+
+function connect_vms() {
     $host = "localhost"; 
     $database = "odhsvms";
     $user = "odhsvms";
     $pass = "odhsvms";
     if ($_SERVER['SERVER_NAME'] == 'jenniferp122.sg-host.com') {
         $user = 'uc1op8sb8zdqp';
-        $database = 'dbjyzu1z500h5e';
+        $database = 'dbv3lnjdtwy4ks';
         $pass = "7f8r0d57ltxn";
     } else if ($_SERVER['SERVER_NAME'] == 'gwynethsgiftvms.org') {
         $user = "uybhc603shfl5";
