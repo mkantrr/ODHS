@@ -41,7 +41,7 @@
                 echo 'bad time range';
                 die();
             }
-            $startTime = $args['start-time'] = $validated[0];
+            $startTime = $args['start-time'] = $validated;
             $date = $args['date'] = validateDate($args["date"]);
             $abbrevLength = strlen($args['abbrev-name']);
             if (!$startTime || !$date || $abbrevLength > 11){

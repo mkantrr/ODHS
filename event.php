@@ -312,12 +312,12 @@
                 <input type="hidden" name="id" value="<?= $id ?>">
             </form> -->
             <?php if ($event_info["completed"] == "no") : ?>
-                <button onclick="showCompleteConfirmation()">Complete Appointment</button>
+                <button onclick="showCompleteConfirmation()" style="margin-top">Complete Appointment</button>
             <?php endif ?>
-            <button onclick="showDeleteConfirmation()">Delete Appointment</button>
+            <button onclick="showDeleteConfirmation()" style="margin-top">Delete Appointment</button>
         <?php endif ?>
 
-        <a href="calendar.php" class="button cancel" style="margin-top: -.5rem">Return to Calendar</a>
+        <a href="calendar.php" class="button cancel" style="margin-bottom">Return to Calendar</a>
     </main>
 </body>
 
