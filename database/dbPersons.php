@@ -61,7 +61,6 @@ function add_person($person) {
             $person->get_gender() .
             '");'
         );							
-        mysqli_close($con);
     }
     mysqli_close($con);
 
@@ -119,10 +118,11 @@ function remove_person($id) {
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_close($con);
-    }
+    } else {
     $query = 'DELETE FROM dbPersons WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
     mysqli_close($con);
+    }
 
     $con=connect_vms();
     $query = 'SELECT * FROM dbPersons WHERE id = "' . $id . '"';
@@ -281,7 +281,6 @@ function update_start_date($id, $new_start_date) {
 	$query = 'UPDATE dbPersons SET start_date = "' . $new_start_date . '" WHERE id = "' . $id . '"';
 	$result = mysqli_query($con,$query);
 	mysqli_close($con);
-	return $result;
 
     $con=connect_vms();
 	$query = 'UPDATE dbPersons SET start_date = "' . $new_start_date . '" WHERE id = "' . $id . '"';
