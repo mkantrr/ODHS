@@ -173,7 +173,7 @@
     <?php
         require_once('universal.inc');
     ?>
-    <title>ODHS Medicine Tracker | View Appointment: <?php echo $event_info['name'] ?></title>
+    <title>ODHS VMS | View Event: <?php echo $event_info['name'] ?></title>
     <link rel="stylesheet" href="css/event.css" type="text/css" />
     <?php if ($access_level >= 2) : ?>
         <script src="js/event.js"></script>
@@ -212,6 +212,9 @@
     <?php require_once('header.php') ?>
     <h1>View Appointment</h1>
     <main class="event-info">
+        <?php if (isset($_GET['signUpSuccess'])): ?>
+            <div class="happy-toast"><?php echo $user->get_first_name() . " " . $user->get_last_name()?> successfully signed up for the Event!</div>
+        <?php endif ?>
         <?php if (isset($_GET['createSuccess'])): ?>
             <div class="happy-toast">Appointment created successfully!</div>
         <?php endif ?>
@@ -232,24 +235,12 @@
             $event_location = $event_info['locationID'];
             $event_description = $event_info['description'];
             $event_in_past = strcmp(date('Y-m-d'), $event_info['date']) > 0;
-            $event_animal_id = $event_info['animalID'];
             require_once('include/time.php');
             echo '<h2 class="centered">'.$event_name.'</h2>';
         ?>
         <div id="table-wrapper">
             <table class="centered">
                 <tbody>
-                <tr>	
-                        <td class="label">Animal </td>
-                        <td>
-                            <?php 
-                                $animals = get_animal($event_animal_id);
-                                foreach($animals as $animal) {
-                                    echo "<a href='animal.php?id=" . $animal['id'] . "'>" . $animal['name'] . "</a>";
-                                }
-                            ?>
-                        </td>
-                    </tr>
                     <tr>	
                         <td class="label">Date </td>
                         <td><?php echo $event_date ?></td>     		
@@ -257,21 +248,6 @@
                     <tr>	
                         <td class="label">Time </td>
                         <td><?php echo $event_startTime?></td>
-                    </tr>
-                    <tr>	
-                        <td class="label">Service(s) </td>
-                        <td>
-                            <?php 
-                                $services = get_services($id);
-                                $length = count($services);
-                                for ($i = 0; $i < $length; $i++) { 
-                                    echo $services[$i]['name'];
-                                    if ($i < $length - 1) {
-                                        echo ', ';
-                                    }
-                                }
-                            ?>
-                        </td>     		
                     </tr>
                     <tr>	
                         <td class="label">Location </td>
@@ -328,7 +304,8 @@
             <button onclick="showDeleteConfirmation()">Delete Appointment</button>
         <?php endif ?>
 
-        <a href="calendar.php?month=<?php echo substr($event_info['date'], 0, 7) ?>" class="button cancel" style="margin-top: -.5rem">Return to Calendar</a>
+        <a href="signUp.php?id=<?php echo $id ?>" class="button" style="margin-top">Sign Up for this Event</a>
+        <a href="calendar.php" class="button cancel" style="margin-bottom">Return to Calendar</a>
     </main>
 </body>
 

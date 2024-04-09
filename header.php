@@ -54,7 +54,8 @@
         $permission_array['register.php'] = 0;
         $permission_array['findanimal.php'] = 0;
         //pages volunteers can view
-        $permission_array['vms_index.php']= 1;         // Volunteer Management Service
+        $permission_array['vms_index.php'] = 1;         // Volunteer Management Service
+        $permission_array['signup.php'] = 1;
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1;
         $permission_array['calendar.php'] = 1;
