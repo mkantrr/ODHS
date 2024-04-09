@@ -304,7 +304,9 @@
             <button onclick="showDeleteConfirmation()">Delete Appointment</button>
         <?php endif ?>
 
-        <a href="signUp.php?id=<?php echo $id ?>" class="button" style="margin-top">Sign Up for this Event</a>
+        <?php if ($event_date > date('l, F j, Y')) : ?>
+            <a href="signUp.php?id=<?php echo $id ?>" class="button" style="margin-top">Sign Up for this Event</a>
+        <?php endif ?>
         <a href="calendar.php" class="button cancel" style="margin-bottom">Return to Calendar</a>
     </main>
 </body>
