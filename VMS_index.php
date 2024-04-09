@@ -67,7 +67,7 @@
                 <?php if ($_SESSION['access_level'] >= 2): ?>
                     <div class="dashboard-item" data-link="addEvent.php">
                         <img src="images/new-event.svg">
-                        <span>Add Event</span>
+                        <span>Create Event</span>
                     </div>
                 <?php endif ?>
 				<div class="dashboard-item" data-link="addLocation.php">
@@ -85,10 +85,17 @@
                         <img src="images/person-search.svg">
                         <span>Find Volunteer</span>
                     </div>
+                    <?php if ($_SESSION['access_level'] < 3) { ?>
                     <div class="dashboard-item" data-link="register.php">
                         <img src="images/add-person.svg">
-                        <span>Register Volunteer</span>
+                        <span>Create Volunteer</span>
                     </div>
+                    <?php } else {?>
+                    <div class="dashboard-item" data-link="register.php">
+                        <img src="images/add-person.svg">
+                        <span>Create Account</span>
+                    </div> 
+                    <?php } ?>
                     <div class="dashboard-item" data-link="report.php">
                         <img src="images/create-report.svg">
                         <span>Create Report</span>

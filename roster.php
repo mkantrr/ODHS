@@ -58,7 +58,11 @@
     <head>
         <?php require_once('universal.inc') ?>
         <link rel="stylesheet" href="css/roster.css" type="text/css" />
-        <title>ODHS Medicine Tracker | View Event Roster</title>
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
+        <title>ODHS Medicine Tracker | View Appointment Roster</title>
+        <?php } else { ?>
+        <title>ODHS VMS | View Event Roster</title>
+        <?php } ?>
     </head>
     <body>
         <?php require_once('header.php') ?>

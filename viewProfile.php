@@ -54,7 +54,11 @@
     <head>
         <?php require_once('universal.inc') ?>
         <!-- <link rel="stylesheet" href="css/editprofile.css" type="text/css" /> -->
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
         <title>ODHS Medicine Tracker | View User</title>
+        <?php } else { ?>
+        <title>ODHS VMS | View User</title>
+        <?php } ?>
     </head>
     <body>
         <?php 
@@ -161,40 +165,6 @@
                 <p><?php echo $user->get_relation() ?></p>
                 <label>Phone Number</label>
                 <p><a href="tel:<?php echo $user->get_contact_num() ?>"><?php echo formatPhoneNumber($user->get_contact_num()) ?></a></p>
-            </fieldset>
-            <fieldset>
-                <legend>Volunteer Information</legend>
-                <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
-                <label>Availability</label>
-                <?php if ($user->get_sunday_availability_start()): ?>
-                    <label>Sundays</label>
-                    <p><?php echo time24hTo12h($user->get_sunday_availability_start()) . ' - ' . time24hTo12h($user->get_sunday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_monday_availability_start()): ?>
-                    <label>Mondays</label>
-                    <p><?php echo time24hTo12h($user->get_monday_availability_start()) . ' - ' . time24hTo12h($user->get_monday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_tuesday_availability_start()): ?>
-                    <label>Tuedays</label>
-                    <p><?php echo time24hTo12h($user->get_tuesday_availability_start()) . ' - ' . time24hTo12h($user->get_tuesday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_wednesday_availability_start()): ?>
-                    <label>Wednesdays</label>
-                    <p><?php echo time24hTo12h($user->get_wednesday_availability_start()) . ' - ' . time24hTo12h($user->get_wednesday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_thursday_availability_start()): ?>
-                    <label>Thursdays</label>
-                    <p><?php echo time24hTo12h($user->get_thursday_availability_start()) . ' - ' . time24hTo12h($user->get_thursday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_friday_availability_start()): ?>
-                    <label>Fridays</label>
-                    <p><?php echo time24hTo12h($user->get_friday_availability_start()) . ' - ' . time24hTo12h($user->get_friday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_saturday_availability_start()): ?>
-                    <label>Saturdays</label>
-                    <p><?php echo time24hTo12h($user->get_saturday_availability_start()) . ' - ' . time24hTo12h($user->get_saturday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php } ?>
             </fieldset>
             <a class="button" href="editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>">Edit Profile</a>
             <?php if ($id != $userID): ?>

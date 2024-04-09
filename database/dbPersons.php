@@ -478,22 +478,14 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         $first, $last, $dateOfBirth, $address, $city, $state, $zipcode,
         $email, $phone, $phoneType, $contactWhen, $contactMethod, 
         $econtactName, $econtactPhone, $econtactRelation,
-        $skills, $hasComputer, $hasCamera, $hasTransportation, $shirtSize,
-        $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
-        $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
-        $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-        $saturdaysStart, $saturdaysEnd, $gender
+        $skills, $hasComputer, $hasCamera, $hasTransportation, $shirtSize, $gender
     ) {
         $query = "update dbPersons set 
             first_name='$first', last_name='$last', birthday='$dateOfBirth', address='$address', city='$city', zip='$zipcode',
             email='$email', phone1='$phone', phone1type='$phoneType', contact_time='$contactWhen', cMethod='$contactMethod',
             contact_name='$econtactName', contact_num='$econtactPhone', relation='$econtactRelation',
-            specialties='$skills', computer='$hasComputer', camera='$hasCamera', transportation='$hasTransportation', shirt_size='$shirtSize',
-            sundays_start='$sundaysStart', sundays_end='$sundaysEnd', mondays_start='$mondaysStart', mondays_end='$mondaysEnd',
-            tuesdays_start='$tuesdaysStart', tuesdays_end='$tuesdaysEnd', wednesdays_start='$wednesdaysStart', wednesdays_end='$wednesdaysEnd',
-            thursdays_start='$thursdaysStart', thursdays_end='$thursdaysEnd', fridays_start='$fridaysStart', fridays_end='$fridaysEnd',
-            saturdays_start='$saturdaysStart', saturdays_end='$saturdaysEnd', gender='$gender'
-            where id='$id'";
+            specialties='$skills', computer='$hasComputer', camera='$hasCamera', transportation='$hasTransportation', shirt_size='$shirtSize', 
+            gender='$gender' where id='$id'";
         $connection = connect();
         $result = mysqli_query($connection, $query);
         mysqli_commit($connection);

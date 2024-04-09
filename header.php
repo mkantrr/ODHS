@@ -106,6 +106,7 @@
         // pages adoption center can view
         $permission_array['loghours.php'] = 0;
         $permission_array['loghoursform.php'] = 0;
+        $permission_array['template.php'] = 0;
 
         //Check if they're at a valid page for their access level.
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
@@ -260,6 +261,7 @@
             // pages adoption center can view
             $permission_array['loghours.php'] = 0;
             $permission_array['loghoursform.php'] = 0;
+            $permission_array['template.php'] = 0;
     
             //Check if they're at a valid page for their access level.
             $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
