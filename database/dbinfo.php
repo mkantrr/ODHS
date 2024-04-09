@@ -61,9 +61,9 @@ function connect_vms() {
 
 function connect() {
     if (isset($_SESSION) && $_SESSION['system_type'] == 'MedTracker') {
-        connect_md();
+        return connect_md();
     } else {
-        connect_vms();
+        return connect_vms();
     }
 }
 
