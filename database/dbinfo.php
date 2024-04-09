@@ -15,14 +15,6 @@
  * @version updated 2/12/08
  */
 
-function connect() {
-    if (isset($_SESSION) && $_SESSION['system_type'] == 'MedTracker') {
-        connect_md();
-    } else {
-        connect_vms();
-    }
-}
-
 function connect_md() {
     $host = "localhost"; 
     $database = "odhsmd";
@@ -65,6 +57,14 @@ function connect_vms() {
     if (!$selected) { echo "database not selected"; return mysqli_error($con); }
     else return $con;
     
+}
+
+function connect() {
+    if (isset($_SESSION) && $_SESSION['system_type'] == 'MedTracker') {
+        connect_md();
+    } else {
+        connect_vms();
+    }
 }
 
 ?>
