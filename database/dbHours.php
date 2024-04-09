@@ -17,7 +17,8 @@ function add_hours($hours) {
         mysqli_query($con, 'INSERT INTO dbhours VALUES("' .
             $hours->get_id() . '","' .
             $hours->get_email() . '","' .
-            $hours->get_timestamp() . '","' .
+            $hours->get_date() . '","' .
+            $hours->get_time() . '","' .
             $hours->get_duration() . '");'
         );
         mysqli_close($con);

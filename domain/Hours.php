@@ -3,7 +3,8 @@
 class Hours {
     private $id; //id
     private $email; //email of user logging hours
-    private $timestamp; //timestamp of when the hours were logged
+    private $date; //date of the hour logged
+    private $time; //time of the hour logged
     private $duration; //how many hours volunteered
 }
 
@@ -21,8 +22,12 @@ function get_email() {
     return $this->email;
 }
 
-function get_timestamp() {
-    return $this->timestamp;
+function get_date() {
+    return $this->date;
+}
+
+function get_time() {
+    return $this->time;
 }
 
 function get_duration() {
