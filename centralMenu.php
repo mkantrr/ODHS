@@ -42,7 +42,7 @@
                     </div>
                 <?php endif ?>
                 <div class="dashboard-item" data-link="vmsindex.php">
-                    <img src="images/vmsindex.svg">
+                    <img src="images/vms_index.svg">
                     <span>Go to Volunteer Management System Dashboard</span>
                 </div>
                 <div class="dashboard-item" data-link="logout.php">

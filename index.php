@@ -130,7 +130,7 @@
                     <span>Change Password</span>
                 </div>
                 <div class="dashboard-item" data-link="vmsindex.php">
-                    <img src="images/vmsindex.svg">
+                    <img src="images/vms_index.svg">
                     <span>Volunteer Management System</span>
                 </div>
                 <div class="dashboard-item" data-link="logout.php">
