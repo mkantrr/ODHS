@@ -1,6 +1,8 @@
 <?php
 /*
- * Edited by Joseph Vogtli 4/5/2024
+ * Edited by 
+ * Joseph Vogtli 4/5/2024
+ * Niko Toro 4/11/2024
  * Deletes hours via a link in the view hours table
  */
 ?>
