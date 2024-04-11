@@ -2,6 +2,7 @@
     session_cache_expire(30);
     session_start();
 
+    $_SESSION['system_type'] = 'Menu';
     date_default_timezone_set("America/New_York");
     
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
@@ -29,7 +30,7 @@
     </head>
     <body>
         <?php require('header.php'); ?>
-        <h1>ODHS Login</h1>
+        <h1>ODHS Menu</h1>
         <main class='dashboard'>
             <p>Welcome back, <?php echo $person->get_first_name()?>!</p>
             <p>Today is <?php echo date('l, F j, Y'); ?>.</p>

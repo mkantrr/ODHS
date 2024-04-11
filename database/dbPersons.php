@@ -24,7 +24,47 @@ include_once(dirname(__FILE__).'/../domain/Person.php');
 function add_person($person) {
     if (!$person instanceof Person)
         die("Error: add_person type mismatch");
-    $con=connect();
+    $con=connect_md();
+    $query = "SELECT * FROM dbPersons WHERE id = '" . $person->get_id() . "'";
+    $result = mysqli_query($con,$query);
+    //if there's no entry for this id, add it
+    if ($result == null || mysqli_num_rows($result) == 0) {
+        mysqli_query($con,'INSERT INTO dbPersons VALUES("' .
+            $person->get_id() . '","' .
+            $person->get_start_date() . '","' .
+            $person->get_venue() . '","' .
+            $person->get_first_name() . '","' .
+            $person->get_last_name() . '","' .
+            $person->get_address() . '","' .
+            $person->get_city() . '","' .
+            $person->get_state() . '","' .
+            $person->get_zip() . '","' .
+            $person->get_phone1() . '","' .
+            $person->get_phone1type() . '","' .
+            $person->get_phone2() . '","' .
+            $person->get_phone2type() . '","' .
+            $person->get_birthday() . '","' .
+            $person->get_email() . '","' .
+            $person->get_contact_name() . '","' .
+            $person->get_contact_num() . '","' .
+            $person->get_relation() . '","' .
+            $person->get_contact_time() . '","' .
+            $person->get_cMethod() . '","' . 
+            implode(',', $person->get_type()) . '","' .
+            $person->get_status() . '","' .
+            //implode(',', $person->get_availability()) . '","' .
+            //implode(',', $person->get_schedule()) . '","' .
+            implode(',', $person->get_hours()) . '","' .
+            $person->get_notes() . '","' .
+            $person->get_password() . '","' .
+            $person->is_password_change_required() . '","' .
+            $person->get_gender() .
+            '");'
+        );							
+    }
+    mysqli_close($con);
+
+    $con=connect_vms();
     $query = "SELECT * FROM dbPersons WHERE id = '" . $person->get_id() . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
@@ -73,7 +113,18 @@ function add_person($person) {
  */
 
 function remove_person($id) {
-    $con=connect();
+    $con=connect_md();
+    $query = 'SELECT * FROM dbPersons WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+    if ($result == null || mysqli_num_rows($result) == 0) {
+        mysqli_close($con);
+    } else {
+    $query = 'DELETE FROM dbPersons WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+    mysqli_close($con);
+    }
+
+    $con=connect_vms();
     $query = 'SELECT * FROM dbPersons WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
@@ -84,6 +135,7 @@ function remove_person($id) {
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return true;
+
 }
 
 /*
@@ -91,13 +143,12 @@ function remove_person($id) {
  */
 function retrieve_hours($id) {
     $persons = array();
-    $con=connect();
+    $con=connect_vms();
     $query = "SELECT hours FROM dbPersons WHERE id = '" . $id . "'";
     $result = mysqli_query($con,$query);
     while ($row = $result->fetch_assoc()) {
         return $row['hours'];
     }
-    
 }
 
 /*
@@ -138,15 +189,26 @@ function retrieve_persons_by_name ($name) {
 }
 
 function change_password($id, $newPass) {
-    $con=connect();
+    $con=connect_md();
+    $query = 'UPDATE dbPersons SET password = "' . $newPass . '", force_password_change="0" WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+    mysqli_close($con);
+    
+    $con=connect_vms();
     $query = 'UPDATE dbPersons SET password = "' . $newPass . '", force_password_change="0" WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;
+
 }
 
 function reset_password($id, $newPass) {
-    $con=connect();
+    $con=connect_md();
+    $query = 'UPDATE dbPersons SET password = "' . $newPass . '", force_password_change="1" WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+    mysqli_close($con);
+
+    $con=connect_vms();
     $query = 'UPDATE dbPersons SET password = "' . $newPass . '", force_password_change="1" WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
     mysqli_close($con);
@@ -154,7 +216,12 @@ function reset_password($id, $newPass) {
 }
 
 function update_hours($id, $new_hours) {
-    $con=connect();
+    $con=connect_md();
+    $query = 'UPDATE dbPersons SET hours = "' . $new_hours . '" WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+    mysqli_close($con);
+
+    $con=connect_vms();
     $query = 'UPDATE dbPersons SET hours = "' . $new_hours . '" WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
     mysqli_close($con);
@@ -162,11 +229,17 @@ function update_hours($id, $new_hours) {
 }
 
 function update_birthday($id, $new_birthday) {
-	$con=connect();
+	$con=connect_md();
+	$query = 'UPDATE dbPersons SET birthday = "' . $new_birthday . '" WHERE id = "' . $id . '"';
+	$result = mysqli_query($con,$query);
+	mysqli_close($con);
+
+    $con=connect_vms();
 	$query = 'UPDATE dbPersons SET birthday = "' . $new_birthday . '" WHERE id = "' . $id . '"';
 	$result = mysqli_query($con,$query);
 	mysqli_close($con);
 	return $result;
+
 }
 
 /*
@@ -175,11 +248,17 @@ function update_birthday($id, $new_birthday) {
 */
 
 function update_profile_pic($id, $link) {
-  $con = connect();
+  $con = connect_md();
+  $query = 'UPDATE dbPersons SET profile_pic = "'.$link.'" WHERE id ="'.$id.'"';
+  $result = mysqli_query($con, $query);
+  mysqli_close($con);
+
+  $con = connect_vms();
   $query = 'UPDATE dbPersons SET profile_pic = "'.$link.'" WHERE id ="'.$id.'"';
   $result = mysqli_query($con, $query);
   mysqli_close($con);
   return $result;
+
 }
 
 /*
@@ -198,7 +277,12 @@ function get_age($birthday) {
 }
 
 function update_start_date($id, $new_start_date) {
-	$con=connect();
+	$con=connect_md();
+	$query = 'UPDATE dbPersons SET start_date = "' . $new_start_date . '" WHERE id = "' . $id . '"';
+	$result = mysqli_query($con,$query);
+	mysqli_close($con);
+
+    $con=connect_vms();
 	$query = 'UPDATE dbPersons SET start_date = "' . $new_start_date . '" WHERE id = "' . $id . '"';
 	$result = mysqli_query($con,$query);
 	mysqli_close($con);
@@ -478,26 +562,24 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         $first, $last, $dateOfBirth, $address, $city, $state, $zipcode,
         $email, $phone, $phoneType, $contactWhen, $contactMethod, 
         $econtactName, $econtactPhone, $econtactRelation,
-        $skills, $hasComputer, $hasCamera, $hasTransportation, $shirtSize,
-        $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
-        $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
-        $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-        $saturdaysStart, $saturdaysEnd, $gender
+        $skills, $hasComputer, $hasCamera, $hasTransportation, $shirtSize, $gender
     ) {
         $query = "update dbPersons set 
             first_name='$first', last_name='$last', birthday='$dateOfBirth', address='$address', city='$city', zip='$zipcode',
             email='$email', phone1='$phone', phone1type='$phoneType', contact_time='$contactWhen', cMethod='$contactMethod',
             contact_name='$econtactName', contact_num='$econtactPhone', relation='$econtactRelation',
-            specialties='$skills', computer='$hasComputer', camera='$hasCamera', transportation='$hasTransportation', shirt_size='$shirtSize',
-            sundays_start='$sundaysStart', sundays_end='$sundaysEnd', mondays_start='$mondaysStart', mondays_end='$mondaysEnd',
-            tuesdays_start='$tuesdaysStart', tuesdays_end='$tuesdaysEnd', wednesdays_start='$wednesdaysStart', wednesdays_end='$wednesdaysEnd',
-            thursdays_start='$thursdaysStart', thursdays_end='$thursdaysEnd', fridays_start='$fridaysStart', fridays_end='$fridaysEnd',
-            saturdays_start='$saturdaysStart', saturdays_end='$saturdaysEnd', gender='$gender'
-            where id='$id'";
-        $connection = connect();
+            specialties='$skills', computer='$hasComputer', camera='$hasCamera', transportation='$hasTransportation', shirt_size='$shirtSize', 
+            gender='$gender' where id='$id'";
+        $connection = connect_md();
         $result = mysqli_query($connection, $query);
         mysqli_commit($connection);
         mysqli_close($connection);
+
+        $connection = connect_vms();
+        $result = mysqli_query($connection, $query);
+        mysqli_commit($connection);
+        mysqli_close($connection);
+
         return $result;
     }
 
@@ -657,7 +739,12 @@ function find_user_names($name) {
     }
 
     function update_type($id, $role) {
-        $con=connect();
+        $con=connect_md();
+        $query = 'UPDATE dbPersons SET type = "' . $role . '" WHERE id = "' . $id . '"';
+        $result = mysqli_query($con,$query);
+        mysqli_close($con);
+
+        $con=connect_vms();
         $query = 'UPDATE dbPersons SET type = "' . $role . '" WHERE id = "' . $id . '"';
         $result = mysqli_query($con,$query);
         mysqli_close($con);
@@ -665,14 +752,24 @@ function find_user_names($name) {
     }
     
     function update_status($id, $new_status){
-        $con=connect();
+        $con=connect_md();
+        $query = 'UPDATE dbPersons SET status = "' . $new_status . '" WHERE id = "' . $id . '"';
+        $result = mysqli_query($con,$query);
+        mysqli_close($con);
+
+        $con=connect_vms();
         $query = 'UPDATE dbPersons SET status = "' . $new_status . '" WHERE id = "' . $id . '"';
         $result = mysqli_query($con,$query);
         mysqli_close($con);
         return $result;
     }
     function update_notes($id, $new_notes){
-        $con=connect();
+        $con=connect_md();
+        $query = 'UPDATE dbPersons SET notes = "' . $new_notes . '" WHERE id = "' . $id . '"';
+        $result = mysqli_query($con,$query);
+        mysqli_close($con);
+
+        $con=connect_vms();
         $query = 'UPDATE dbPersons SET notes = "' . $new_notes . '" WHERE id = "' . $id . '"';
         $result = mysqli_query($con,$query);
         mysqli_close($con);
@@ -917,7 +1014,12 @@ function find_user_names($name) {
     }
 
     function remove_profile_picture($id) {
-        $con=connect();
+        $con=connect_md();
+        $query = 'UPDATE dbPersons SET profile_pic="" WHERE id="'.$id.'"';
+        $result = mysqli_query($con,$query);
+        mysqli_close($con);
+
+        $con=connect_vms();
         $query = 'UPDATE dbPersons SET profile_pic="" WHERE id="'.$id.'"';
         $result = mysqli_query($con,$query);
         mysqli_close($con);

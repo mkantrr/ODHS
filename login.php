@@ -5,6 +5,8 @@
     // data with the logged-in user.
     session_cache_expire(30);
     session_start();
+
+    $_SESSION['system_type'] = "Menu";
     
     ini_set("display_errors",1);
     error_reporting(E_ALL);
@@ -14,7 +16,7 @@
         if($_SESSION['access_level'] > 1){
             header('Location: centralMenu.php');
         } else if ($_SESSION['access_level'] == 1) {
-            header('Location:vms_index.php');
+            header('Location:VMS_index.php');
         }
         die();
     }
@@ -51,7 +53,7 @@
                     header('Location:centralMenu.php');
                 } else {
                     $_SESSION['access_level'] = 1;
-                    header('Location:vms_index.php');
+                    header('Location:VMS_index.php');
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();
@@ -82,12 +84,12 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>ODHS Medicine Tracker | Log In</title>
+        <title>ODHS | Log In</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
         <main class="login">
-            <h1>ODHS MedTracker Login</h1>
+            <h1>ODHS System Login</h1>
             <?php if (isset($_GET['registerSuccess'])): ?>
                 <div class="happy-toast">
                     Your registration was successful! Please log in below.

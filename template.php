@@ -20,7 +20,11 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
         <title>ODHS Medicine Tracker | Template Page</title>
+        <?php } else { ?>
+        <title>ODHS VMS | Template Page</title>
+        <?php } ?>
     </head>
     <body>
         <?php require_once('header.php') ?>

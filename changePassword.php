@@ -71,7 +71,11 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
         <title>ODHS Medicine Tracker | Change Password</title>
+        <?php } else { ?>
+        <title>ODHS VMS | Change Password</title>
+        <?php } ?>
     </head>
     <body>
         <?php require_once('header.php') ?>

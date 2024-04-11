@@ -40,7 +40,19 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>ODHS Medicine Tracker | Register <?php if ($loggedIn) echo ' New Volunteer' ?></title>
+    <?php if ($_SESSION['system_type'] == 'MedTracker') {
+        if ($_SESSION['access_level'] < 3) { ?>
+    <title>ODHS Medicine Tracker | Create Volunteer <?php if ($loggedIn) echo ' New Volunteer' ?></title>
+    <?php } else { ?>
+    <title>ODHS Medicine Tracker | Create Account <?php if ($loggedIn) echo ' New Account' ?></title>
+    <?php }
+    } else {
+        if ($_SESSION['access_level'] < 3) { ?> 
+    <title>ODHS VMS | Create Volunteer <?php if ($loggedIn) echo ' New Volunteer' ?></title>
+    <?php } else { ?>
+    <title>ODHS VMS | Create Account <?php if ($loggedIn) echo ' New Account' ?></title>
+    <?php }
+    } ?>
 </head>
 <body>
     <?php
@@ -137,80 +149,6 @@
             $password = password_hash($args['password'], PASSWORD_BCRYPT);
             $type = $args['type'];
 
-            //$days = array('sundays', 'mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays');
-            //$availability = array();
-            //$availabilityCount = 0;
-            //foreach ($days as $day) {
-            //    if (isset($args['available-' . $day])) {
-            //        $startKey = $day . '-start';
-            //        $endKey = $day . '-end';
-            //        if (!isset($args[$startKey]) || !isset($args[$endKey])) {
-            //            $errors = true;
-            //        }
-            //        $start = $args[$startKey];
-            //        $end = $args[$endKey];
-            //        // $range24h = validate12hTimeRangeAndConvertTo24h($start, $end);
-            //        $range24h = null;
-            //        if (validate24hTimeRange($start, $end)) {
-            //            $range24h = [$start, $end];
-            //        }
-            //        if (!$range24h) {
-            //            $errors = true;
-            //            echo "bad $day availability";
-            //        }
-            //        $availability[$day] = $range24h;
-            //        $availabilityCount++;
-            //    } else {
-            //        $availability[$day] = null;
-            //    }
-            //}
-            //if ($availabilityCount == 0) {
-            //    $errors = true;
-            //    echo 'bad availability - none chosen';
-            //}
-            //$sundaysStart = '';
-            //$sundaysEnd = '';
-            //if ($availability['sundays']) {
-            //    $sundaysStart = $availability['sundays'][0];
-            //    $sundaysEnd = $availability['sundays'][1];
-            //}
-            //$mondaysStart = '';
-            //$mondaysEnd = '';
-            //if ($availability['mondays']) {
-            //    $mondaysStart = $availability['mondays'][0];
-            //    $mondaysEnd = $availability['mondays'][1];
-            //}
-            //$tuesdaysStart = '';
-            //$tuesdaysEnd = '';
-            //if ($availability['tuesdays']) {
-            //    $tuesdaysStart = $availability['tuesdays'][0];
-            //    $tuesdaysEnd = $availability['tuesdays'][1];
-            //}
-            //$wednesdaysStart = '';
-            //$wednesdaysEnd = '';
-            //if ($availability['wednesdays']) {
-            //    $wednesdaysStart = $availability['wednesdays'][0];
-            //    $wednesdaysEnd = $availability['wednesdays'][1];
-            //}
-            //$thursdaysStart = '';
-            //$thursdaysEnd = '';
-            //if ($availability['thursdays']) {
-            //    $thursdaysStart = $availability['thursdays'][0];
-            //    $thursdaysEnd = $availability['thursdays'][1];
-            //}
-            //$fridaysStart = '';
-            //$fridaysEnd = '';
-            //if ($availability['fridays']) {
-            //    $fridaysStart = $availability['fridays'][0];
-            //    $fridaysEnd = $availability['fridays'][1];
-            //}
-            //$saturdaysStart = '';
-            //$saturdaysEnd = '';
-            //if ($availability['saturdays']) {
-            //    $saturdaysStart = $availability['saturdays'][0];
-            //    $saturdaysEnd = $availability['saturdays'][1];
-            //}
-
             if ($errors) {
                 echo '<p>Your form submission contained unexpected input.</p>';
                 die();
@@ -238,7 +176,7 @@
                 echo '<p>That e-mail address is already in use.</p>';
             } else {
                 if ($loggedIn) {
-                    echo '<script>document.location = "index.php?registerSuccess";</script>';
+                    echo '<script>document.location = "VMS_index.php?registerSuccess";</script>';
                 } else {
                     echo '<script>document.location = "login.php?registerSuccess";</script>';
                 }

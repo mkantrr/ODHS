@@ -31,7 +31,11 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>ODHS Medicine Tracker | Register <?php if ($loggedIn) echo 'Adoption Center Login' ?></title>
+    <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
+    <title>ODHS Medicine Tracker | Hours <?php if ($loggedIn) echo 'Adoption Center Login' ?></title>
+    <?php } else { ?>
+    <title>ODHS VMS | Hours <?php if ($loggedIn) echo 'Adoption Center Login' ?></title>
+    <?php } ?>
 </head>
 <body>
     <?php
