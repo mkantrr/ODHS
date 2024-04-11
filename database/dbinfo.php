@@ -44,7 +44,7 @@ function connect_vms() {
     $pass = "odhsvms";
     if ($_SERVER['SERVER_NAME'] == 'jenniferp122.sg-host.com') {
         $user = 'uc1op8sb8zdqp';
-        $database = 'dbv3lnjdtwy4ks';
+        $database = 'db8h84ufietcqo';
         $pass = "7f8r0d57ltxn";
     } else if ($_SERVER['SERVER_NAME'] == 'gwynethsgiftvms.org') {
         $user = "uybhc603shfl5";
