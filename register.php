@@ -176,7 +176,7 @@
                 echo '<p>That e-mail address is already in use.</p>';
             } else {
                 if ($loggedIn) {
-                    echo '<script>document.location = "VMS_index.php?registerSuccess";</script>';
+                    echo '<script>document.location = "vms_index.php?registerSuccess";</script>';
                 } else {
                     echo '<script>document.location = "login.php?registerSuccess";</script>';
                 }
