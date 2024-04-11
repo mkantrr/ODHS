@@ -10,7 +10,7 @@ function add_hours($hours) {
     if (!$hours instanceof Hours)
         die("Error: add_hours type mismatch");
     $con=connect();
-    $query = "SELECT * FROM dbHours WHERE id = '" . $hours->get_id() . "'";
+    $query = "SELECT * FROM dbHours WHERE hourID = '" . $hours->get_id() . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
@@ -33,13 +33,13 @@ function add_hours($hours) {
  */
 function remove_hours($id) {
     $con=connect();
-    $query = 'SELECT * FROM dbHours WHERE id = "' . $id . '"';
+    $query = "SELECT * FROM dbHours WHERE hourID = " . $id . "";
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_close($con);
         return false;
     }
-    $query = 'DELETE FROM dbHours WHERE id = "' . $id . '"';
+    $query = "DELETE FROM dbHours WHERE hourID = " . $id . "";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return true;
