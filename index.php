@@ -100,14 +100,6 @@
                 </div>
                 -->
                 <?php if ($_SESSION['access_level'] >= 2): ?>
-                    <div class="dashboard-item" data-link="personSearch.php">
-                        <img src="images/person-search.svg">
-                        <span>Find Volunteer</span>
-                    </div>
-                    <div class="dashboard-item" data-link="register.php">
-                        <img src="images/add-person.svg">
-                        <span>Register Volunteer</span>
-                    </div>
                     <div class="dashboard-item" data-link="viewArchived.php">
                         <img src="images/person-search.svg">
                         <span>Archived Animals</span>

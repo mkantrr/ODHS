@@ -112,12 +112,6 @@
                     </div>
                 <?php endif ?>
                 <?php if ($notRoot) : ?>
-                    <div class="dashboard-item" data-link="logHours.php">
-                        <img src="images/volunteer-history.svg">
-                        <span>Log Hours</span>
-                    </div>
-                <?php endif ?>
-                <?php if ($notRoot) : ?>
                     <div class="dashboard-item" data-link="volunteerReport.php">
                         <img src="images/volunteer-history.svg">
                         <span>View My Hours</span>
