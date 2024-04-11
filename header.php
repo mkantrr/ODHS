@@ -64,7 +64,7 @@
         $permission_array['register.php'] = 0;
         $permission_array['findanimal.php'] = 0;
         //pages volunteers can view
-        $permission_array['vmsindex.php']= 1;         // Volunteer Management Service
+        $permission_array['VMS_index.php']= 1;         // Volunteer Management Service
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1;
         $permission_array['calendar.php'] = 1;
@@ -219,7 +219,7 @@
             $permission_array['register.php'] = 0;
             $permission_array['findanimal.php'] = 0;
             //pages volunteers can view
-            $permission_array['vmsindex.php']= 1;         // Volunteer Management Service
+            $permission_array['VMS_index.php']= 1;         // Volunteer Management Service
             $permission_array['help.php'] = 1;
             $permission_array['dashboard.php'] = 1;
             $permission_array['calendar.php'] = 1;
@@ -286,11 +286,11 @@
             }
             else {
                 echo('<nav>');
-                echo('<span id="nav-top"><span class="logo"><a class="navbar-brand" href="' . $path . 'vmsindex.php"><img src="images/odhs.png"></a>');
+                echo('<span id="nav-top"><span class="logo"><a class="navbar-brand" href="' . $path . 'VMS_index.php"><img src="images/odhs.png"></a>');
                 echo('<a class="navbar-brand" id="vms-logo"> VMS </a></span><img id="menu-toggle" src="images/menu.png"></span>');
                 echo('<ul>');
                 //echo " <br><b>"."Gwyneth's Gift Homebase"."</b>|"; //changed: 'Homebase' to 'Gwyneth's Gift Homebase'
-                echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'vmsindex.php">Home</a></li>');
+                echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'VMS_index.php">Home</a></li>');
                 //echo('<span class="nav-divider">|</span>');
     
                 echo('<li class="nav-item dropdown">');
@@ -361,7 +361,7 @@
                 $permission_array['register.php'] = 0;
                 $permission_array['findanimal.php'] = 0;
                 //pages volunteers can view
-                $permission_array['vmsindex.php']= 1;         // Volunteer Management Service
+                $permission_array['VMS_index.php']= 1;         // Volunteer Management Service
                 $permission_array['help.php'] = 1;
                 $permission_array['dashboard.php'] = 1;
                 $permission_array['calendar.php'] = 1;

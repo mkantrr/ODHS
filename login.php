@@ -16,7 +16,7 @@
         if($_SESSION['access_level'] > 1){
             header('Location: centralMenu.php');
         } else if ($_SESSION['access_level'] == 1) {
-            header('Location:vmsindex.php');
+            header('Location:VMS_index.php');
         }
         die();
     }
@@ -53,7 +53,7 @@
                     header('Location:centralMenu.php');
                 } else {
                     $_SESSION['access_level'] = 1;
-                    header('Location:vmsindex.php');
+                    header('Location:VMS_index.php');
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();

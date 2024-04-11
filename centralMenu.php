@@ -41,7 +41,7 @@
                         <span>Go to MedTracker Dashboard</span>
                     </div>
                 <?php endif ?>
-                <div class="dashboard-item" data-link="vmsindex.php">
+                <div class="dashboard-item" data-link="VMS_index.php">
                     <img src="images/vms_index.svg">
                     <span>Go to Volunteer Management System Dashboard</span>
                 </div>
