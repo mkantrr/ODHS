@@ -1,6 +1,7 @@
 <?php
 // Original Author: Lauren Knight
-// Modified by: Joseph Vogtli (3/22/2024)
+// Modified by: Joseph Vogtli (4/13/2024)
+
     // Description: Logging Hours that a Volunteer has worked
     session_cache_expire(30);
     session_start();
@@ -36,8 +37,8 @@
 <body>
     <?php
         require_once('header.php');
-        require_once('domain/Person.php');
-        require_once('database/dbPersons.php');
+        require_once('domain/Hours.php');
+        require_once('database/dbHours.php');
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // make every submitted field SQL-safe except for password
             $ignoreList = array('password');
@@ -49,14 +50,15 @@
             // }
 
             $required = array(
-                'email','hours-vol'
+                'userEmail','duration'
             );
             $errors = false;
             if (!wereRequiredFieldsSubmitted($args, $required)) {
                 $errors = true;
             }
             
-            $id = $args['email'];
+            //Puts email into userEmail and checks validity
+            $id = $args['userEmail'];
             if(!validateEmail($id)){
                 $errors = true;
                 echo 'Bad input in Volunteer Email';
@@ -69,7 +71,7 @@
             }
 
             //Put these hours into dbHours with their date
-            $hours = $args['hours-vol'];
+            $hours = $args['duration'];
             if ($hours < 0) {
                 $errors = true;
                 echo 'Bad input in Volunteer Hours';
@@ -80,22 +82,8 @@
                 die();
             }
 
-            //Compunds new hours with hours already in database
-            $sum_hours = intval(retrieve_hours($id)) + intval($args['hours-vol']);
-            $hours = update_hours($id, $sum_hours);
-            if (!$hours) {
-                $errors = true;
-                echo 'Bad input in Volunteer Hours';
-            }
-
-            if ($errors) {
-                echo '<p>Your form submission contained unexpected input.</p>';
-                die();
-            }
             $date = date('d-m-y h:i:s');
-            //Use to insert the date and time user logged their hours
-            //$date = update_date($id, $date);
-
+            $final = add_hours($id, $date, $hours);
 
             echo "<h3> Hours successfully updated! </h3>";
             

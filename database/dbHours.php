@@ -1,25 +1,25 @@
+
 <?php
+// Original Author: Niko Toro
+// Modified by: Joseph Vogtli (4/13/2024)
 
 include_once('dbinfo.php');
 include_once(dirname(__FILE__).'/../domain/Hours.php');
 
 /**
- * Add an hour to dbHours table, if already there, return false
+ * Add an hour to dbHours table, if date is already there, return false
  */
-function add_hours($hours) {
-    if (!$hours instanceof Hours)
-        die("Error: add_hours type mismatch");
+function add_hours($email, $date, $duration) {
     $con=connect();
-    $query = "SELECT * FROM dbHours WHERE hourID = '" . $hours->get_id() . "'";
+    $query = "SELECT * FROM dbHours WHERE timestamp = '" . $date . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_query($con, 'INSERT INTO dbhours VALUES("' .
-            $hours->get_id() . '","' .
-            $hours->get_email() . '","' .
-            $hours->get_date() . '","' .
-            $hours->get_time() . '","' .
-            $hours->get_duration() . '");'
+            NULL . '","' .
+            $email . '","' .
+            $date . '","' .
+            $duration . '");'
         );
         mysqli_close($con);
         return true;
