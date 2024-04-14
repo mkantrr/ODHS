@@ -82,7 +82,7 @@
                 die();
             }
 
-            $date = date('d-m-y');
+            $date = date('y-m-d');
             $time = date('h:i:s');
             $final = add_hours($id, $date, $time, $hours);
 
