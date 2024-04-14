@@ -203,7 +203,7 @@ if ($_SESSION['system_type'] == 'MedTracker') {
                 <input type="text" id="start-time" name="start-time" value="<?php echo time24hto12h($event['startTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
                 <label for="name">Description </label>
                 <input type="text" id="description" name="description" value="<?php echo $event['description'] ?>" required placeholder="Enter description">
-                d
+                
                 <label for="name">Location </label>
                 <select for="name" id="location" name="location" required>
                     <?php 
