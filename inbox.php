@@ -15,6 +15,8 @@
         $accessLevel = $_SESSION['access_level'];
         $userID = $_SESSION['_id'];
     }
+
+if ($_SESSION['system_type'] == 'MedTracker') {
 ?>
 <!DOCTYPE html>
 <html>
@@ -96,3 +98,6 @@
         </main>
     </body>
 </html>
+<?php } else { ?>
+<!-- TO DO -->
+<?php } ?>

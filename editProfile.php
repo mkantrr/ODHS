@@ -191,11 +191,7 @@
         $result = update_person_profile($id,
             $first, $last, $dateOfBirth, $address, $city, $state, $zipcode,
             $email, $phone, $phoneType, $contactWhen, $contactMethod, 
-            $econtactName, $econtactPhone, $econtactRelation,
-            $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
-            $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
-            $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-            $saturdaysStart, $saturdaysEnd, $gender
+            $econtactName, $econtactPhone, $econtactRelation, $gender
         );
         if ($result) {
             if ($editingSelf) {
@@ -212,7 +208,11 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
+    <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
     <title>ODHS Medicine Tracker | Manage Profile</title>
+    <?php } else { ?>
+    <title> ODHS VMS | Manage Profile </title>
+    <?php } ?>
 </head>
 <body>
     <?php

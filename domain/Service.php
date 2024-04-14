@@ -3,7 +3,7 @@
 $accessLevelsByRole = [
 	//'volunteer' => 1,
 	'admin' => 2,
-	'superadmin' => 3
+	'main' => 3
 ];
 
 class Service {
