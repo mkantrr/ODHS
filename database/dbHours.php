@@ -9,9 +9,9 @@ include_once(dirname(__FILE__).'/../domain/Hours.php');
 /**
  * Add an hour to dbHours table, if date is already there, return false
  */
-function add_hours($email, $date, $duration) {
+function add_hours($email, $date, $time, $duration) {
     $con=connect();
-    $query = "SELECT * FROM dbHours WHERE timestamp = '" . $date . "'";
+    $query = "SELECT * FROM dbHours WHERE date = '" . $date . "' AND time = ' . $time . '";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
@@ -19,6 +19,7 @@ function add_hours($email, $date, $duration) {
             NULL . '","' .
             $email . '","' .
             $date . '","' .
+            $time . '","' .
             $duration . '");'
         );
         mysqli_close($con);

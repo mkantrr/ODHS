@@ -82,8 +82,9 @@
                 die();
             }
 
-            $date = date('d-m-y h:i:s');
-            $final = add_hours($id, $date, $hours);
+            $date = date('d-m-y');
+            $time = date('h:i:s');
+            $final = add_hours($id, $date, $time, $hours);
 
             echo "<h3> Hours successfully updated! </h3>";
             
