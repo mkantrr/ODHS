@@ -214,13 +214,10 @@ function create_event($event) {
     $endTime = "23:59";
     $description = $event["description"];
     $location = $event["location"];
-    $services = $event["service"];
-
-    $animal = $event["animal"];
     $completed = "no";
     $query = "
         insert into dbEvents (name, abbrevName, date, startTime, endTime, description, locationID, capacity, animalID, completed)
-        values ('$name', '$abbrevName', '$date', '$startTime', '$endTime', '$description', '$location', '0', '$animal', '$completed')
+        values ('$name', '$abbrevName', '$date', '$startTime', '$endTime', '$description', '$location', '0', NULL, '$completed')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
