@@ -378,7 +378,6 @@ if ($_SESSION['system_type'] == 'MedTracker') {
             $event_location = $event_info['locationID'];
             $event_description = $event_info['description'];
             $event_in_past = strcmp(date('Y-m-d'), $event_info['date']) > 0;
-            $event_animal_id = $event_info['animalID'];
             require_once('include/time.php');
             echo '<h2 class="centered">'.$event_name.'</h2>';
         ?>
