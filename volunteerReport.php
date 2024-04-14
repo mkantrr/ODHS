@@ -61,44 +61,49 @@
             <?php endif ?>
             <h1 class="print-only">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
             
-            <div class="table-wrapper"><table class="general">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Hours Logged</th>
-                        <th>Delete?</th>
-                    </tr>
-                </thead>
-                <tbody class="standout">
+            <?php if (mysqli_fetch_assoc($hours) != NULL): ?>
+                <div class="table-wrapper"><table class="general">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Hours Logged</th>
+                            <th>Delete?</th>
+                        </tr>
+                    </thead>
+                    <tbody class="standout">
 
-            <?php
-            require_once('include/output.php');
-            while ($result_row = mysqli_fetch_assoc($hours)) {
-                $field1name = $result_row["date"];
-                $field2name = $result_row["time"];
-                $field3name = $result_row["duration"];
-                $field4name = $result_row["hourID"];
-                
-                //Come back to "deleteHours.php" later, may cause future issues if not tested?
-                echo 
-                '<tr>
-                    <td>' . $field1name . '</td>
-                    <td>' . $field2name . '</td>
-                    <td>' . $field3name . '</td>
-                    <td><a href="deleteHours.php?hourID=' . $field4name . '">Delete</a></td>
-                </tr>';
+                <?php
+                require_once('include/output.php');
+                while ($result_row = mysqli_fetch_assoc($hours)) {
+                    $field1name = $result_row["date"];
+                    $field2name = $result_row["time"];
+                    $field3name = $result_row["duration"];
+                    $field4name = $result_row["hourID"];
+                    
+                    //Come back to "deleteHours.php" later, may cause future issues if not tested?
+                    echo 
+                    '<tr>
+                        <td>' . $field1name . '</td>
+                        <td>' . $field2name . '</td>
+                        <td>' . $field3name . '</td>
+                        <td><a href="deleteHours.php?hourID=' . $field4name . '">Delete</a></td>
+                    </tr>';
                 }
+    
+                while ($result_row = mysqli_fetch_assoc($totalHours)) {
+                    $field1name = $result_row["SUM(duration)"];
+                    echo 
+                    '<tr class="total-hours">
+                        <td></td><td class="total-hours">Total Hours</td>
+                        <td>' . $field1name . '</td>
+                    </tr>';
+                }
+                ?>
 
-            while ($result_row = mysqli_fetch_assoc($totalHours)) {
-                $field1name = $result_row["SUM(duration)"];
-                echo 
-                '<tr class="total-hours">
-                    <td></td><td class="total-hours">Total Hours</td>
-                    <td>' . $field1name . '</td>
-                </tr>';
-            }
-            ?>
+            <?php else: ?>
+                <?php echo 'Whoops! Looks like you don\'t have any hours to view!'; ?>
+            <?php endif ?>
         </main>
     </body>
 </html>
