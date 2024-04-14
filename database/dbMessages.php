@@ -123,11 +123,11 @@ function system_message_all_volunteers($title, $body) {
 }
 
 function message_all_admins($from, $title, $body) {
-    return message_all_users_of_types($from, ['"admin"', '"superadmin"'], $title, $body);
+    return message_all_users_of_types($from, ['"admin"', '"main"'], $title, $body);
 }
 
 function system_message_all_admins($title, $body) {
-    return message_all_users_of_types('vmsroot', ['"admin"', '"superadmin"'], $title, $body);
+    return message_all_users_of_types('vmsroot', ['"admin"', '"main"'], $title, $body);
 }
 
 function system_message_all_users_except($except, $title, $body) {

@@ -5,13 +5,19 @@
     // data with the logged-in user.
     session_cache_expire(30);
     session_start();
+
+    $_SESSION['system_type'] = "Menu";
     
     ini_set("display_errors",1);
     error_reporting(E_ALL);
 
     // redirect to index if already logged in
     if (isset($_SESSION['_id'])) {
-        header('Location: index.php');
+        if($_SESSION['access_level'] > 1){
+            header('Location: centralMenu.php');
+        } else if ($_SESSION['access_level'] == 1) {
+            header('Location:VMS_index.php');
+        }
         die();
     }
     $badLogin = false;
@@ -39,12 +45,15 @@
                     $_SESSION['logged_in'] = true;
                 }
                 $types = $user->get_type();
-                if (in_array('superadmin', $types)) {
+                if (in_array('main', $types)) {
                     $_SESSION['access_level'] = 3;
+                    header('Location:centralMenu.php');
                 } else if (in_array('admin', $types)) {
                     $_SESSION['access_level'] = 2;
+                    header('Location:centralMenu.php');
                 } else {
                     $_SESSION['access_level'] = 1;
+                    header('Location:VMS_index.php');
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();
@@ -54,16 +63,14 @@
                 // hard code root privileges
                 if ($user->get_id() == 'vmsroot') {
                     $_SESSION['access_level'] = 3;
+                    header('Location:centralMenu.php');
                 }
                 if ($changePassword) {
                     $_SESSION['access_level'] = 0;
                     $_SESSION['change-password'] = true;
                     header('Location: changePassword.php');
                     die();
-                } else {
-                    header('Location: index.php');
-                    die();
-                }
+                } 
                 die();
             } else {
                 $badLogin = true;
@@ -77,18 +84,20 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>ODHS Medicine Tracker | Log In</title>
+        <title>ODHS | Log In</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
         <main class="login">
-            <h1>ODHS MedTracker Login</h1>
+            <h1>ODHS System Login</h1>
             <?php if (isset($_GET['registerSuccess'])): ?>
                 <div class="happy-toast">
                     Your registration was successful! Please log in below.
+                    echo $_SESSION['access_level']
                 </div>
             <?php else: ?>
             <p>Welcome! Please log in below.</p>
+            
             <?php endif ?>
             <form method="post">
                 <?php
@@ -101,10 +110,18 @@
         		<label for="password">Password</label>
                 <input type="password" name="password" placeholder="Enter your password" required>
                 <input type="submit" name="login" value="Log in">
-
             </form>
             <p></p>
             <p>Looking for <a href="https://www.olddominionhumanesociety.org">Old Dominion Humane Society</a>?</p>
+            <p><a href="#" onclick="showMessage()">Forgot username or password?</a></p>
+            <div id="forgotMessage" style="display: none;">
+                <p>Please contact your administrator for assistance with your username or password.</p>
+            </div>
         </main>
+        <script>
+        function showMessage() {
+            document.getElementById('forgotMessage').style.display = 'block';
+        }
+        </script>
     </body>
 </html>

@@ -12,11 +12,13 @@ function displaySearchRow($location){
         <td><a href='viewLocation.php?id=".$location['id']."'>" . $location['name'] . "</a></td>
         <td>" . $location['address'] . "</td>";
     echo "<td>";
-    $length = count($services);
-    for ($i = 0; $i < $length; $i++) { 
-        echo $services[$i]['name'];
-        if ($i < $length - 1) {
-            echo ', ';
+    if ($_SESSION['system_type'] == 'MedTracker') {
+        $length = count($services);
+        for ($i = 0; $i < $length; $i++) { 
+            echo $services[$i]['name'];
+            if ($i < $length - 1) {
+                echo ', ';
+            }
         }
     }
     echo "</td></tr>";
@@ -72,6 +74,7 @@ function displaySearchRow($location){
     }
     $date = null;
 
+if ($_SESSION['system_type'] == 'MedTracker') {
 ?>
 <!DOCTYPE html>
 <html>
@@ -166,3 +169,66 @@ function displaySearchRow($location){
         </main>
     </body>
 </html>
+<?php } else { ?>
+    <!DOCTYPE html>
+<html>
+    <head>
+        <?php require_once('universal.inc') ?>
+        <title>ODHS VMS | Add Location</title>
+    </head>
+    <body>
+        <?php require_once('header.php') ?>
+        <h1>Add Location</h1>
+        <main class="date">
+            <h2>New Location Form</h2>
+            <form id="new-service-form" method="post">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required placeholder="Enter location's name"> 
+                <label for="name">Address *</label>
+                <input type="text" id="address" name="address" required placeholder="Enter location's address"> 
+                <p></p>
+                <input type="submit" value="Add New Location">
+            </form>
+            <?php if ($date): ?>
+                <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>
+            <?php else: ?>
+                <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
+            <?php endif ?>
+            <?php
+                include_once('database/dbServices.php');
+                $locations = find_allLocations();
+                require_once('include/output.php');
+                if ($locations){
+                    echo "<h3></h3>";
+                    echo "<h3>Current Locations</h3>";
+                    echo '
+                    <div class="table-wrapper">
+                        <table class="general">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="standout">';
+                    $mailingList = '';
+                    $notFirst = false;
+                    foreach ($locations as $location) {
+                        if ($notFirst) {
+                            $mailingList .= ', ';
+                        } else {
+                            $notFirst = true;
+                        }
+                        displaySearchRow($location);                                    
+                    }
+                    echo '
+                            </tbody>
+                        </table>
+                    </div>';
+                }
+            ?>
+        </main>
+    </body>
+</html>
+<?php } ?>

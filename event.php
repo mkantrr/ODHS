@@ -452,4 +452,6 @@ if ($_SESSION['system_type'] == 'MedTracker') {
 </body>
 
 </html>
+
 <?php } ?>
+
