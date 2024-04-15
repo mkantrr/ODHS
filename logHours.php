@@ -5,8 +5,6 @@
     // Description: Logging Hours that a Volunteer has worked
     session_cache_expire(30);
     session_start();
-    
-    $_SESSION['system_type'] = "Menu";
 
     require_once('include/input-validation.php');
 
