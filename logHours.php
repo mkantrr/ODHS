@@ -97,6 +97,6 @@
         }
         //Allows Adoption Center user to go back on their Ipad 
     ?>
-    <a class="button cancel" href="loghours.php">Return to form</a>
+    <a class="button cancel" href="logHours.php">Return to form</a>
 </body>
 </html>
