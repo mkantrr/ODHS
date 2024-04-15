@@ -58,9 +58,9 @@ function buildSelect($name, $disabled=false, $selected=null) {
     <?php endif ?>
     <div style="display: flex; justify-content: center; align-items: center;">
         <p><a href="#" onclick="showMessage()">Forgot email address for your account?</a></p>
-        <div id="forgotMessage" style="display: none; text-align center;">
-            <p>Please contact your administrator for assistance with your email address.</p>
-        </div>
+    </div> 
+    <div id="forgotMessage" style="display: flex; justify-content: center; align-items: center;">
+        <p>Please contact your administrator for assistance with your email address.</p>
     </div>
     <script>
         function showMessage() {
