@@ -15,10 +15,10 @@
     if (isset($_SESSION['_id'])) {
         if($_SESSION['access_level'] > 1){
             header('Location: centralMenu.php');
-        } else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] = 'user')) {
+        } else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] == 'user')) {
             header('Location:VMS_index.php');
         }
-        else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] = 'adoption center')) {
+        else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] == 'adoption center')) {
             header('Location:logHours.php');
         }
         die();
