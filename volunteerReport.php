@@ -61,7 +61,7 @@
             <?php endif ?>
             <h1 class="print-only">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
             
-            <?php if (mysqli_fetch_assoc($hours) != NULL): ?>
+            <?php if ($hours): ?>
                 <div class="table-wrapper"><table class="general">
                     <thead>
                         <tr>
