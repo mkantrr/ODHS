@@ -104,8 +104,8 @@
 
         $permission_array['centralmenu.php'] = 2;   // admin/main users choose between VMS and Medtracker Dashboard
         // pages adoption center can view
-        $permission_array['loghours.php'] = 0;
-        $permission_array['loghoursform.php'] = 0;
+        $permission_array['loghours.php'] = 1;
+        $permission_array['loghoursform.php'] = 1;
         $permission_array['template.php'] = 0;
 
         //Check if they're at a valid page for their access level.

@@ -47,12 +47,19 @@
                 $types = $user->get_type();
                 if (in_array('main', $types)) {
                     $_SESSION['access_level'] = 3;
+                    $_SESSION['type'] = 'main';
                     header('Location:centralMenu.php');
                 } else if (in_array('admin', $types)) {
                     $_SESSION['access_level'] = 2;
+                    $_SESSION['type'] = 'admin';
                     header('Location:centralMenu.php');
+                } else if (in_array('adoption center', $types)) {
+                    $_SESSION['access_level'] = 1;
+                    $_SESSION['type'] = 'adoption center account';
+                    header('Location:logHours.php');
                 } else {
                     $_SESSION['access_level'] = 1;
+                    $_SESSION['type'] = 'user';
                     header('Location:VMS_index.php');
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
