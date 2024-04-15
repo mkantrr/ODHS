@@ -60,7 +60,7 @@
                 } else {
                     $_SESSION['access_level'] = 1;
                     $_SESSION['type'] = 'user';
-                    header('Location:VMS_index.php');
+                    header('Location:logHours.php');
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();
