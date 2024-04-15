@@ -62,10 +62,9 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <p>Please contact your administrator for assistance with your email address.</p>
         </div>
     </div>
-    <script>
-        function showMessage() {
-            document.getElementById('forgotMessage').style.display = 'block';
-        }
-    </script>
-
 </main>
+<script>
+    function showMessage() {
+        document.getElementById('forgotMessage').style.display = 'block';
+    }
+</script>
