@@ -15,8 +15,11 @@
     if (isset($_SESSION['_id'])) {
         if($_SESSION['access_level'] > 1){
             header('Location: centralMenu.php');
-        } else if ($_SESSION['access_level'] == 1) {
+        } else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] = 'user')) {
             header('Location:VMS_index.php');
+        }
+        else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] = 'adoption center')) {
+            header('Location:logHours.php');
         }
         die();
     }
@@ -60,7 +63,7 @@
                 } else {
                     $_SESSION['access_level'] = 1;
                     $_SESSION['type'] = 'user';
-                    header('Location:logHours.php');
+                    header('Location:VMS_index.php');
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();
