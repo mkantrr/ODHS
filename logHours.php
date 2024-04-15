@@ -20,7 +20,7 @@
     }
 
     // Require admin privileges or needs to be adoption center account
-    if ($accessLevel < 2 && $_SESSION['type'] != 'adoption center')
+    if ($accessLevel < 2 && $_SESSION['type'] == 'user')
     {
         header('Location: login.php');
         echo 'bad access level';
