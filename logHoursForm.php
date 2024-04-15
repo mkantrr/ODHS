@@ -56,4 +56,16 @@ function buildSelect($name, $disabled=false, $selected=null) {
     <?php if ($loggedIn): ?>
         <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
     <?php endif ?>
+    <div style="text-align: center;">
+        <p><a href="#" onclick="showMessage()">Forgot email address for your account?</a></p>
+        <div id="forgotMessage" style="display: none;">
+            <p>Please contact your administrator for assistance with your email address.</p>
+        </div>
+    </div>
+    <script>
+        function showMessage() {
+            document.getElementById('forgotMessage').style.display = 'block';
+        }
+    </script>
+
 </main>
