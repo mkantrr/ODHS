@@ -98,5 +98,14 @@
         //Allows Adoption Center user to go back on their Ipad 
     ?>
     <a class="button cancel" href="loghours.php">Return to form</a>
+    <p><a href="#" onclick="showMessage()">Forgot email address for your account?</a></p>
+            <div id="forgotMessage" style="display: none;">
+                <p>Please contact your administrator for assistance with your email address.</p>
+            </div>
+            <script>
+        function showMessage() {
+            document.getElementById('forgotMessage').style.display = 'block';
+        }
+        </script>
 </body>
 </html>
