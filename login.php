@@ -55,7 +55,7 @@
                     header('Location:centralMenu.php');
                 } else if (in_array('adoption center', $types)) {
                     $_SESSION['access_level'] = 1;
-                    $_SESSION['type'] = 'adoption center account';
+                    $_SESSION['type'] = 'adoption center';
                     header('Location:logHours.php');
                 } else {
                     $_SESSION['access_level'] = 1;
