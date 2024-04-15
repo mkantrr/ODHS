@@ -1,8 +1,9 @@
 
 <?php
 
-// Modified by: Joseph Vogtli (3/22/2024)
+// Modified by: Joseph Vogtli (4/13/2024)
 // Provides a form for volunteers to log their hours
+
 function buildSelect($name, $disabled=false, $selected=null) {
     global $times;
     global $values;
@@ -40,11 +41,11 @@ function buildSelect($name, $disabled=false, $selected=null) {
         <p>An asterisk (<em>*</em>) indicates a required field.</p>
         <fieldset>
             
-            <label for="email"><em>* </em>Email Address</Address></label>
-            <input type="text" id="email" name="email" required placeholder="Enter your email address">
+            <label for="userEmail"><em>* </em>Email Address</Address></label>
+            <input type="text" id="userEmail" name="userEmail" required placeholder="Enter your email address">
 
-            <label for="hours-vol"><em>* </em>Hours Volunteered</label>
-            <input type="number" id="hours-vol" name="hours-vol" required placeholder="Enter your volunteer hours">
+            <label for="duration"><em>* </em>Hours Volunteered</label>
+            <input type="number" id="duration" name="duration" required placeholder="Enter your volunteer hours">
             
 
         </fieldset>

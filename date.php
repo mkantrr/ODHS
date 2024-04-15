@@ -55,7 +55,6 @@ if ($_SESSION['system_type'] == 'MedTracker') {
                 $events = fetch_events_on_date($date);
                 if ($events) {
                     foreach ($events as $event) {
-                        $animal = get_animal($event["animalID"])[0]["name"];
                         $location = get_location($event['locationID'])[0]["name"]; 
                         echo "
                             <table class='event'>
@@ -65,7 +64,6 @@ if ($_SESSION['system_type'] == 'MedTracker') {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr><td>Animal</td><td>" . $animal . " </td></tr>
                                     <tr><td>Time</td><td>" . time24hto12h($event['startTime']) . "</td></tr>
                                     <tr><td>Location</td><td>" . $location . "</td></tr>
                                     <tr><td>Description</td><td>" . $event['description'] . "</td></tr>
