@@ -35,6 +35,14 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
 <h1>Log Volunteer Hours</h1>
 <main class="signup-form">
+<style>
+    .centered {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+</style>
     <form class="signup-form" method="post">
         <h2>Log Hours Form</h2>
         <p>Please fill out each section of the following form if you would like to update your volunteer hours.</p>
