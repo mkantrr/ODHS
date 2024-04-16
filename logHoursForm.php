@@ -57,7 +57,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
         <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
     <?php endif ?>
     <div style="display: flex; justify-content: center; align-items: center;">
-        <p><a href="#" onclick="showMessage()">Forgot email address for your account?<?php echo "\n"?></a></p>
+        <p><a href="#" onclick="showMessage()">Forgot email address for your account?\n</a></p>
         <div id="forgotMessage" style="display: none; text-align: center;">
             <p>Please contact your administrator for assistance with your email address.</p>
         </div>
