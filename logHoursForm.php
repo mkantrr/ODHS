@@ -1,4 +1,3 @@
-
 <?php
 
 // Modified by: Joseph Vogtli (4/13/2024)
@@ -41,7 +40,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
         <p>An asterisk (<em>*</em>) indicates a required field.</p>
         <fieldset>
             
-            <label for="userEmail"><em>* </em>Email Address</Address></label>
+            <label for="userEmail"><em>* </em>Email Address</label>
             <input type="text" id="userEmail" name="userEmail" required placeholder="Enter your email address">
 
             <label for="duration"><em>* </em>Hours Volunteered</label>
@@ -55,13 +54,15 @@ function buildSelect($name, $disabled=false, $selected=null) {
     </form>
     <?php if ($loggedIn): ?>
         <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
-    <?php endif ?>
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <p><a href="#" onclick="showMessage()">Forgot email address for your account?\n</a></p>
-        <div id="forgotMessage" style="display: none; text-align: center;">
-            <p>Please contact your administrator for assistance with your email address.</p>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="display: flex; flex-direction: column; align-items: center;"> <!-- Added wrapping div -->
+                <p><a href="#" onclick="showMessage()">Forgot email address for your account?</a></p>
+                <div id="forgotMessage" style="display: none; text-align: center;">
+                    <p>Please contact your administrator for assistance with your email address.</p>
+                </div>
+            </div>
         </div>
-    </div>
+    <?php endif ?>
 </main>
 <script>
     function showMessage() {
