@@ -102,7 +102,7 @@
         //<a class="button cancel" href="loghours.php">Return to form</a>
     ?>
     <?php if ($hours_updated): ?>
-        <a class="button cancel" href="loghours.php">Return to form</a>
+        <a class="button cancel" href="logHours.php">Return to form</a>
         <?php $hours_updated = false  ?>
     <?php endif; ?>
 
