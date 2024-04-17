@@ -1,6 +1,4 @@
-
 <?php
-
 // Modified by: Joseph Vogtli (4/13/2024)
 // Provides a form for volunteers to log their hours
 
@@ -41,7 +39,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
         <p>An asterisk (<em>*</em>) indicates a required field.</p>
         <fieldset>
             
-            <label for="userEmail"><em>* </em>Email Address</Address></label>
+            <label for="userEmail"><em>* </em>Email Address</label>
             <input type="text" id="userEmail" name="userEmail" required placeholder="Enter your email address">
 
             <label for="duration"><em>* </em>Hours Volunteered</label>
@@ -53,7 +51,27 @@ function buildSelect($name, $disabled=false, $selected=null) {
         <p>By pressing Submit below, you are agreeing to volunteer for the organization.</p>
         <input type="submit" name="logHoursForm" value="Submit">
     </form>
+
     <?php if ($loggedIn): ?>
-        <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
-    <?php endif ?>
+        <?php if ($_SESSION['type'] == 'adoption center'): ?>
+            <a class="button cancel" href="loghours.php" style="margin-top: .5rem">Cancel</a>
+        </div>
+        <?php else: ?>
+            <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
+        <?php endif; ?>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="display: flex; flex-direction: column; align-items: center;"> <!-- Added wrapping div -->
+                <p><a href="#" onclick="showMessage()">Forgot email address for your account?</a></p>
+                <div id="forgotMessage" style="display: none; text-align: center;">
+                    <p>Please contact your administrator for assistance with your email address.</p>
+                </div>
+            </div>
+        </div>
+        <script>
+            function showMessage() {
+                document.getElementById('forgotMessage').style.display = 'block';
+            }
+        </script>
+    <?php endif; ?>
 </main>
+
