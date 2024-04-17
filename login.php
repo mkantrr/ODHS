@@ -15,7 +15,7 @@
     if (isset($_SESSION['_id'])) {
         if($_SESSION['access_level'] > 1){
             header('Location: centralMenu.php');
-        } else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] == 'user')) {
+        } else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] == 'volunteer')) {
             header('Location:VMS_index.php');
         }
         else if (($_SESSION['access_level'] == 1) && ($_SESSION['type'] == 'adoption center')) {
@@ -62,13 +62,13 @@
                     header('Location:logHours.php');
                 } else {
                     $_SESSION['access_level'] = 1;
-                    $_SESSION['type'] = 'user';
+                    $_SESSION['type'] = 'volunteer';
                     header('Location:VMS_index.php');
                 }
                 $_SESSION['f_name'] = $user->get_first_name();
                 $_SESSION['l_name'] = $user->get_last_name();
                 $_SESSION['venue'] = $user->get_venue();
-                $_SESSION['type'] = $user->get_type();
+                //$_SESSION['type'] = $user->get_type();
                 $_SESSION['_id'] = $user->get_id();
                 // hard code root privileges
                 if ($user->get_id() == 'vmsroot') {

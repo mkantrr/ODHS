@@ -1,5 +1,4 @@
 <?php
-
 // Modified by: Joseph Vogtli (4/13/2024)
 // Provides a form for volunteers to log their hours
 
@@ -52,8 +51,14 @@ function buildSelect($name, $disabled=false, $selected=null) {
         <p>By pressing Submit below, you are agreeing to volunteer for the organization.</p>
         <input type="submit" name="logHoursForm" value="Submit">
     </form>
+
     <?php if ($loggedIn): ?>
-        <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
+        <?php if ($_SESSION['type'] == 'adoption center'): ?>
+            <a class="button cancel" href="loghours.php" style="margin-top: .5rem">Cancel</a>
+        </div>
+        <?php else: ?>
+            <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>
+        <?php endif; ?>
         <div style="display: flex; justify-content: center; align-items: center;">
             <div style="display: flex; flex-direction: column; align-items: center;"> <!-- Added wrapping div -->
                 <p><a href="#" onclick="showMessage()">Forgot email address for your account?</a></p>
@@ -62,10 +67,11 @@ function buildSelect($name, $disabled=false, $selected=null) {
                 </div>
             </div>
         </div>
-    <?php endif ?>
+        <script>
+            function showMessage() {
+                document.getElementById('forgotMessage').style.display = 'block';
+            }
+        </script>
+    <?php endif; ?>
 </main>
-<script>
-    function showMessage() {
-        document.getElementById('forgotMessage').style.display = 'block';
-    }
-</script>
+

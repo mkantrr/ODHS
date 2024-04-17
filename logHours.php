@@ -5,7 +5,6 @@
     // Description: Logging Hours that a Volunteer has worked
     session_cache_expire(30);
     session_start();
-
     require_once('include/input-validation.php');
 
     $loggedIn = false;
@@ -17,10 +16,11 @@
         $loggedIn = true;
         $accessLevel = $_SESSION['access_level'];
         $userID = $_SESSION['_id'];
+        //$accountType = $_SESSION['type'];
     }
 
     // Require admin privileges or needs to be adoption center account
-    if ($accessLevel < 2 && $_SESSION['type'] == 'user')
+    if ($accessLevel < 2 && $_SESSION['type'] == 'volunteer')
     {
         header('Location: login.php');
         echo 'bad access level';
@@ -39,10 +39,12 @@
     <?php } ?>
 </head>
 <body>
+    
     <?php
         require_once('header.php');
         require_once('domain/Hours.php');
         require_once('database/dbHours.php');
+        $hours_updated = false;
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // make every submitted field SQL-safe except for password
             $ignoreList = array('password');
@@ -91,12 +93,18 @@
             $final = add_hours($id, $date, $time, $hours);
 
             echo "<h3> Hours successfully updated! </h3>";
+            $hours_updated = true;
             
         } else {
             require_once('logHoursForm.php'); 
         }
         //Allows Adoption Center user to go back on their Ipad 
+        //<a class="button cancel" href="loghours.php">Return to form</a>
     ?>
-    <a class="button cancel" href="loghours.php">Return to form</a>
+    <?php if ($hours_updated): ?>
+        <a class="button cancel" href="loghours.php">Return to form</a>
+        <?php $hours_updated = false  ?>
+    <?php endif; ?>
+
 </body>
 </html>
