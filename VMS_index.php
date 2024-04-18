@@ -72,7 +72,7 @@
                 <?php endif ?>
                 <?php if ($_SESSION['access_level'] >= 2 || $_SESSION['type'] == 'adoption center'): ?>
                     <div class="dashboard-item" data-link="logHours.php">
-                        <img src="images/new-event.svg">
+                        <img src="images/log-hours.svg">
                         <span>Log Hours</span>
                     </div>
                 <?php endif ?>
