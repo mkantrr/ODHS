@@ -61,7 +61,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --shadow-and-border-color: #e8e8e8;
 
     --main-color: #FF289A;
-    --accent-color: #6fbf00;
+    --accent-color: #BFF079;
     --secondary-accent-color: #f6a4b5;
 
     --calendar-event-color: #808080;
@@ -70,7 +70,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --button-font-color: white;
     --button-padding: 0.5rem 1.5rem;
-    --button-border-radius: 8px;
+    --button-border-radius: 0.25rem;
 
     --standard-border: 1px solid #333333;
     --light-border: 1px solid var(--shadow-and-border-color);

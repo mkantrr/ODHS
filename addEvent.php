@@ -1,7 +1,4 @@
 <?php
-
-    // Template for new VMS pages. Base your new page on this one
-
     // Make session information accessible, allowing us to associate
     // data with the logged-in user.
     session_cache_expire(30);
@@ -30,19 +27,20 @@
         require_once('database/dbEvents.php');
         $args = sanitize($_POST, null);
         $required = array(
-            "name", "abbrev-name", "date", "start-time", "description", "location"
+            "name", "abbrev-name", "date", "start-time", "description", "location", "service", "animal"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             echo 'bad form data';
             die();
         } else {
-            $validated = validate12hTimeAndConvertTo24h($args["start-time"]);
+            $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], "11:59 PM");
             if (!$validated) {
                 echo 'bad time range';
                 die();
             }
-            $startTime = $args['start-time'] = $validated;
+            $startTime = $args['start-time'] = $validated[0];
             $date = $args['date'] = validateDate($args["date"]);
+            $capacity = intval($args["capacity"]);
             $abbrevLength = strlen($args['abbrev-name']);
             if (!$startTime || !$date || $abbrevLength > 11){
                 echo 'bad args';
@@ -59,8 +57,7 @@
             $startTime = time24hto12h($startTime);
             $date = date('l, F j, Y', strtotime($date));
             require_once('database/dbMessages.php');
-            //New Event notification commented out during testing
-            //system_message_all_users_except($userID, "A new event was created!", "Exciting news!\r\n\r\nThe [$name](event: $id) event at $startTime on $date was added!\r\nSign up today!");
+            system_message_all_users_except($userID, "A new event was created!", "Exciting news!\r\n\r\nThe [$name](event: $id) event at $startTime on $date was added!\r\nSign up today!");
             header("Location: event.php?id=$id&createSuccess");
             die();
         }
@@ -75,35 +72,56 @@
             die();
         }
     }
-    // Connect to database to get list of Locations
+
+    // get animal data from database for form
+    // Connect to database
     include_once('database/dbinfo.php'); 
     $con=connect();  
+    // Get all the animals from animal table
+    $sql = "SELECT * FROM `dbAnimals`";
+    $all_animals = mysqli_query($con,$sql);
     $sql = "SELECT * FROM `dbLocations`";
     $all_locations = mysqli_query($con,$sql);
+    $sql = "SELECT * FROM `dbServices`";
+    $all_services = mysqli_query($con,$sql);
+
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>ODHS VMS | Create Event</title>
+        <title>ODHS Medicine Tracker | Create Event</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
-        <h1>Create Event</h1>
+        <h1>Create Appointment</h1>
         <main class="date">
-            <h2>New Event Form</h2>
+            <h2>New Appointment Form</h2>
             <form id="new-event-form" method="post">
-                <label for="name">Event Name </label>
+                <label for="name">* Appointment Name </label>
                 <input type="text" id="name" name="name" required placeholder="Enter name"> 
-                <label for="name">Abbreviated Name</label>
+                <label for="name">* Abbreviated Name</label>
                 <input type="text" id="abbrev-name" name="abbrev-name" maxlength="11" required placeholder="Enter name that will appear on calendar">
-                <label for="name">Date </label>
+                <label for="name">* Date </label>
                 <input type="date" id="date" name="date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
-                <label for="name">Start Time </label>
+                <label for="name">* Start Time </label>
                 <input type="text" id="start-time" name="start-time" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
-                <label for="name">Description </label>
+                <label for="name">* Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description">
-                <label for="name">Location </label>
+                <fieldset>
+                    <label for="name">* Service </label>
+                    <?php 
+                        // fetch data from the $all_services variable
+                        // and individually display as an option
+                        echo '<ul>';
+                        while ($service = mysqli_fetch_array(
+                                $all_services, MYSQLI_ASSOC)):; 
+                            echo '<li><input class="checkboxes" type="checkbox" name="service[]" value="' . $service['id'] . '" required/> ' . $service['name'] . '</li>';
+                        endwhile;
+                        echo '</ul>';
+                    ?>
+                </fieldset> 
+                <label for="name">* Location </label>
                 <select for="name" id="location" name="location" required>
                     <option value="">--</option>
                     <?php 
@@ -120,6 +138,25 @@
                         // terminate while loop
                     ?>
                 </select><p></p>
+                <label for="name">* Volunteer Slots</label>
+                <input type="text" id="capacity" name="capacity" pattern="([1-9])|([01][0-9])|(20)" required placeholder="Enter a number up to 20">   
+                <label for="name">* Animal</label>
+                <select for="name" id="animal" name="animal" required>
+                    <?php 
+                        // fetch data from the $all_animals variable
+                        // and individually display as an option
+                        while ($animal = mysqli_fetch_array(
+                                $all_animals, MYSQLI_ASSOC)):; 
+                    ?>
+                    <option value="<?php echo $animal['id'];?>">
+                        <?php echo $animal['name'];?>
+                    </option>
+                    <?php 
+                        endwhile; 
+                        // terminate while loop
+                    ?>
+                </select><br/>
+                <p></p>
                 <input type="submit" value="Create Event">
             </form>
                 <?php if ($date): ?>
@@ -127,6 +164,20 @@
                 <?php else: ?>
                     <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
                 <?php endif ?>
+
+                <!-- Require at least one checkbox be checked -->
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        var checkboxes = $('.checkboxes');
+                        checkboxes.change(function(){
+                            if($('.checkboxes:checked').length>0) {
+                                checkboxes.removeAttr('required');
+                            } else {
+                                checkboxes.attr('required', 'required');
+                            }
+                        });
+                    });
+                </script>
         </main>
     </body>
 </html>

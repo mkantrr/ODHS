@@ -99,6 +99,30 @@ function update_event_date($id, $new_event_date) {
 	return $result;
 }
 
+// update event volunteer list
+function update_event_volunteer_list($eventID, $volunteerID) {
+	$con=connect();
+	$check = 'SELECT * FROM dbEventVolunteers WHERE eventID = "'.$eventID.'" AND userID = "'.$volunteerID.'" ';
+	$result = mysqli_query($con, $check);
+  $result_check = mysqli_fetch_assoc($result);
+	if ($result_check > 0) {
+			return 0;
+	}
+	$query = 'INSERT INTO dbEventVolunteers (eventID, userID) VALUES ("'.$eventID.'", "'.$volunteerID.'")';
+	$result = mysqli_query($con, $query);
+	mysqli_close($con);
+	return $result;
+}
+
+function remove_volunteer_from_event($eventID, $volunteerID){
+	$con = connect();
+	$query = 'DELETE FROM dbEventVolunteers WHERE eventID = "'.$eventID.'" AND userID = "'.$volunteerID.'" ';
+	$result = mysqli_query($con, $query);
+	mysqli_close($con);
+	return $result;
+}
+
+
 function make_an_event($result_row) {
 	/*
 	 ($en, $v, $sd, $description, $ev))
@@ -262,8 +286,8 @@ function create_animal($animal) {
     }
 	$microchip_done = $animal["microchip_done"];
     $query = "
-        INSERT INTO dbAnimals (odhs_id, name, breed, age, gender, notes, spay_neuter_done, spay_neuter_date, rabies_given_date, rabies_due_date, heartworm_given_date, heartworm_due_date, distemper1_given_date, distemper1_due_date, distemper2_given_date, distemper2_due_date, distemper3_given_date, distemper3_due_date, microchip_done, archived)
-        values ('$odhsid','$name', '$breed', '$age', '$gender', '$notes', '$spay_neuter_done', '$spay_neuter_date', '$rabies_given_date', '$rabies_due_date', '$heartworm_given_date', '$heartworm_due_date', '$distemper1_given_date', '$distemper1_due_date', '$distemper2_given_date', '$distemper2_due_date', '$distemper3_given_date', '$distemper3_due_date', '$microchip_done', 'no')
+        INSERT INTO dbAnimals (odhs_id, name, breed, age, gender, notes, spay_neuter_done, spay_neuter_date, rabies_given_date, rabies_due_date, heartworm_given_date, heartworm_due_date, distemper1_given_date, distemper1_due_date, distemper2_given_date, distemper2_due_date, distemper3_given_date, distemper3_due_date, microchip_done)
+        values ('$odhsid','$name', '$breed', '$age', '$gender', '$notes', '$spay_neuter_done', '$spay_neuter_date', '$rabies_given_date', '$rabies_due_date', '$heartworm_given_date', '$heartworm_due_date', '$distemper1_given_date', '$distemper1_due_date', '$distemper2_given_date', '$distemper2_due_date', '$distemper3_given_date', '$distemper3_due_date', '$microchip_done')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -466,44 +490,6 @@ function delete_animal($id) {
     return $result;
 }
 
-function archive_animal($id) {
-    $query = "UPDATE dbAnimals set archived='yes' where id='$id'";
-    $connection = connect();
-    $result = mysqli_query($connection, $query);
-    $result = boolval($result);
-    mysqli_close($connection);
-    return $result;
-}
-
-function unarchive_animal($id) {
-    $query = "UPDATE dbAnimals set archived='no' where id='$id'";
-    $connection = connect();
-    $result = mysqli_query($connection, $query);
-    $result = boolval($result);
-    mysqli_close($connection);
-    return $result;
-}
-
-function find_archived() {
-    $query = "select * from dbAnimals where archived='yes' order by name";
-
-    $connection = connect();
-
-    $result = mysqli_query($connection, $query);
-    if (!$result) {
-        mysqli_close($connection);
-        return [];
-    }
-    $raw = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    $animals = [];
-    foreach ($raw as $row) {
-        $animals []= make_an_animal($row);
-    }
-    mysqli_close($connection);
-    return $animals;
-
-}
-
 function find_animal($name, $breed, $age1, $age2, $gender, $spay_neuter_done, $microchip_done, $needs_attention, $other){
     $where = 'where ';
     if (!($name || $breed || $age1 || $age2 || $gender || $spay_neuter_done || $microchip_done || $needs_attention || $other)){
@@ -559,10 +545,9 @@ function find_animal($name, $breed, $age1, $age2, $gender, $spay_neuter_done, $m
     if ($needs_attention || $other) {
         if ($first) {
             $maxAge = "99";
-            $where .= " age <= '$maxAge'";
+            $where .= " age <= '$maxAge' ";
         }
     }
-    $where .= " and archived='no'";
 
     $query = "select * from dbAnimals $where order by name";
     // echo $query;

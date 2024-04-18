@@ -138,6 +138,7 @@
                 $person = retrieve_person($volunteerID);
                 $name = $person->get_first_name() . ' ' . $person->get_last_name();
                 $name = htmlspecialchars_decode($name);
+                update_event_volunteer_list($eventID, $volunteerID);
                 require_once('database/dbMessages.php');
                 require_once('include/output.php');
                 $event = fetch_event_by_id($eventID);
@@ -155,6 +156,7 @@
                     echo 'invalid user id';
                     die();
                 }
+                update_event_volunteer_list($eventID, $volunteerID);
                 require_once('database/dbMessages.php');
                 require_once('include/output.php');
                 $event = fetch_event_by_id($eventID);
@@ -163,6 +165,9 @@
                 $eventStart = time24hto12h($event['startTime']);
                 $eventEnd = time24hto12h($event['endTime']);
                 send_system_message($volunteerID, 'You were assigned to an event!', "Hello,\r\n\r\nYou were assigned to the [$eventName](event: $eventID) event from $eventStart to $eventEnd on $eventDate.");
+            } else if ($request_type == 'remove' && $access_level > 1) {
+                $volunteerID = $args['selected_removal_id'];
+                remove_volunteer_from_event($eventID, $volunteerID);
             } else {
                 header('Location: event.php?id='.$eventID);
                 die();
@@ -184,6 +189,7 @@
         <script src="js/event.js"></script>
     <?php endif ?>
 </head>
+
 <body>
     <?php if ($access_level >= 2) : ?>
         <div id="delete-confirmation-wrapper" class="hidden">
@@ -199,41 +205,8 @@
             </div>
         </div>
     <?php endif ?>
-    <?php if ($access_level >= 2) : ?>
-        <?php if ($animal_info["archived"] == "yes") : ?>
-            <div id="complete-confirmation-wrapper" class="hidden">
-                <div id="complete-confirmation">
-                    <p>Are you sure you want to unarchive this animal?</p>
-                    <p>This action can be undone.</p>
-                    <form method="post" action="unarchiveAnimal.php">
-                        <input type="submit" value="Unarchive Animal">
-                        <input type="hidden" name="id" value="<?= $id ?>">
-                    </form>
-                    <button id="complete-cancel">Cancel</button>
-                </div>
-            </div>
-        <?php endif ?>
-        <?php if ($animal_info["archived"] != "yes") : ?>
-            <div id="complete-confirmation-wrapper" class="hidden">
-                <div id="complete-confirmation">
-                    <p>Are you sure you want to archive this animal?</p>
-                    <p>This action can be undone.</p>
-                    <form method="post" action="archiveAnimal.php">
-                        <input type="submit" value="Archive Animal">
-                        <input type="hidden" name="id" value="<?= $id ?>">
-                    </form>
-                    <button id="complete-cancel">Cancel</button>
-                </div>
-            </div>
-        <?php endif ?>
-    <?php endif ?>
     <?php require_once('header.php') ?>
     <h1>View Animal</h1>
-    <?php if (isset($_GET['animalArchived'])): ?>
-        <div class="happy-toast">Animal archived successfully!</div>
-    <?php elseif (isset($_GET['animalUnarchived'])): ?>
-        <div class="happy-toast">Animal successfully unarchived!</div>
-    <?php endif ?>
     <main class="event-info">
         <?php if (isset($_GET['createSuccess'])): ?>
             <div class="happy-toast">Animal created successfully!</div>
@@ -413,13 +386,6 @@
                 <input type="submit" value="Edit Animal">
                 <input type="hidden" name="id" value="<?= $id ?>">
             </form>
-            <?php 
-            if ($animal_info["archived"] == "yes"){ 
-                echo "<button onclick='showCompleteConfirmation()'>Unarchive Animal</button>";
-            } else {
-                echo "<button onclick='showCompleteConfirmation()'>Archive Animal</button>";
-            }
-            ?>
             <button onclick="showDeleteConfirmation()">Delete Animal</button>
         <?php endif ?>
 

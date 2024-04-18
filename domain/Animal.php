@@ -3,7 +3,7 @@
 $accessLevelsByRole = [
 	//'volunteer' => 1,
 	'admin' => 2,
-	'main' => 3
+	'superadmin' => 3
 ];
 
 class Animal {

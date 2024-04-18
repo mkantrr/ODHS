@@ -2,7 +2,6 @@
     session_cache_expire(30);
     session_start();
 
-    $_SESSION['system_type'] = 'MedTracker';
     date_default_timezone_set("America/New_York");
     
     if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 1) {
@@ -21,7 +20,6 @@
         $person = retrieve_person($_SESSION['_id']);
     }
     $notRoot = $person->get_id() != 'vmsroot';
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,7 +29,7 @@
     </head>
     <body>
         <?php require('header.php'); ?>
-        <h1>MedTracker Dashboard</h1>
+        <h1>Dashboard</h1>
         <main class='dashboard'>
             <?php if (isset($_GET['pcSuccess'])): ?>
                 <div class="happy-toast">Password changed successfully!</div>
@@ -100,9 +98,13 @@
                 </div>
                 -->
                 <?php if ($_SESSION['access_level'] >= 2): ?>
-                    <div class="dashboard-item" data-link="viewArchived.php">
+                    <div class="dashboard-item" data-link="personSearch.php">
                         <img src="images/person-search.svg">
-                        <span>Archived Animals</span>
+                        <span>Find Volunteer</span>
+                    </div>
+                    <div class="dashboard-item" data-link="register.php">
+                        <img src="images/add-person.svg">
+                        <span>Register Volunteer</span>
                     </div>
                     <div class="dashboard-item" data-link="report.php">
                         <img src="images/create-report.svg">
@@ -128,10 +130,6 @@
                 <div class="dashboard-item" data-link="changePassword.php">
                     <img src="images/change-password.svg">
                     <span>Change Password</span>
-                </div>
-                <div class="dashboard-item" data-link="VMS_index.php">
-                    <img src="images/vms_index.svg">
-                    <span>Volunteer Management System</span>
                 </div>
                 <div class="dashboard-item" data-link="logout.php">
                     <img src="images/logout.svg">

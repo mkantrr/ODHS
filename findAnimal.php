@@ -55,6 +55,33 @@ function check_needs_attention($animal){
 }
 
 function displaySearchRow($animal, $other){
+    $today = date("Y-m-d");
+    $oneMonthOut = date("Y-m-d", strtotime("+1 month"));
+
+    // Check if any task is past due
+    $urgentNeedsAttention = "";
+    if($today > $animal->get_rabies_due_date() 
+            || $today > $animal->get_heartworm_due_date() 
+            || $today > $animal->get_distemper1_due_date() 
+            || $today > $animal->get_distemper2_due_date() 
+            || $today > $animal->get_distemper3_due_date()){
+        $urgentNeedsAttention = "Past Due";
+    }
+
+    // Check if any task is one month out
+    $needsAttentionOneMonthOut = "";
+    if($oneMonthOut >= $animal->get_rabies_due_date() 
+            || $oneMonthOut >= $animal->get_heartworm_due_date() 
+            || $oneMonthOut >= $animal->get_distemper1_due_date() 
+            || $oneMonthOut >= $animal->get_distemper2_due_date() 
+            || $oneMonthOut >= $animal->get_distemper3_due_date()){
+        $needsAttentionOneMonthOut = "One Month Out";
+    }
+
+    // Add CSS classes based on conditions
+    $urgentNeedsAttentionClass = ($urgentNeedsAttention == "Past Due") ? "past-due" : "";
+    $needsAttentionOneMonthOutClass = ($needsAttentionOneMonthOut == "One Month Out") ? "one-month-out" : "";
+
     echo "
     <tr>
         <td><a href='animal.php?id=".$animal->get_id()."'>" . $animal->get_name() . "</a></td>
@@ -63,17 +90,22 @@ function displaySearchRow($animal, $other){
         <td>" . $animal->get_gender() . "</td>
         <td>" . $animal->get_spay_neuter_done() . "</td>
         <td>" . $animal->get_microchip_done() . "</td>
-        <td>" . check_needs_attention($animal) . "</td>";
-        if($other){
-            $emptyCheck = $animal->get_other($other);
-            if($emptyCheck == "0000-00-00"){
-                echo "<td></td>";
-            } else {
-                echo "<td>" . $emptyCheck . "</td>";
-            }
+        <td class='$urgentNeedsAttentionClass'>" . $urgentNeedsAttention . "</td>
+        <td class='$needsAttentionOneMonthOutClass'>" . $needsAttentionOneMonthOut . "</td>";
+
+    // Add columns for specific tasks
+    if($other){
+        $emptyCheck = $animal->get_other($other);
+        if($emptyCheck == "0000-00-00"){
+            echo "<td></td>";
+        } else {
+            echo "<td>" . $emptyCheck . "</td>";
         }
+    }
     echo "</tr>";
 }
+
+
 
     // Template for new VMS pages. Base your new page on this one
 
@@ -102,6 +134,15 @@ function displaySearchRow($animal, $other){
     <head>
         <?php require_once('universal.inc') ?>
         <title>ODHS Medicine Tracker | Animal Search</title>
+        <style>
+        .past-due {
+            background-color: #FFCCCC; /* Light red for past due */
+        }
+
+        .one-month-out {
+            background-color: #FFFF99; /* Light yellow for one month out */
+        }
+    </style>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -133,23 +174,26 @@ function displaySearchRow($animal, $other){
                         require_once('include/output.php');
                         if (count($animals) > 0) {
                             echo '
-                            <div class="table-wrapper">
-                                <table class="general">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Breed</th>
-                                            <th>Age</th>
-                                            <th>Gender</th>
-											<th>Spay/Neuter</th>
-                                            <th>Microchipped</th>
-                                            <th>Needs Attention</th>';
-                                            if($other){
-                                                echo '<th>'.$other_options[$other].'</th>';
-                                            }
-                                        echo '</tr>
-                                    </thead>
-                                    <tbody class="standout">';
+            <div class="table-wrapper">
+        <table class="general">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Breed</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Spay/Neuter</th>
+                    <th>Microchipped</th>
+                    <th>Needs Attention</th>
+                    <th> One Month Out</th>';
+                    // Add column for specific task
+                    if($other){
+                        echo '<th>'.$other_options[$other].'</th>';
+                    }
+                echo '</tr>
+            </thead>
+            <tbody class="standout">';
+
                             $mailingList = '';
                             $notFirst = false;
                             foreach ($animals as $animal) {

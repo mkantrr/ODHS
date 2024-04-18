@@ -58,16 +58,12 @@
     <head>
         <?php require_once('universal.inc') ?>
         <link rel="stylesheet" href="css/roster.css" type="text/css" />
-        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
-        <title>ODHS Medicine Tracker | View Appointment Roster</title>
-        <?php } else { ?>
-        <title>ODHS VMS | View Event Roster</title>
-        <?php } ?>
+        <title>ODHS Medicine Tracker | View Event Roster</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
         <span class="logo_print">
-          <img src="images/odhs.png">
+          <img src="images/gwynethsgift.png">
         </span>
           <?php
             $event_name = $event_info['name'];
@@ -149,7 +145,7 @@
             } else {
               $type = 'Admin';
             }
-
+            $shirt_size = $person->get_shirt_size();
             echo '<div id="table-wrapper">'."\n";
             echo '<table class="centered">';
             echo '<tbody>'.
@@ -172,6 +168,10 @@
                     '<tr>'.
                         '<td class="label">Phone</td>'.
                         '<td>'.$phone1.' ('.$phone1_type.')'.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td class="label">Shirt Size</td>'.
+                        '<td>'.$shirt_size.'</td>'.
                     '</tr>'.
                     '<tr>'.
                         '<td class="label"><b>Emergency Contact<b></td>'.

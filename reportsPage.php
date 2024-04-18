@@ -79,31 +79,31 @@
             }
 
             @media print {
-                tr:nth-child(even) {
-                    background-color: white;
-                }
+    tr:nth-child(even) {
+        background-color: white;
+    }
 
-                button, header {
-                    display: none;
-                }
+    button, 
+    header {
+        display: none !important; /* Ensure the header is hidden */
+    }
 
-                :root {
-                    font-size: 10pt;
-                }
+    :root {
+        font-size: 10pt;
+    }
 
-                label {
-                    color: black;
-                }
+    label {
+        color: black;
+    }
 
-                table {
-                    width: 100%;
-                }
+    table {
+        width: 100%;
+    }
 
-                a {
-                    color: black;
-                }
-            }
-
+    a {
+        color: black;
+    }
+}
             .theB{
                 width: auto;
                 font-size: 15px;
@@ -261,7 +261,15 @@
             </table>   
              </span>
          </div>
-
+        <!-- Print button -->
+        <div class="center_b">
+        <button onclick="printReport()" class="theB">Print Report</button>
+        </div>
+        <script>
+        function printReport() {
+            window.print();
+        }
+        </script>
 	
     </main>
 	<div class="center_a">
@@ -271,6 +279,7 @@
                 <a href="index.php">
                 <button class = "theB">Home Page</button>
                 </a>
+
 	</div>
         </main>
     </body>

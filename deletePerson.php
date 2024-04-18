@@ -67,7 +67,7 @@ $loggedIn = false;
         <nav>
             <span id="nav-top">
                 <span class="logo">
-                    <img src="images/odhs.png">
+                    <img src="images/gwynethsgift.png">
                         <span id="vms-logo"> MedTracker </span>
                         </span>
                     <img id="menu-toggle" src="images/menu.png">

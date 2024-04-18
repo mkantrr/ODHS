@@ -28,8 +28,8 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $args = sanitize($_POST, null);
         $required = array(
-            "id", "name", "abbrev-name", "date", "start-time", "description", "location");
-
+            "id", "name", "abbrev-name", "date", "start-time", "description", "location", "capacity"
+        );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             echo 'bad form data';
             die();
@@ -43,14 +43,14 @@
             $startTime = $args['start-time'] = $validated[0];
             $endTime = $validated[1];
             $date = $args['date'] = validateDate($args["date"]);
-           // $capacity = intval($args["capacity"]);
-           // $assignedVolunteerCount = count(getvolunteers_byevent($id));
-           // $difference = $assignedVolunteerCount - $capacity;
-           // if ($capacity < $assignedVolunteerCount) {
-            //    $errors .= "<p>There are currently $assignedVolunteerCount volunteers assigned to this event. The new capacity must not exceed this number. You must remove $difference volunteer(s) from the event to reduce the capacity to $capacity.</p>";
-           // }
+            $capacity = intval($args["capacity"]);
+            $assignedVolunteerCount = count(getvolunteers_byevent($id));
+            $difference = $assignedVolunteerCount - $capacity;
+            if ($capacity < $assignedVolunteerCount) {
+                $errors .= "<p>There are currently $assignedVolunteerCount volunteers assigned to this event. The new capacity must not exceed this number. You must remove $difference volunteer(s) from the event to reduce the capacity to $capacity.</p>";
+            }
             $abbrevLength = strlen($args['abbrev-name']);
-            if (!$startTime || !$date || $abbrevLength > 11){
+            if (!$startTime || !$date || $capacity < 1 || $capacity > 20 || $abbrevLength > 11){
                 $errors .= '<p>Your request was missing arguments.</p>';
             }
             if (!$errors) {
@@ -87,7 +87,6 @@
 
     // get current selected services for event
     $current_services = get_services($id);
-if ($_SESSION['system_type'] == 'MedTracker') {
 ?>
 <!DOCTYPE html>
 <html>
@@ -157,6 +156,8 @@ if ($_SESSION['system_type'] == 'MedTracker') {
                         // terminate while loop
                     ?>
                 </select><p></p>
+                <label for="name">Volunteer Slots</label>
+                <input type="text" id="capacity" name="capacity"  value="<?php echo $event['capacity'] ?>"pattern="([1-9])|([01][0-9])|(20)" required placeholder="Enter a number up to 20">   
                 <input type="submit" value="Update Appointment">
                 <a class="button cancel" href="event.php?id=<?php echo htmlspecialchars($_GET['id']) ?>" style="margin-top: .5rem">Cancel</a>
             </form>
@@ -176,58 +177,3 @@ if ($_SESSION['system_type'] == 'MedTracker') {
         </main>
     </body>
 </html>
-<?php } else { ?>
-    <!DOCTYPE html>
-<html>
-    <head>
-        <?php require_once('universal.inc') ?>
-        <title>ODHS VMS | Edit Event</title>
-    </head>
-    <body>
-        <?php require_once('header.php') ?>
-        <h1>Modify Event</h1>
-        <main class="date">
-        <?php if ($errors): ?>
-            <div class="error-toast"><?php echo $errors ?></div>
-        <?php endif ?>
-            <h2>Event Details</h2>
-            <form id="new-event-form" method="post">
-                <label for="name">Event Name </label>
-                <input type="hidden" name="id" value="<?php echo $id ?>"/> 
-                <input type="text" id="name" name="name" value="<?php echo $event['name'] ?>" required placeholder="Enter name"> 
-                <label for="name">Abbreviated Name</label>
-                <input type="text" id="abbrev-name" name="abbrev-name" value="<?php echo $event['abbrevName'] ?>" maxlength="11"  required placeholder="Enter name that will appear on calendar">
-                <label for="name">Date </label>
-                <input type="date" id="date" name="date" value="<?php echo $event['date'] ?>" min="<?php echo date('Y-m-d'); ?>" required>
-                <label for="name">Start Time </label>
-                <input type="text" id="start-time" name="start-time" value="<?php echo time24hto12h($event['startTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">
-                <label for="name">Description </label>
-                <input type="text" id="description" name="description" value="<?php echo $event['description'] ?>" required placeholder="Enter description">
-                
-                <label for="name">Location </label>
-                <select for="name" id="location" name="location" required>
-                    <?php 
-                        // fetch data from the $all_locations variable
-                        // and individually display as an option
-                        while ($location = mysqli_fetch_array(
-                                $all_locations, MYSQLI_ASSOC)):; 
-                    
-                            if ($event['locationID'] == $location['id']) {
-                                echo '<option selected value="' . $location['id']. '">';
-                            } else {
-                                echo '<option value="' . $location['id']. '">';
-                            }
-                            echo $location['name'];
-                            echo '</option>';
-                        
-                        endwhile; 
-                        // terminate while loop
-                    ?>
-                </select><p></p>
-                <input type="submit" value="Update Event">
-                <a class="button cancel" href="event.php?id=<?php echo htmlspecialchars($_GET['id']) ?>" style="margin-top: .5rem">Cancel</a>
-            </form>
-        </main>
-    </body>
-</html>
-<?php }

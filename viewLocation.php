@@ -140,7 +140,6 @@
                         <td class="label">Address </td>
                         <td><?php echo $location['address'] ?></td>
                     </tr>
-                    <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
                     <tr>	
                         <td class="label">Services Available: </td>
                         <td>
@@ -156,7 +155,6 @@
                             ?>
                         </td>
                     </tr>
-                    <?php } ?>
                     <tr>	
                         <td class="label"> </td>
                     </tr>

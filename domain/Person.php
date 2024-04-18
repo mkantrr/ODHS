@@ -15,9 +15,9 @@
  */
 
 $accessLevelsByRole = [
-	'volunteer' => 1,
+	//'volunteer' => 1,
 	'admin' => 2,
-	'main' => 3
+	'superadmin' => 3
 ];
 
 class Person {
@@ -30,39 +30,60 @@ class Person {
 	private $city;    // city - string
 	private $state;   // state - string
 	private $zip;    // zip code - integer
-  private $profile_pic; // image link
+  	private $profile_pic; // image link
 	private $phone1;   // primary phone -- home, cell, or work
 	private $phone1type; // home, cell, or work
 	private $phone2;   // secondary phone -- home, cell, or work
 	private $phone2type; // home, cell, or work
 	private $birthday;     // format: 64-03-12
-	private $email;
+	private $email;   // email address as a string
+	private $shirt_size;   // t-shirt size
+	private $computer;   // computer - yes or no
+	private $camera;   // camera - yes or no
+	private $transportation;   // transportation - yes or no
 	private $contact_name;   // emergency contact name
 	private $contact_num;   // emergency cont. phone number
 	private $relation;   // relation to emergency contact
 	private $contact_time; //best time to contact volunteer
 	private $cMethod;    // best contact method for volunteer (email, phone, text)
-	private $type;       // array of "volunteer", "admin", "main", "adoption center"
+	private $position;    // job title or "student"
+	private $credithours; // hours required if volunteering for academic credit; otherwise blank
+	private $howdidyouhear;  // about RMH; internet, family, friend, volunteer, other (explain)
+	private $commitment;  // App: "year" or "semester" (if student) or N/A (guest chef, events, or projects)
+	private $motivation;   // App: why interested in RMH?
+	private $specialties;  // special training or skills
+	private $convictions;  // App: ever convicted of a felony?  "yes" or blank
+	private $type;       // array of "volunteer", "weekendmgr", "sub", "guestchef", "events", "projects", "manager"
 	private $access_level;
 	private $status;     // a person may be "active" or "inactive"
-	//private $schedule;     // array of scheduled shift ids; e.g., 15-01-05:9-12:bangor
+	private $availability; // array of day:hours:venue triples; e.g., Mon:9-12:bangor, Sat:afternoon:portland
+	private $schedule;     // array of scheduled shift ids; e.g., 15-01-05:9-12:bangor
 	private $hours;        // array of actual hours logged; e.g., 15-01-05:0930-1300:portland:3.5
 	private $notes;        // notes that only the manager can see and edit
 	private $password;     // password for calendar and database access: default = $id
+	// Volunteer availability start and end for each week day in 24h format, hh:mm
+	private $sundaysStart;
+	private $sundaysEnd;
+	private $mondaysStart;
+	private $mondaysEnd;
+	private $tuesdaysStart;
+	private $tuesdaysEnd;
+	private $wednesdaysStart;
+	private $wednesdaysEnd;
+	private $thursdaysStart;
+	private $thursdaysEnd;
+	private $fridaysStart;
+	private $fridaysEnd;
+	private $saturdaysStart;
+	private $saturdaysEnd;
 	private $mustChangePassword;
 	private $gender;
 
-	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, $p1, $p1t, $p2, $p2t, $e, 
-			//$ts, $comp, $cam, $tran, 
-			$cn, $cpn, $rel,
-			$ct, $t, $st, $cntm, 
-			//$pos, $credithours, $comm, $mot, $spe,$convictions, 
-			$hrs, $bd, $sd, 
-			//$hdyh, 
-			$notes, $pass,
-			//$suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
-			//$thus, $thue, $fris, $frie, $sats, $sate, 
-			$mcp, $gender) {
+	function __construct($f, $l, $v, $a, $c, $s, $z, $pp, $p1, $p1t, $p2, $p2t, $e, $ts, $comp, $cam, $tran, $cn, $cpn, $rel,
+			$ct, $t, $st, $cntm, $pos, $credithours, $comm, $mot, $spe,
+			$convictions, $av, $sch, $hrs, $bd, $sd, $hdyh, $notes, $pass,
+			$suns, $sune, $mons, $mone, $tues, $tuee, $weds, $wede,
+			$thus, $thue, $fris, $frie, $sats, $sate, $mcp, $gender) {
 		$this->id = $e;
 		$this->start_date = $sd;
 		$this->venue = $v;
@@ -72,30 +93,32 @@ class Person {
 		$this->city = $c;
 		$this->state = $s;
 		$this->zip = $z;
-    		$this->profile_pic = $pp;
+    	$this->profile_pic = $pp;
 		$this->phone1 = $p1;
 		$this->phone1type = $p1t;
 		$this->phone2 = $p2;
 		$this->phone2type = $p2t;
 		$this->birthday = $bd;
 		$this->email = $e;
+		$this->shirt_size = $ts;
+		$this->computer = $comp;
+		$this->camera = $cam;
+		$this->transportation = $tran;
 		$this->contact_name = $cn;
 		$this->contact_num = $cpn;
 		$this->relation = $rel;
 		$this->contact_time = $ct;
 		$this->cMethod = $cntm;
+		$this->position = $pos;
+		$this->credithours = $credithours;
+		$this->howdidyouhear = $hdyh;
+		$this->commitment = $comm;
+		$this->motivation = $mot;
+		$this->specialties = $spe;
+		$this->convictions = $convictions;
 		$this->mustChangePassword = $mcp;
 		$this->type = $t !== "" ? explode(',', $t) : array();
-		if ($t =='volunteer'){
-			$this->access_level = 1;
-		} else if ($t== 'admin'){
-			$this->access_level == 2;
-		} else if ($t == 'main'){
-			$this->access_level == 3;
-		} else {
-			$this->access_level == 0;
-		}
-		//$this->access_level = $accessLevelsByRole[$t];
+		$this->access_level = 2;
 		//if ($t !== "") {
 			//$this->type = explode(',', $t);
 			//global $accessLevelsByRole;
@@ -105,14 +128,14 @@ class Person {
 			//$this->access_level = 0;
 		//}
 		$this->status = $st;
-		//if ($av == "")
-		//	$this->availability = array();
-		//else
-		//	$this->availability = explode(',', $av);
-		//if ($sch !== "")
-		//	$this->schedule = explode(',', $sch);
-		//else
-		//	$this->schedule = array();
+		if ($av == "")
+			$this->availability = array();
+		else
+			$this->availability = explode(',', $av);
+		if ($sch !== "")
+			$this->schedule = explode(',', $sch);
+		else
+			$this->schedule = array();
 		if ($hrs !== "")
 			$this->hours = explode(',', $hrs);
 		else
@@ -121,21 +144,21 @@ class Person {
 		if ($pass == "")
 			$this->password = password_hash($this->id, PASSWORD_BCRYPT); // default password
 		else
-		$this->password = $pass;
-		//$this->sundaysStart = $suns;
-		//$this->sundaysEnd = $sune;
-		//$this->mondaysStart = $mons;
-		//$this->mondaysEnd = $mone;
-		//$this->tuesdaysStart = $tues;
-		//$this->tuesdaysEnd = $tuee;
-		//$this->wednesdaysStart = $weds;
-		//$this->wednesdaysEnd = $wede;
-		//$this->thursdaysStart = $thus;
-		//$this->thursdaysEnd = $thue;
-		//$this->fridaysStart = $fris;
-		//$this->fridaysEnd = $frie;
-		//$this->saturdaysStart = $sats;
-		//$this->saturdaysEnd = $sate;
+			$this->password = $pass;
+		$this->sundaysStart = $suns;
+		$this->sundaysEnd = $sune;
+		$this->mondaysStart = $mons;
+		$this->mondaysEnd = $mone;
+		$this->tuesdaysStart = $tues;
+		$this->tuesdaysEnd = $tuee;
+		$this->wednesdaysStart = $weds;
+		$this->wednesdaysEnd = $wede;
+		$this->thursdaysStart = $thus;
+		$this->thursdaysEnd = $thue;
+		$this->fridaysStart = $fris;
+		$this->fridaysEnd = $frie;
+		$this->saturdaysStart = $sats;
+		$this->saturdaysEnd = $sate;
 		$this->gender = $gender;
 	}
 

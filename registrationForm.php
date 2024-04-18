@@ -47,7 +47,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 <main class="signup-form">
     <form class="signup-form" method="post">
         <h2>Registration Form</h2>
-        <p>Please fill out each section of the following form to add a person to the VMS.</p>
+        <p>Please fill out each section of the following form if you would like to volunteer for the organization.</p>
         <p>An asterisk (<em>*</em>) indicates a required field.</p>
         <fieldset>
             <legend>Personal Information</legend>
@@ -176,13 +176,136 @@ function buildSelect($name, $disabled=false, $selected=null) {
         </fieldset>
         <fieldset>
             <legend>Volunteer Information</legend>
-            <p>The following information will be used to help us determine your availability.</p>
+            <p>The following information will be used to help us determine your availability and skillset.</p>
             <label for="start-date"><em>* </em>I will be available to volunteer starting</label>
             <input type="date" id="start-date" name="start-date" value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d'); ?>">
+            <label><em>* </em>Availability</label>
+            <p>Enter the days and times you will be available to volunteer each week, starting from the date above.</p>
+            <div class="availability-container">
+                <div class="availability-day">
+                    <p class="availability-day-header">
+                        <input id="available-sundays" name="available-sundays" type="checkbox" required>
+                        <label for="available-sundays">Sundays</label>
+                    </p>
+                    <p><em class="hidden">* </em>From</p>
+                    <!-- <input type="text" id="sundays-start" name="sundays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                    <?php echo buildSelect('sundays-start', true) ?>
+                    <p><em class="hidden">* </em>to</p>
+                    <?php echo buildSelect('sundays-end', true) ?>
+                    <!-- <input type="text" id="sundays-end" name="sundays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                    <p id="sundays-range-error" class="hidden error">Start time must come before end time.</p>
+                </div>
+                <div class="availability-day">
+                    <p class="availability-day-header">
+                        <input id="available-mondays" name="available-mondays" type="checkbox" required>
+                        <label for="available-mondays">Mondays</label>
+                    </p>
+                    <p><em class="hidden">* </em>From</p>
+                    <?php echo buildSelect('mondays-start', true) ?>
+                    <!-- <input type="text" id="mondays-start" name="mondays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                    <p><em class="hidden">* </em>to</p>
+                    <?php echo buildSelect('mondays-end', true) ?>
+                    <!-- <input type="text" id="mondays-end" name="mondays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                    <p id="mondays-range-error" class="hidden error">Start time must come before end time.</p>
+                </div>
+                <div class="availability-day">
+                    <p class="availability-day-header">
+                        <input id="available-tuesdays" name="available-tuesdays" type="checkbox" required>
+                        <label for="available-tuesdays">Tuesdays</label>
+                    </p>
+                    <p><em class="hidden">* </em>From</p>
+                    <?php echo buildSelect('tuesdays-start', true) ?>
+                    <!-- <input type="text" id="tuesdays-start" name="tuesdays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                    <p><em class="hidden">* </em>to</p>
+                    <?php echo buildSelect('tuesdays-end', true) ?>
+                    <!-- <input type="text" id="tuesdays-end" name="tuesdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                    <p id="tuesdays-range-error" class="hidden error">Start time must come before end time.</p>
+                </div>
+                <div class="availability-day">
+                    <p class="availability-day-header">
+                        <input id="available-wednesdays" name="available-wednesdays" type="checkbox" required>
+                        <label for="available-wednesdays">Wednesdays</label>
+                    </p>
+                    <p><em class="hidden">* </em>From</p>
+                    <?php echo buildSelect('wednesdays-start', true) ?>
+                    <!-- <input type="text" id="wednesdays-start" name="wednesdays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                    <p><em class="hidden">* </em>to</p>
+                    <?php echo buildSelect('wednesdays-end', true) ?>
+                    <!-- <input type="text" id="wednesdays-end" name="wednesdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                    <p id="wednesdays-range-error" class="hidden error">Start time must come before end time.</p>
+                </div>
+                <div class="availability-day">
+                    <p class="availability-day-header">
+                        <input id="available-thursdays" name="available-thursdays" type="checkbox" required>
+                        <label for="available-thursdays">Thursdays</label>
+                    </p>
+                    <p>From</p>
+                    <?php echo buildSelect('thursdays-start', true) ?>
+                    <!-- <input type="text" id="thursdays-start" name="thursdays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                    <p>to</p>
+                    <?php echo buildSelect('thursdays-end', true) ?>
+                    <!-- <input type="text" id="thursdays-end" name="thursdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                    <p id="thursdays-range-error" class="hidden error">Start time must come before end time.</p>
+                </div>
+                <div class="availability-day">
+                    <p class="availability-day-header">
+                        <input id="available-fridays" name="available-fridays" type="checkbox" required>
+                        <label for="available-fridays">Fridays</label>
+                    </p>
+                    <p><em class="hidden">* </em>From</p>
+                    <?php echo buildSelect('fridays-start', true) ?>
+                    <!-- <input type="text" id="fridays-start" name="fridays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                    <p><em class="hidden">* </em>to</p>
+                    <?php echo buildSelect('fridays-end', true) ?>
+                    <!-- <input type="text" id="fridays-end" name="fridays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                    <p id="fridays-range-error" class="hidden error">Start time must come before end time.</p>
+                </div>
+                <div class="availability-day">
+                    <p class="availability-day-header">
+                        <input id="available-saturdays" name="available-saturdays" type="checkbox" required>
+                        <label for="available-saturdays">Saturdays</label>
+                    </p>
+                    <p><em class="hidden">* </em>From</p>
+                    <?php echo buildSelect('saturdays-start', true) ?>
+                    <!-- <input type="text" id="saturdays-start" name="saturdays-start" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 8:00AM" disabled> -->
+                    <p><em class="hidden">* </em>to</p>
+                    <?php echo buildSelect('saturdays-end', true) ?>
+                    <!-- <input type="text" id="saturdays-end" name="saturdays-end" pattern="([1-9]|10|11|12):[0-5][0-9]([aApP][mM])" placeholder="Ex. 4:00PM" disabled> -->
+                    <p id="saturdays-range-error" class="hidden error">Start time must come before end time.</p>
+                </div>
+            </div>
+
+            <label for="skills">Skills</label>
+            <textarea id="skills" name="skills" placeholder="Please let us know about any special skills you may have, including proficiencies in non-English languages."></textarea>
+
+            <label>Additional Information</label>
+            <div class="checkbox-grouping">
+                <div class="checkbox-pair">
+                    <input id="has-computer" name="has-computer" type="checkbox">
+                    <label for="has-computer">I own a computer</label>
+                </div>
+                <div class="checkbox-pair">
+                    <input id="has-camera" name="has-camera" type="checkbox">
+                    <label for="has-camera">I own a camera</label>
+                </div>
+                <div class="checkbox-pair">
+                    <input id="has-transportation" name="has-transportation" type="checkbox">
+                    <label for="has-transportation">I have access to reliable transportation</label>
+                </div>
+            </div>
+
+            <label for="shirt-size"><em>* </em>T-shirt Size</label>
+            <select id="shirt-size" name="shirt-size" required>
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">Extra Large</option>
+                <option value="XXL">2X Large</option>
+            </select>
         </fieldset>
         <fieldset>
             <legend>Login Credentials</legend>
-            <p>The person using this account will use the following to log in to and access the VMS.</p>
+            <p>You will use the following information to log in to the VMS.</p>
 
             <label for="email-relisting">E-mail Address</label>
             <span id="email-dupe" class="pseudo-input">Enter your e-mail address above</span>
@@ -193,11 +316,6 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="password-reenter"><em>* </em>Re-enter Password</label>
             <input type="password" id="password-reenter" name="password-reenter" placeholder="Re-enter password" required>
             <p id="password-match-error" class="error hidden">Passwords do not match!</p>
-
-            <label for="type"><em>* </em>Account Type</label>
-            <select id="type" name="type" required>
-                <option value="volunteer">Volunteer</option>
-            </select>
         </fieldset>
         <p>By pressing Submit below, you are agreeing to volunteer for the organization.</p>
         <input type="submit" name="registration-form" value="Submit">
