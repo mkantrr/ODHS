@@ -15,7 +15,7 @@ function add_hours($email, $date, $time, $duration) {
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
-        mysqli_query($con, 'INSERT INTO dbhours (hourID, userEmail, date, time, duration) VALUES(
+        mysqli_query($con, 'INSERT INTO dbHours (hourID, userEmail, date, time, duration) VALUES(
             NULL, "' .
             $email . '","' .
             $date . '","' .
