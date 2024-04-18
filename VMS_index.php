@@ -70,6 +70,12 @@
                         <span>Create Event</span>
                     </div>
                 <?php endif ?>
+                <?php if ($_SESSION['access_level'] >= 2 || $_SESSION['type'] == 'adoption center'): ?>
+                    <div class="dashboard-item" data-link="logHours.php">
+                        <img src="images/log-hours.svg">
+                        <span>Log Hours</span>
+                    </div>
+                <?php endif ?>
 				<div class="dashboard-item" data-link="addLocation.php">
                     <img src="images/settings.png">
                     <span>Add Location</span>

@@ -199,6 +199,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
                 <option value="volunteer">Volunteer</option>
                 <option value="admin">Admin</option>
                 <option value="main">Main</option>
+                <option value="adoption center">Adoption Center</option>
             </select>
         </fieldset>
         <p>By pressing Submit below, you are agreeing to volunteer for the organization.</p>
