@@ -13,19 +13,14 @@
  * Sign up a Volunteer for an Event, adding an entry of the Person ID and Event ID, then return True. If such an entry
  * already exists, return False.
  */
-function sign_up($person_id, $email_id) {
+function sign_up($event_id, $person_id) {
     $con=connect();
-    $query = "SELECT * FROM dbEventsPersons WHERE date = '" . $date . "' AND time = ' . $time . '";
+    $query = "SELECT * FROM dbEventsPersons WHERE event_id = $event_id AND person_id = '" . $person_id . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
-        mysqli_query($con, 'INSERT INTO dbHours (hourID, userEmail, date, time, duration) VALUES(
-            NULL, "' .
-            $email . '","' .
-            $date . '","' .
-            $time . '","' .
-            $duration . '");'
-        );
+        $query = "INSERT INTO dbeventspersons (event_id, person_id) VALUES($event_id, '" . $person_id . "')";
+        mysqli_query($con, $query);
         mysqli_close($con);
         return true;
     }
@@ -36,43 +31,40 @@ function sign_up($person_id, $email_id) {
 /**
  * Remove an hour from dbHours table, if it doesn't exist, return false
  */
-function remove_hours($id) {
+function remove_sign_up($event_id, $person_id) {
     $con=connect();
-    $query = "SELECT * FROM dbHours WHERE hourID = " . $id . "";
+    $query = "SELECT * FROM dbeventspersons WHERE event_id = ' . $event_id . ' AND person_id = '" . $person_id . "'";
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_close($con);
         return false;
     }
-    $query = "DELETE FROM dbHours WHERE hourID = " . $id . "";
+    $query = "DELETE FROM dbeventspersons WHERE event_id = ' . $event_id . ' AND person_id = '" . $person_id . "'";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return true;
 }
 
 /**
- * Return an array of hours logged by a given email
+ * Return an array of events signed up for by a given person
  */
-function retrieve_hours_by_email($email) {
-	if (!isset($email) || $email == "" || $email == null) return $hours;
-	$con=connect();
-    $query = "SELECT * FROM dbHours WHERE userEmail = '" . $email .  "'  ORDER BY date, time";
+function retrieve_events_by_person($person_id) {
+    $query = "SELECT * FROM dbeventspersons WHERE person_id = '" . $person_id .  "'";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;	
 }
 
 /**
- * Return the sum of all logged hour durations from a specific user
+ * Return an array of persons signed up for a given event
  */
-function total_hours($email) {
-    $con=connect();
-    $query = "SELECT SUM(duration) FROM dbHours WHERE userEmail = '" . $email . "'";
+function retrieve_persons_by_event($event_id) {
+    $query = "SELECT * FROM dbeventspersons WHERE event_id = ' . $event_id .  '";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
-    return $result;
+    return $result;	
 }
 
-?>
 
 ?>
+
