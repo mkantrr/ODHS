@@ -4,7 +4,7 @@
         if (is_array($input)) {
             $arr = [];
             foreach ($input as $key => $value) {
-                if ($value != NULL) {
+                if (!is_null($value)) {
                     $arr[$key] = htmlspecialchars($value);
                 }
             }
