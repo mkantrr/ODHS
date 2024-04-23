@@ -66,6 +66,8 @@
         //pages volunteers can view
         $permission_array['vms_index.php']= 1;         // Volunteer Management Service
         $permission_array['help.php'] = 1;
+        $permission_array['signUp.php'] = 1;
+        $permission_array['eventSignUp.php'] = 1;
         $permission_array['dashboard.php'] = 1;
         $permission_array['calendar.php'] = 1;
         $permission_array['eventsearch.php'] = 1;

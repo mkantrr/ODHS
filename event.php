@@ -447,6 +447,9 @@ if ($_SESSION['system_type'] == 'MedTracker') {
             <button onclick="showDeleteConfirmation()">Delete Event</button>
         <?php endif ?>
 
+        <?php if (!$event_in_past) :?>
+            <a href="signUp.php?id=<?php echo $id ?>" class="button" style="margin-top">Sign Up for this Event</a>
+        <?php endif ?>
         <a href="calendar.php?month=<?php echo substr($event_info['date'], 0, 7) ?>" class="button cancel" style="margin-top: -.5rem">Return to Calendar</a>
     </main>
 </body>
