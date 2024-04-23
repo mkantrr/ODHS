@@ -97,7 +97,10 @@
         //Check if they're at a valid page for their access level.
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
         $current_page = substr($current_page, strpos($current_page,"/"));
+        if($_SESSION['dark-mode'] == true){
+            echo '<script>darkModeToggle();</script>';
         
+        }
         if($permission_array[$current_page]>$_SESSION['access_level']){
             //in this case, the user doesn't have permission to view this page.
             //we redirect them to the index page.
@@ -154,7 +157,9 @@
 
             echo('</div>');
             echo('</li>');
-
+            echo('<li class = "button">');
+            echo('<button onclick = "darkModeToggle()"> Toggle dark mode </button>');
+            echo('</li>');
             //echo('<span class="nav-divider">|</span>');
             echo('<li class="nav-item dropdown">');
             echo('<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Others</a>');

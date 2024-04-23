@@ -92,6 +92,11 @@ table, td, tr, th, form, fieldset, em, button, a {
     font-family: Montserrat;
     font-weight: 300;
 }
+.dark-mode{
+    --page-background-color: black;
+    --page-font-color: white;
+}
+
 
 /* Page Sections */
 
@@ -107,6 +112,12 @@ body {
     color: var(--page-font-color);
     font-family: Montserrat;
 }
+.dark-mode{
+    background-color:  black;
+    color: white;
+    font-family: Montserrat;
+}
+
 
 header > img {
     height: 5rem;

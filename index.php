@@ -12,7 +12,7 @@
         }
         die();
     }
-        
+    
     include_once('database/dbPersons.php');
     include_once('domain/Person.php');
     // Get date?

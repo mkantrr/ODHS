@@ -66,6 +66,11 @@ function validate12hTimeRange(start, end) {
 function validateDateRange(start, end) {
     return start <= end;
 }
+//inspiration from https://www.w3schools.com/howto/howto_js_toggle_dark_mode.asp
+function darkModeToggle(){
+var element =  document.body;
+element.classList.toggle("dark-mode");
+}
 
 $(function() {
     $('#menu-toggle').click(function() {
@@ -91,7 +96,7 @@ $(function() {
             document.location = link;
         }
     });
-
+    
     let numberChecked = 0;
     $('div.availability-day > p > input[type=checkbox]').each(function() {
         if ($(this).prop('checked')) {
