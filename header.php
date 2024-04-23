@@ -293,29 +293,37 @@
                 echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'VMS_index.php">Home</a></li>');
                 //echo('<span class="nav-divider">|</span>');
     
+                // EVENTS DROPDOWN
                 echo('<li class="nav-item dropdown">');
                 echo('<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Events</a>');
                 echo('<div class="dropdown-menu" aria-labelledby="navbarDropdown">');
                 echo('<a class="dropdown-item" href="' . $path . 'calendar.php">Calendar</a>');
                 echo('<a class="dropdown-item" href="' . $path . 'inbox.php">Notifications</a>');
-                echo('<a class="dropdown-item" href="' . $path . 'addEvent.php">Add</a>');
+                if ($_SESSION['type'] == 'main' || $_SESSION['type'] == 'admin') {
+                    echo('<a class="dropdown-item" href="' . $path . 'addEvent.php">Add</a>');
+                }
                 echo('</div>');
                 echo('</li>');
-    
+                
+                //   VOLUNTEERS DROPDOWN
                 //echo('<span class="nav-divider">|</span>');
-                echo('<li class="nav-item dropdown">');
-                echo('<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Volunteers</a>');
-                echo('<div class="dropdown-menu">');
-                echo('<a class="dropdown-item" href="' . $path . 'personSearch.php">Search</a>
-                    <a class="dropdown-item" href="register.php">Add</a>');
-                echo('</div>');
-                echo('</li>');
-    
+                if ($_SESSION['type'] == 'main' || $_SESSION['type'] == 'admin') {
+                    echo('<li class="nav-item dropdown">');
+                    echo('<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Volunteers</a>');
+                    echo('<div class="dropdown-menu">');
+                    echo('<a class="dropdown-item" href="' . $path . 'personSearch.php">Search</a>
+                        <a class="dropdown-item" href="register.php">Add</a>');
+                    echo('</div>');
+                    echo('</li>');
+                }
+                // OTHERS DROPDOWN
                 //echo('<span class="nav-divider">|</span>');
                 echo('<li class="nav-item dropdown">');
                 echo('<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Others</a>');
                 echo('<div class="dropdown-menu">');
-                echo('<a class="dropdown-item" href="' . $path . 'addLocation.php">Add Location</a>');
+                if ($_SESSION['type'] == 'main' || $_SESSION['type'] == 'admin') {
+                    echo('<a class="dropdown-item" href="' . $path . 'addLocation.php">Add Location</a>');
+                }
                 echo('<a class="dropdown-item" href="' . $path . 'changePassword.php">Change Password</a>');
     
                 echo('</div>');
