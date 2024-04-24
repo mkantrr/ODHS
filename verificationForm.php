@@ -51,12 +51,10 @@ require('fpdf/fpdf.php');
     $col_duration = "";
 
     while ($row = mysqli_fetch_assoc($hours)) {
-        $userEmail = $row["userEmail"];
         $date = $row["date"];
         $time = $row["time"];
         $duration = $row["duration"];
 
-        $col_userEmail = $col_userEmail.$userEmail."\n";
         $col_date = $col_date.$date."\n";
         $col_time = $col_time.$time."\n";
         $col_duration = $col_duration.$duration."\n";
@@ -93,7 +91,7 @@ function BasicTable($header, $data)
         $this->Ln();
     }
 }
-} 
+}
  
   
 // Instantiation of FPDF class 
@@ -145,6 +143,42 @@ $pdf->Cell(40,10,'folding laundry, and socializing with the dogs. ' . $volunteer
 $pdf->Ln(5);
 $pdf->Cell(40,10,'organization.');
 $pdf->Ln(10);
+
+//Fields Name position
+$Y_Fields_Name_position = 20;
+//Table position, under Fields Name
+$Y_Table_Position = 26;
+$pdf->SetFont('Arial','B',12);
+$pdf->SetY($Y_Fields_Name_position);
+$pdf->SetX(45);
+$pdf->Cell(20,6,'CODE',1,0,'L',1);
+$pdf->SetX(65);
+$pdf->Cell(100,6,'NAME',1,0,'L',1);
+$pdf->SetX(135);
+$pdf->Cell(30,6,'PRICE',1,0,'R',1);
+$pdf->Ln();
+
+$pdf->SetFont('Arial','',12);
+$pdf->SetY($Y_Table_Position);
+$pdf->SetX(45);
+$pdf->MultiCell(20,6,$col_date,1);
+$pdf->SetY($Y_Table_Position);
+$pdf->SetX(65);
+$pdf->MultiCell(100,6,$col_time,1);
+$pdf->SetY($Y_Table_Position);
+$pdf->SetX(135);
+$pdf->MultiCell(30,6,$col_duration,1,'R');
+
+//Create lines (boxes) for each ROW (Product)
+//If you don't use the following code, you don't create the lines separating each row
+$i = 0;
+$pdf->SetY($Y_Table_Position);
+while ($i < $num_of_rows)
+{
+    $pdf->SetX(45);
+    $pdf->MultiCell(120,6,'',1);
+    $i = $i +1;
+}
 
 //Table of Hours
 $pdf->Cell(40,10,"The following is a record of " . $volunteerName . "'s self-reported hours:");
