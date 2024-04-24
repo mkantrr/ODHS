@@ -54,7 +54,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 
     <?php if ($loggedIn): ?>
         <?php if ($_SESSION['type'] == 'adoption center'): ?>
-            <a class="button cancel" href="loghours.php" style="margin-top: .5rem">Cancel</a>
+            <a class="button cancel" href="logHours.php" style="margin-top: .5rem">Cancel</a>
         </div>
         <?php else: ?>
             <a class="button cancel" href="index.php" style="margin-top: .5rem">Cancel</a>

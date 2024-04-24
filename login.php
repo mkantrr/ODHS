@@ -73,6 +73,7 @@
                 // hard code root privileges
                 if ($user->get_id() == 'vmsroot') {
                     $_SESSION['access_level'] = 3;
+                    $_SESSION['type'] = 'main';
                     header('Location:centralMenu.php');
                 }
                 if ($changePassword) {
