@@ -2,6 +2,65 @@
 <?php 
   
 require('fpdf/fpdf.php'); 
+
+//Created by Niko Toro
+    // Template for new VMS pages. Base your new page on this one
+
+    // Make session information accessible, allowing us to associate
+    // data with the logged-in user.
+    session_cache_expire(30);
+    session_start();
+    ini_set("display_errors",1);
+    error_reporting(E_ALL);
+    $loggedIn = false;
+    $accessLevel = 0;
+    $userID = null;
+    if (isset($_SESSION['_id'])) {
+        $loggedIn = true;
+        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+        $accessLevel = $_SESSION['access_level'];
+        $userID = $_SESSION['_id'];
+    }
+    if (!$loggedIn) {
+        header('Location: login.php');
+        die();
+    }
+    $isAdmin = $accessLevel >= 2;
+    require_once('database/dbPersons.php');
+    require_once('database/dbHours.php');
+    if ($isAdmin && isset($_GET['id'])) {
+        require_once('include/input-validation.php');
+        $args = sanitize($_GET);
+        $id = $args['id'];
+        $viewingSelf = $id == $userID;
+    } else {
+        $id = $_SESSION['_id'];
+        $viewingSelf = true;
+    }
+    $volunteer = retrieve_person($id);
+    $volunteerName = get_name_from_id($id);
+    $email = get_email_from_id($id);
+    $totalHours = total_hours($email);
+    $hours = retrieve_hours_by_email($email);
+
+
+    $num_of_rows = mysqli_num_rows($hours);
+    $col_userEmail = "";
+    $col_date = "";
+    $col_time = "";
+    $col_duration = "";
+
+    while ($row = mysqli_fetch_assoc($hours)) {
+        $userEmail = $row["userEmail"];
+        $date = $row["date"];
+        $time = $row["time"];
+        $duration = $row["duration"];
+
+        $col_userEmail = $col_userEmail.$userEmail."\n";
+        $col_date = $col_date.$date."\n";
+        $col_time = $col_time.$time."\n";
+        $col_duration = $col_duration.$duration."\n";
+    }
   
 class PDF extends FPDF { 
   
@@ -18,7 +77,24 @@ class PDF extends FPDF {
         $this->Cell(0,10,'Page ' .  
             $this->PageNo() . '/{nb}',0,0,'C'); 
     } 
+
+    // Simple table
+function BasicTable($header, $data)
+{
+    // Header
+    foreach($header as $col)
+        $this->Cell(40,7,$col,1);
+    $this->Ln();
+    // Data
+    foreach($data as $row)
+    {
+        foreach($row as $col)
+            $this->Cell(40,6,$col,1);
+        $this->Ln();
+    }
+}
 } 
+ 
   
 // Instantiation of FPDF class 
 $pdf = new PDF(); 
@@ -56,25 +132,29 @@ $pdf->Cell(40,10,'overpopulation of these animals through a spay and neuter prog
 $pdf->Ln(10);
 
 //Second Paragraph
-$pdf->Cell(40,10,'[FIRST NAME LAST NAME] self-reports that he volunteered for [NUMBER] hours between');
+while ($result_row = mysqli_fetch_assoc($totalHours)) {
+    $field1name = $result_row["SUM(duration)"];
+$pdf->Cell(40,10,'' . $volunteerName . ' self-reports that he volunteered for ' . $field1name . ' hours between');
+}
 $pdf->Ln(5);
 $pdf->Cell(40,10,'[OLDEST DATE LOGGED] and [MOST RECENT DATE LOGGED] with our rescue completing several');
 $pdf->Ln(5);
 $pdf->Cell(40,10,'tasks which include the following: walking dogs, cleaning kennels, cleaning dishes, washing and');
 $pdf->Ln(5);
-$pdf->Cell(40,10,'folding laundry, and socializing with the dogs. [PERSON] has contributed wonderfully to our');
+$pdf->Cell(40,10,'folding laundry, and socializing with the dogs. ' . $volunteerName . ' has contributed wonderfully to our');
 $pdf->Ln(5);
 $pdf->Cell(40,10,'organization.');
 $pdf->Ln(10);
 
 //Table of Hours
-$pdf->Cell(40,10,"The following is a record of [PERSON]'s self-reported hours:");
+$pdf->Cell(40,10,"The following is a record of " . $volunteerName . "'s self-reported hours:");
 $pdf->Ln(10);
-
 //Contact
 $pdf->Cell(40,10,"If you have any questions please contact us at volunteer@olddominionhumanesociety.org for");
 $pdf->Ln(5);
 $pdf->Cell(40,10,"additional information.");
+
+
 $pdf->Output(); 
   
 ?>
