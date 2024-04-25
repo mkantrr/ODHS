@@ -42,6 +42,8 @@ require('fpdf/fpdf.php');
     $email = get_email_from_id($id);
     $totalHours = total_hours($email);
     $hours = retrieve_hours_by_email($email);
+    $first_date = get_first_date($email);
+    $last_date = get_last_date($email);
 
 
     $num_of_rows = mysqli_num_rows($hours);
@@ -75,22 +77,6 @@ class PDF extends FPDF {
         $this->Cell(0,10,'Page ' .  
             $this->PageNo() . '/{nb}',0,0,'C'); 
     } 
-
-    // Simple table
-function BasicTable($header, $data)
-{
-    // Header
-    foreach($header as $col)
-        $this->Cell(40,7,$col,1);
-    $this->Ln();
-    // Data
-    foreach($data as $row)
-    {
-        foreach($row as $col)
-            $this->Cell(40,6,$col,1);
-        $this->Ln();
-    }
-}
 }
  
   
@@ -135,39 +121,42 @@ while ($result_row = mysqli_fetch_assoc($totalHours)) {
 $pdf->Cell(40,10,'' . $volunteerName . ' self-reports that they volunteered for ' . $field1name . ' hours between');
 }
 $pdf->Ln(5);
-$pdf->Cell(40,10,'[OLDEST DATE LOGGED] and [MOST RECENT DATE LOGGED] with our rescue completing several');
+$pdf->Cell(40,10,'' . $first_date . ' and '. $last_date . ' with our rescue completing several taskes which include the');
 $pdf->Ln(5);
-$pdf->Cell(40,10,'tasks which include the following: walking dogs, cleaning kennels, cleaning dishes, washing and');
+$pdf->Cell(40,10,'following: walking dogs, cleaning kennels, cleaning dishes, washing and folding laundry,');
 $pdf->Ln(5);
-$pdf->Cell(40,10,'folding laundry, and socializing with the dogs. ' . $volunteerName . ' has contributed wonderfully to our');
-$pdf->Ln(5);
-$pdf->Cell(40,10,'organization.');
+$pdf->Cell(40,10,'and socializing with the dogs. ' . $volunteerName . ' has contributed wonderfully to our organization');
 $pdf->Ln(10);
 
+//Table of Hours
+$pdf->Cell(40,10,"The following is a record of " . $volunteerName . "'s self-reported hours:");
+$pdf->Ln(10);
+
+$pdf->SetFillColor(232,232,232);
 //Fields Name position
-$Y_Fields_Name_position = 20;
+$Y_Fields_Name_position = 145;
 //Table position, under Fields Name
-$Y_Table_Position = 26;
+$Y_Table_Position = 151;
 $pdf->SetFont('Arial','B',12);
 $pdf->SetY($Y_Fields_Name_position);
 $pdf->SetX(45);
-$pdf->Cell(20,6,'CODE',1,0,'L',1);
+$pdf->Cell(20,6,'HOURS',1,0,'L',1);
 $pdf->SetX(65);
-$pdf->Cell(100,6,'NAME',1,0,'L',1);
-$pdf->SetX(135);
-$pdf->Cell(30,6,'PRICE',1,0,'R',1);
+$pdf->Cell(70,6,'DATE',1,0,'L',1);
+$pdf->SetX(105);
+$pdf->Cell(30,6,'TIME',1,0,'L',1);
 $pdf->Ln();
 
 $pdf->SetFont('Arial','',12);
 $pdf->SetY($Y_Table_Position);
 $pdf->SetX(45);
-$pdf->MultiCell(20,6,$col_date,1);
+$pdf->MultiCell(20,6,$col_duration,1);
 $pdf->SetY($Y_Table_Position);
 $pdf->SetX(65);
-$pdf->MultiCell(100,6,$col_time,1);
+$pdf->MultiCell(70,6,$col_date,1);
 $pdf->SetY($Y_Table_Position);
-$pdf->SetX(135);
-$pdf->MultiCell(30,6,$col_duration,1,'R');
+$pdf->SetX(105);
+$pdf->MultiCell(30,6,$col_time,1,'L');
 
 //Create lines (boxes) for each ROW (Product)
 //If you don't use the following code, you don't create the lines separating each row
@@ -176,14 +165,11 @@ $pdf->SetY($Y_Table_Position);
 while ($i < $num_of_rows)
 {
     $pdf->SetX(45);
-    $pdf->MultiCell(120,6,'',1);
+    $pdf->MultiCell(90,6,'',1);
     $i = $i +1;
 }
-
-//Table of Hours
-$pdf->Cell(40,10,"The following is a record of " . $volunteerName . "'s self-reported hours:");
-$pdf->Ln(10);
 //Contact
+$pdf->Ln(5);
 $pdf->Cell(40,10,"If you have any questions please contact us at volunteer@olddominionhumanesociety.org for");
 $pdf->Ln(5);
 $pdf->Cell(40,10,"additional information.");
