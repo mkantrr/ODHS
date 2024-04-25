@@ -69,4 +69,30 @@ function total_hours($email) {
     return $result;
 }
 
+/**
+ * Return the earliest date of a user's logged hours
+ */
+function get_first_date($email) {
+    $con=connect();
+    $query = "SELECT MIN(date) FROM dbHours WHERE userEmail = '" . $email . "'";
+    $result = mysqli_query($con,$query);
+    $result_row = mysqli_fetch_assoc($result);
+    $date = $result_row["MIN(date)"];
+    mysqli_close($con);
+    return $date;
+}
+
+/**
+ * Return the latest date of a user's logged hours
+ */
+function get_last_date($email) {
+    $con=connect();
+    $query = "SELECT MAX(date) FROM dbHours WHERE userEmail = '" . $email . "'";
+    $result = mysqli_query($con,$query);
+    $result_row = mysqli_fetch_assoc($result);
+    $date = $result_row["MAX(date)"];
+    mysqli_close($con);
+    return $date;
+}
+
 ?>
