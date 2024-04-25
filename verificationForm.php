@@ -119,7 +119,7 @@ $pdf->Ln(5);
 $pdf->Cell(40,10,'3602 Lafayette Blvd. Ste. 102');
 $pdf->Ln(5); 
 $pdf->Cell(40,10,'Fredericksburg, VA 22408');
-$pdf->Ln(5);
+$pdf->Ln(15);
 $pdf->Cell(40,10,'To Whom It May Concern:');
 $pdf->Ln(10);
 $pdf->Cell(40,10,'Old Dominion Humane Society is a volunteer organization dedicated to providing a better life');
@@ -132,7 +132,7 @@ $pdf->Ln(10);
 //Second Paragraph
 while ($result_row = mysqli_fetch_assoc($totalHours)) {
     $field1name = $result_row["SUM(duration)"];
-$pdf->Cell(40,10,'' . $volunteerName . ' self-reports that he volunteered for ' . $field1name . ' hours between');
+$pdf->Cell(40,10,'' . $volunteerName . ' self-reports that they volunteered for ' . $field1name . ' hours between');
 }
 $pdf->Ln(5);
 $pdf->Cell(40,10,'[OLDEST DATE LOGGED] and [MOST RECENT DATE LOGGED] with our rescue completing several');
