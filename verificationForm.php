@@ -143,22 +143,22 @@ $Y_Table_Position = 151;
 $pdf->SetFont('Arial','B',12);
 $pdf->SetY($Y_Fields_Name_position);
 $pdf->SetX(45);
+$pdf->Cell(30,6,'DATE',1,0,'L',1);
+$pdf->SetX(75);
 $pdf->Cell(20,6,'HOURS',1,0,'L',1);
-$pdf->SetX(65);
-$pdf->Cell(70,6,'DATE',1,0,'L',1);
-$pdf->SetX(105);
+$pdf->SetX(95);
 $pdf->Cell(30,6,'TIME',1,0,'L',1);
 $pdf->Ln();
 
 $pdf->SetFont('Arial','',12);
 $pdf->SetY($Y_Table_Position);
 $pdf->SetX(45);
+$pdf->MultiCell(30,6,$col_date,1);
+$pdf->SetY($Y_Table_Position);
+$pdf->SetX(75);
 $pdf->MultiCell(20,6,$col_duration,1);
 $pdf->SetY($Y_Table_Position);
-$pdf->SetX(65);
-$pdf->MultiCell(70,6,$col_date,1);
-$pdf->SetY($Y_Table_Position);
-$pdf->SetX(105);
+$pdf->SetX(95);
 $pdf->MultiCell(30,6,$col_time,1,'L');
 
 //Create lines (boxes) for each ROW (Product)
@@ -167,7 +167,7 @@ $pdf->SetY($Y_Table_Position);
 while ($i < $num_of_rows)
 {
     $pdf->SetX(45);
-    $pdf->MultiCell(90,6,'',1);
+    $pdf->MultiCell(80,6,'',1);
     $i = $i +1;
 }
 //Contact
