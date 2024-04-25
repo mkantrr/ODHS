@@ -3,7 +3,9 @@
   
 require('fpdf/fpdf.php'); 
 
-//Created by Niko Toro
+//Created by Joseph Vogtli
+//Table code from Carlos Vasquez Suez (http://www.fpdf.org/en/script/script10.php)
+//PDF code taken from FPDF Tutorials (http://www.fpdf.org/)
     // Template for new VMS pages. Base your new page on this one
 
     // Make session information accessible, allowing us to associate
@@ -132,6 +134,7 @@ $pdf->Ln(10);
 $pdf->Cell(40,10,"The following is a record of " . $volunteerName . "'s self-reported hours:");
 $pdf->Ln(10);
 
+//Color of Column Labels
 $pdf->SetFillColor(232,232,232);
 //Fields Name position
 $Y_Fields_Name_position = 145;
@@ -159,7 +162,6 @@ $pdf->SetX(105);
 $pdf->MultiCell(30,6,$col_time,1,'L');
 
 //Create lines (boxes) for each ROW (Product)
-//If you don't use the following code, you don't create the lines separating each row
 $i = 0;
 $pdf->SetY($Y_Table_Position);
 while ($i < $num_of_rows)
