@@ -43,7 +43,7 @@ function buildSelect($name, $disabled=false, $selected=null) {
 }
 ?>
 
-<h1>New Volunteer Registration</h1>
+<h1>New Account Registration</h1>
 <main class="signup-form">
     <form class="signup-form" method="post">
         <h2>Registration Form</h2>
@@ -197,6 +197,9 @@ function buildSelect($name, $disabled=false, $selected=null) {
             <label for="type"><em>* </em>Account Type</label>
             <select id="type" name="type" required>
                 <option value="volunteer">Volunteer</option>
+                <option value="admin">Admin</option>
+                <option value="main">Main</option>
+                <option value="adoption center">Adoption Center</option>
             </select>
         </fieldset>
         <p>By pressing Submit below, you are agreeing to volunteer for the organization.</p>

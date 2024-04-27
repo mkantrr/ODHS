@@ -48,13 +48,15 @@
         $calendarEndEpoch = strtotime($calendarEnd);
         $weeks = 6;
     }
+
+if ($_SESSION['system_type'] == 'MedTracker') {
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <?php require('universal.inc'); ?>
         <script src="js/calendar.js"></script>
-        <title>ODHS Medicine Tracker | Events Calendar</title>
+        <title>ODHS Medicine Tracker | Appointments Calendar</title>
         <style>.happy-toast { margin: 0 1rem 1rem 1rem; }</style>
     </head>
     <body>
@@ -93,6 +95,126 @@
             <h1 class='calendar-header'>
                 <img id="previous-month-button" src="images/arrow-back.png" data-month="<?php echo date("Y-m", $previousMonth); ?>">
                 <span id="calendar-heading-month">Appointments - <?php echo date('F Y', $month); ?></span>
+                <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m", $nextMonth); ?>">
+            </h1>
+            <!-- <input type="date" id="month-jumper" value="<?php echo date('Y-m-d', $month); ?>" min="2023-01-01"> -->
+            <?php if (isset($_GET['deleteSuccess'])) : ?>
+                <div class="happy-toast">Appointment deleted successfully.</div>
+            <?php elseif (isset($_GET['completeSuccess'])) : ?>
+                <div class="happy-toast">Appointment completed successfully.</div>
+            <?php endif ?>
+            <div class="table-wrapper">
+                <table id="calendar">
+                    <thead>
+                        <tr>
+                            <th>Sunday</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        $date = $calendarStart;
+                        $start = date('Y-m-d', $calendarStart);
+                        $end = date('Y-m-d', $calendarEndEpoch);
+                        require_once('database/dbAppointments.php');
+                        $events = fetch_events_in_date_range($start, $end);
+                        for ($week = 0; $week < $weeks; $week++) {
+                            echo '
+                                <tr class="calendar-week">
+                            ';
+                            for ($day = 0; $day < 7; $day++) {
+                                $extraAttributes = '';
+                                $extraClasses = '';
+                                if ($date == $today) {
+                                    $extraClasses = ' today';
+                                }
+                                if (date('m', $date) != date('m', $month)) {
+                                    $extraClasses .= ' other-month';
+                                    $extraAttributes .= ' data-month="' . date('Y-m', $date) . '"';
+                                }
+                                $eventsStr = '';
+                                $e = date('Y-m-d', $date);
+                                if (isset($events[$e])) {
+                                    $dayEvents = $events[$e];
+                                    foreach ($dayEvents as $info) {
+                                        if($info["completed"] == "no"){
+                                            $eventsStr .= '<a class="calendar-event" style="background-color:#1a7024" href="event.php?id=' . $info['id'] . '">' . $info['abbrevName'] .  '</a>';
+                                        } else {
+                                            $eventsStr .= '<a class="calendar-event" href="event.php?id=' . $info['id'] . '">' . $info['abbrevName'] .  '</a>';
+                                        }
+                                    }
+                                }
+                                echo '<td class="calendar-day' . $extraClasses . '" ' . $extraAttributes . ' data-date="' . date('Y-m-d', $date) . '">
+                                    <div class="calendar-day-wrapper">
+                                        <p class="calendar-day-number">' . date('j', $date) . '</p>
+                                        ' . $eventsStr . '
+                                    </div>
+                                </td>';
+                                $date = strtotime(date('Y-m-d', $date) . ' +1 day');
+                            }
+                            echo '
+                                </tr>';
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+            <div id="calendar-footer">
+                <a class="button cancel" href="index.php">Return to Dashboard</a>
+            </div>
+        </main>
+    </body>
+</html>
+<?php } else { ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php require('universal.inc'); ?>
+        <script src="js/calendar.js"></script>
+        <title>ODHS VMS | Events Calendar</title>
+        <style>.happy-toast { margin: 0 1rem 1rem 1rem; }</style>
+    </head>
+    <body>
+        <div id="month-jumper-wrapper" class="hidden">
+            <form id="month-jumper">
+                <p>Choose a month to jump to</p>
+                <div>
+                    <select id="jumper-month">
+                        <?php
+                            $months = [
+                                'January', 'February', 'March', 'April',
+                                'May', 'June', 'July', 'August',
+                                'September', 'October', 'November', 'December'
+                            ];
+                            $digit = 1;
+                            foreach ($months as $m) {
+                                $month_digits = str_pad($digit, 2, '0', STR_PAD_LEFT);
+                                if ($month_digits == $month2digit) {
+                                    echo "<option value='$month_digits' selected>$m</option>";
+                                } else {
+                                    echo "<option value='$month_digits'>$m</option>";
+                                }
+                                $digit++;
+                            }
+                        ?>
+                    </select>
+                    <input id="jumper-year" type="number" value="<?php echo $year ?>" required min="2023">
+                </div>
+                <input type="hidden" id="jumper-value" name="month" value="<?php echo 'test' ?>">
+                <input type="submit" value="View">
+                <button id="jumper-cancel" class="cancel" type="button">Cancel</button>
+            </form>
+        </div>
+        <?php require('header.php'); ?>
+        <main class="calendar-view">
+            <h1 class='calendar-header'>
+                <img id="previous-month-button" src="images/arrow-back.png" data-month="<?php echo date("Y-m", $previousMonth); ?>">
+                <span id="calendar-heading-month">Events - <?php echo date('F Y', $month); ?></span>
                 <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m", $nextMonth); ?>">
             </h1>
             <!-- <input type="date" id="month-jumper" value="<?php echo date('Y-m-d', $month); ?>" min="2023-01-01"> -->
@@ -163,8 +285,9 @@
                 </table>
             </div>
             <div id="calendar-footer">
-                <a class="button cancel" href="index.php">Return to Dashboard</a>
+                <a class="button cancel" href="VMS_index.php">Return to Dashboard</a>
             </div>
         </main>
     </body>
 </html>
+<?php } ?>

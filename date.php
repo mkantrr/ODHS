@@ -33,6 +33,8 @@
         header('Location: calendar.php');
         die();
     }
+
+if ($_SESSION['system_type'] == 'MedTracker') {
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,7 +55,6 @@
                 $events = fetch_events_on_date($date);
                 if ($events) {
                     foreach ($events as $event) {
-                        $animal = get_animal($event["animalID"])[0]["name"];
                         $location = get_location($event['locationID'])[0]["name"]; 
                         echo "
                             <table class='event'>
@@ -63,7 +64,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr><td>Animal</td><td>" . $animal . " </td></tr>
                                     <tr><td>Time</td><td>" . time24hto12h($event['startTime']) . "</td></tr>
                                     <tr><td>Location</td><td>" . $location . "</td></tr>
                                     <tr><td>Description</td><td>" . $event['description'] . "</td></tr>
@@ -89,3 +89,59 @@
         </main>
     </body>
 </html>
+<?php } else { ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php require_once('universal.inc') ?>
+        <title>ODHS VMS | View Date</title>
+    </head>
+    <body>
+        <?php require_once('header.php') ?>
+        <h1>View Day</h1>
+        <main class="date">
+            <h2>Events for <?php echo date('l, F j, Y', $timeStamp) ?></h2>
+            <!-- Loop -->
+            <?php
+                require('database/dbEvents.php');
+                require('include/output.php');
+                require('include/time.php');
+                $events = fetch_events_on_date($date);
+                if ($events) {
+                    foreach ($events as $event) {
+                        $animal = get_animal($event["animalID"])[0]["name"];
+                        $location = get_location($event['locationID'])[0]["name"]; 
+                        echo "
+                            <table class='event'>
+                                <thead>
+                                    <tr>
+                                        <th colspan='2' data-event-id='" . $event['id'] . "'>" . $event['name'] . "</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Time</td><td>" . time24hto12h($event['startTime']) . "</td></tr>
+                                    <tr><td>Location</td><td>" . $location . "</td></tr>
+                                    <tr><td>Description</td><td>" . $event['description'] . "</td></tr>
+                                </tbody>
+                              </table>
+                        ";
+
+                        
+                    }
+                } else {
+                    echo '<p class="none-scheduled">There are no events scheduled on this day</p>';
+                }
+            ?>
+            <?php
+            if ($accessLevel >= 2) {
+                echo '
+                    <a class="button" href="addEvent.php?date=' . $date . '">
+                        Create New Event
+                    </a>';
+            }
+            ?>
+			<a href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" class="button cancel" style="margin-top: -.5rem">Return to Calendar</a>
+        </main>
+    </body>
+</html>
+<?php } ?>

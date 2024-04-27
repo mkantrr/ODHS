@@ -30,7 +30,7 @@ include_once(dirname(__FILE__).'/../domain/Event.php');
 function add_event($event) {
     if (!$event instanceof Event)
         die("Error: add_event type mismatch");
-    $con=connect();
+    $con=connect_vms();
     $query = "SELECT * FROM dbEvents WHERE id = '" . $event->get_id() . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
@@ -55,7 +55,7 @@ function add_event($event) {
  */
 
 function remove_event($id) {
-    $con=connect();
+    $con=connect_vms();
     $query = 'SELECT * FROM dbEvents WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
@@ -75,7 +75,7 @@ function remove_event($id) {
  */
 
 function retrieve_event($id) {
-    $con=connect();
+    $con=connect_vms();
     $query = "SELECT * FROM dbEvents WHERE id = '" . $id . "'";
     $result = mysqli_query($con,$query);
     if (mysqli_num_rows($result) !== 1) {
@@ -90,7 +90,7 @@ function retrieve_event($id) {
 }
 
 function retrieve_event2($id) {
-    $con=connect();
+    $con=connect_vms();
     $query = "SELECT * FROM dbEvents WHERE id = '" . $id . "'";
     $result = mysqli_query($con,$query);
     if (mysqli_num_rows($result) !== 1) {
@@ -104,32 +104,9 @@ function retrieve_event2($id) {
 
 // not in use, may be useful for future iterations in changing how events are edited (i.e. change the remove and create new event process)
 function update_event_date($id, $new_event_date) {
-	$con=connect();
+	$con=connect_vms();
 	$query = 'UPDATE dbEvents SET event_date = "' . $new_event_date . '" WHERE id = "' . $id . '"';
 	$result = mysqli_query($con,$query);
-	mysqli_close($con);
-	return $result;
-}
-
-// update event volunteer list
-function update_event_volunteer_list($eventID, $volunteerID) {
-	$con=connect();
-	$check = 'SELECT * FROM dbEventVolunteers WHERE eventID = "'.$eventID.'" AND userID = "'.$volunteerID.'" ';
-	$result = mysqli_query($con, $check);
-  $result_check = mysqli_fetch_assoc($result);
-	if ($result_check > 0) {
-			return 0;
-	}
-	$query = 'INSERT INTO dbEventVolunteers (eventID, userID) VALUES ("'.$eventID.'", "'.$volunteerID.'")';
-	$result = mysqli_query($con, $query);
-	mysqli_close($con);
-	return $result;
-}
-
-function remove_volunteer_from_event($eventID, $volunteerID){
-	$con = connect();
-	$query = 'DELETE FROM dbEventVolunteers WHERE eventID = "'.$eventID.'" AND userID = "'.$volunteerID.'" ';
-	$result = mysqli_query($con, $query);
 	mysqli_close($con);
 	return $result;
 }
@@ -152,7 +129,7 @@ function make_an_event($result_row) {
 
 // retrieve only those events that match the criteria given in the arguments
 function getonlythose_dbEvents($name, $day, $venue) {
-   $con=connect();
+   $con=connect_vms();
    $query = "SELECT * FROM dbEvents WHERE event_name LIKE '%" . $event_name . "%'" .
            " AND event_name LIKE '%" . $name . "%'" .
            " AND venue = '" . $venue . "'" . 
@@ -168,7 +145,7 @@ function getonlythose_dbEvents($name, $day, $venue) {
 }
 
 function fetch_events_in_date_range($start_date, $end_date) {
-    $connection = connect();
+    $connection = connect_vms();
     $start_date = mysqli_real_escape_string($connection, $start_date);
     $end_date = mysqli_real_escape_string($connection, $end_date);
     $query = "select * from dbEvents
@@ -194,7 +171,7 @@ function fetch_events_in_date_range($start_date, $end_date) {
 }
 
 function fetch_events_on_date($date) {
-    $connection = connect();
+    $connection = connect_vms();
     $date = mysqli_real_escape_string($connection, $date);
     $query = "select * from dbEvents
               where date = '$date' order by startTime asc";
@@ -213,7 +190,7 @@ function fetch_events_on_date($date) {
 }
 
 function fetch_event_by_id($id) {
-    $connection = connect();
+    $connection = connect_vms();
     $id = mysqli_real_escape_string($connection, $id);
     $query = "select * from dbEvents where id = '$id'";
     $result = mysqli_query($connection, $query);
@@ -229,7 +206,7 @@ function fetch_event_by_id($id) {
 }
 
 function create_event($event) {
-    $connection = connect();
+    $connection = connect_vms();
     $name = $event["name"];
     $abbrevName = $event["abbrev-name"];
     $date = $event["date"];
@@ -237,13 +214,10 @@ function create_event($event) {
     $endTime = "23:59";
     $description = $event["description"];
     $location = $event["location"];
-    $services = $event["service"];
-    $capacity = $event["capacity"];
-    $animal = $event["animal"];
     $completed = "no";
     $query = "
         insert into dbEvents (name, abbrevName, date, startTime, endTime, description, locationID, capacity, animalID, completed)
-        values ('$name', '$abbrevName', '$date', '$startTime', '$endTime', '$description', '$location', '$capacity', '$animal', '$completed')
+        values ('$name', '$abbrevName', '$date', '$startTime', '$endTime', '$description', '$location', '0', NULL, '$completed')
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -257,7 +231,7 @@ function create_event($event) {
 }
 
 function add_services_to_event($eventID, $serviceIDs) {
-    $connection = connect();
+    $connection = connect_vms();
     foreach($serviceIDs as $serviceID) {
         $query = "insert into dbEventsServices (eventID, serviceID) values ('$eventID', '$serviceID')";
         $result = mysqli_query($connection, $query);
@@ -271,7 +245,7 @@ function add_services_to_event($eventID, $serviceIDs) {
 }
 
 function update_event($eventID, $eventDetails) {
-    $connection = connect();
+    $connection = connect_vms();
     $name = $eventDetails["name"];
     $abbrevName = $eventDetails["abbrev-name"];
     $date = $eventDetails["date"];
@@ -279,10 +253,10 @@ function update_event($eventID, $eventDetails) {
     $description = $eventDetails["description"];
     $location = $eventDetails["location"];
     $services = $eventDetails["service"];
-    $capacity = $eventDetails["capacity"];
+    
     $completed = $eventDetails["completed"];
     $query = "
-        update dbEvents set name='$name', abbrevName='$abbrevName', date='$date', startTime='$startTime', description='$description', locationID='$location', capacity='$capacity', completed='$completed'
+        update dbEvents set name='$name', abbrevName='$abbrevName', date='$date', startTime='$startTime', description='$description', locationID='$location', completed='$completed'
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);
@@ -293,7 +267,7 @@ function update_event($eventID, $eventDetails) {
 }
 
 function update_event2($eventID, $eventDetails) {
-    $connection = connect();
+    $connection = connect_vms();
     $name = $eventDetails["name"];
     $abbrevName = $eventDetails["abbrevName"];
     $date = $eventDetails["date"];
@@ -316,7 +290,7 @@ function update_event2($eventID, $eventDetails) {
 }
 
 function update_services_for_event($eventID, $serviceIDs) {
-    $connection = connect();
+    $connection = connect_vms();
 
     $current_services = get_services($eventID);
     foreach($current_services as $curr_serv) {
@@ -342,7 +316,7 @@ function update_services_for_event($eventID, $serviceIDs) {
 }
 
 function find_event($nameLike) {
-    $connection = connect();
+    $connection = connect_vms();
     $query = "
         select * from dbEvents
         where name like '%$nameLike%'
@@ -357,7 +331,7 @@ function find_event($nameLike) {
 }
 
 function fetch_events_in_date_range_as_array($start_date, $end_date) {
-    $connection = connect();
+    $connection = connect_vms();
     $start_date = mysqli_real_escape_string($connection, $start_date);
     $end_date = mysqli_real_escape_string($connection, $end_date);
     $query = "select * from dbEvents
@@ -374,7 +348,7 @@ function fetch_events_in_date_range_as_array($start_date, $end_date) {
 }
 
 function get_animal($id) {
-    $connection = connect();
+    $connection = connect_vms();
     $query = "select * from dbAnimals
               where id='$id'";
     $result = mysqli_query($connection, $query);
@@ -387,7 +361,7 @@ function get_animal($id) {
 }
 
 function get_location($id) {
-    $connection = connect();
+    $connection = connect_vms();
     $query = "select * from dbLocations
               where id='$id'";
     $result = mysqli_query($connection, $query);
@@ -400,7 +374,7 @@ function get_location($id) {
 }
 
 function get_services($eventID) {
-    $connection = connect();
+    $connection = connect_vms();
     $query = "select * from dbServices AS serv JOIN dbEventsServices AS es ON es.serviceID = serv.id
               where es.eventID='$eventID'";
     $result = mysqli_query($connection, $query);
@@ -413,7 +387,7 @@ function get_services($eventID) {
 }
 
 function get_media($id, $type) {
-    $connection = connect();
+    $connection = connect_vms();
     $query = "select * from dbEventMedia
               where eventID='$id' and type='$type'";
     $result = mysqli_query($connection, $query);
@@ -437,7 +411,7 @@ function attach_media($eventID, $type, $url, $format, $description) {
     $query = "insert into dbEventMedia
               (eventID, type, url, format, description)
               values ('$eventID', '$type', '$url', '$format', '$description')";
-    $connection = connect();
+    $connection = connect_vms();
     $result = mysqli_query($connection, $query);
     mysqli_close($connection);
     if (!$result) {
@@ -456,7 +430,7 @@ function attach_post_event_media($eventID, $url, $format, $description) {
 
 function detach_media($mediaID) {
     $query = "delete from dbEventMedia where id='$mediaID'";
-    $connection = connect();
+    $connection = connect_vms();
     $result = mysqli_query($connection, $query);
     mysqli_close($connection);
     if ($result) {
@@ -467,7 +441,7 @@ function detach_media($mediaID) {
 
 function delete_event($id) {
     $query = "delete from dbEvents where id='$id'";
-    $connection = connect();
+    $connection = connect_vms();
     $result = mysqli_query($connection, $query);
     $result = boolval($result);
     mysqli_close($connection);
@@ -525,7 +499,7 @@ function complete_event($id) {
 }
 
 function update_animal2($animal) {
-    $connection = connect();
+    $connection = connect_vms();
     $id = $animal['id'];
 	$odhsid = $animal["odhs_id"];
     $name = $animal["name"];

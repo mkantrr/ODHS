@@ -32,7 +32,7 @@ include_once(dirname(__FILE__).'/../domain/Service.php');
 function add_Animal($animal) {
     if (!$animal instanceof Animal)
         die("Error: add_event type mismatch");
-    $con=connect();
+    $con=connect_md();
     $query = "SELECT * FROM dbAnimals WHERE id = '" . $animal->get_id() . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
@@ -57,7 +57,7 @@ function add_Animal($animal) {
  */
 
 function remove_event($id) {
-    $con=connect();
+    $con=connect_md();
     $query = 'SELECT * FROM dbEvents WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
@@ -77,7 +77,7 @@ function remove_event($id) {
  */
 
 function retrieve_event($id) {
-    $con=connect();
+    $con=connect_md();
     $query = "SELECT * FROM dbEvents WHERE id = '" . $id . "'";
     $result = mysqli_query($con,$query);
     if (mysqli_num_rows($result) !== 1) {
@@ -93,7 +93,7 @@ function retrieve_event($id) {
 
 // not in use, may be useful for future iterations in changing how events are edited (i.e. change the remove and create new event process)
 function update_event_date($id, $new_event_date) {
-	$con=connect();
+	$con=connect_md();
 	$query = 'UPDATE dbEvents SET event_date = "' . $new_event_date . '" WHERE id = "' . $id . '"';
 	$result = mysqli_query($con,$query);
 	mysqli_close($con);
@@ -102,7 +102,7 @@ function update_event_date($id, $new_event_date) {
 
 // update event volunteer list
 function update_event_volunteer_list($eventID, $volunteerID) {
-	$con=connect();
+	$con=connect_md();
 	$check = 'SELECT * FROM dbEventVolunteers WHERE eventID = "'.$eventID.'" AND userID = "'.$volunteerID.'" ';
 	$result = mysqli_query($con, $check);
   $result_check = mysqli_fetch_assoc($result);
@@ -116,7 +116,7 @@ function update_event_volunteer_list($eventID, $volunteerID) {
 }
 
 function remove_volunteer_from_event($eventID, $volunteerID){
-	$con = connect();
+	$con = connect_md();
 	$query = 'DELETE FROM dbEventVolunteers WHERE eventID = "'.$eventID.'" AND userID = "'.$volunteerID.'" ';
 	$result = mysqli_query($con, $query);
 	mysqli_close($con);
@@ -140,7 +140,7 @@ function make_an_event($result_row) {
 
 // retrieve only those events that match the criteria given in the arguments
 function getonlythose_dbEvents($name, $day, $venue) {
-   $con=connect();
+   $con=connect_md();
    $query = "SELECT * FROM dbEvents WHERE event_name LIKE '%" . $event_name . "%'" .
            " AND event_name LIKE '%" . $name . "%'" .
            " AND venue = '" . $venue . "'" . 
@@ -156,7 +156,7 @@ function getonlythose_dbEvents($name, $day, $venue) {
 }
 
 function fetch_events_in_date_range($start_date, $end_date) {
-    $connection = connect();
+    $connection = connect_md();
     $start_date = mysqli_real_escape_string($connection, $start_date);
     $end_date = mysqli_real_escape_string($connection, $end_date);
     $query = "select * from dbEvents
@@ -182,7 +182,7 @@ function fetch_events_in_date_range($start_date, $end_date) {
 }
 
 function fetch_events_on_date($date) {
-    $connection = connect();
+    $connection = connect_md();
     $date = mysqli_real_escape_string($connection, $date);
     $query = "select * from dbEvents
               where date = '$date' order by startTime asc";
@@ -201,7 +201,7 @@ function fetch_events_on_date($date) {
 }
 
 function fetch_event_by_id($id) {
-    $connection = connect();
+    $connection = connect_md();
     $id = mysqli_real_escape_string($connection, $id);
     $query = "select * from dbEvents where id = '$id'";
     $result = mysqli_query($connection, $query);
@@ -217,7 +217,7 @@ function fetch_event_by_id($id) {
 }
 
 function fetch_animal_by_id($id) {
-    $connection = connect();
+    $connection = connect_md();
     $id = mysqli_real_escape_string($connection, $id);
     $query = "select * from dbAnimals where id = '$id'";
     $result = mysqli_query($connection, $query);
@@ -233,7 +233,7 @@ function fetch_animal_by_id($id) {
 }
 
 function create_service($service) {
-    $connection = connect();
+    $connection = connect_md();
     $name = $service["name"];
 	$type = $service["type"];
     $duration = $service["duration_years"];
@@ -269,7 +269,7 @@ function create_location($service) {
 }
 
 function add_services_to_location($locationID, $serviceIDs) {
-    $connection = connect();
+    $connection = connect_md();
     foreach($serviceIDs as $serviceID) {
         $query = "insert into dbLocationsServices (locationID, serviceID) values ('$locationID', '$serviceID')";
         $result = mysqli_query($connection, $query);
@@ -283,7 +283,7 @@ function add_services_to_location($locationID, $serviceIDs) {
 }
 
 function update_animal($animal) {
-    $connection = connect();
+    $connection = connect_md();
     $id = $animal['id'];
 	$odhsid = $animal["odhs_id"];
     $name = $animal["name"];
@@ -351,7 +351,7 @@ function update_animal($animal) {
 }
 
 function update_event($eventID, $eventDetails) {
-    $connection = connect();
+    $connection = connect_md();
     $name = $eventDetails["name"];
     $abbrevName = $eventDetails["abbrev-name"];
     $date = $eventDetails["date"];
@@ -386,7 +386,7 @@ function find_event($nameLike) {
 }
 
 function find_service($id) {
-    $connection = connect();
+    $connection = connect_md();
     $id = mysqli_real_escape_string($connection, $id);
     $query = "select * from dbServices where id = '$id'";
     $result = mysqli_query($connection, $query);
@@ -402,7 +402,7 @@ function find_service($id) {
 }
 
 function find_allServices() {
-    $connection = connect();
+    $connection = connect_md();
     $query = "select * from dbServices";
     $result = mysqli_query($connection, $query);
     $service = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -416,7 +416,7 @@ function find_allServices() {
 }
 
 function find_services_for_location($locationID) {
-    $connection = connect();
+    $connection = connect_md();
     $query = "select * from dbServices AS serv JOIN dbLocationsServices AS ls ON ls.serviceID = serv.id
               where ls.locationID='$locationID'";
     $result = mysqli_query($connection, $query);
@@ -539,7 +539,7 @@ function delete_event($id) {
 
 function delete_service($id) {
     $query = "delete from dbServices where id='$id'";
-    $connection = connect();
+    $connection = connect_md();
     $result = mysqli_query($connection, $query);
     $result = boolval($result);
     mysqli_close($connection);
@@ -616,7 +616,7 @@ function find_animal($name, $breed, $age1, $age2, $gender, $spay_neuter_done, $m
 
     $query = "select * from dbAnimals $where order by name";
     // echo $query;
-    $connection = connect();
+    $connection = connect_md();
     $result = mysqli_query($connection, $query);
     if (!$result) {
         mysqli_close($connection);
@@ -662,7 +662,7 @@ function make_an_animal($result_row) {
  * Get all appointments that exist for an animal
  */
 function find_animal_appointments($animal_id) {
-    $connection = connect();
+    $connection = connect_md();
     //$current_date = date("Y-m-d");
     $query = "select * from dbEvents
               where animalID='$animal_id' 

@@ -1,4 +1,5 @@
 <?php
+    //Created by Niko Toro
     // Template for new VMS pages. Base your new page on this one
 
     // Make session information accessible, allowing us to associate
@@ -22,6 +23,7 @@
     }
     $isAdmin = $accessLevel >= 2;
     require_once('database/dbPersons.php');
+    require_once('database/dbHours.php');
     if ($isAdmin && isset($_GET['id'])) {
         require_once('include/input-validation.php');
         $args = sanitize($_GET);
@@ -31,15 +33,21 @@
         $id = $_SESSION['_id'];
         $viewingSelf = true;
     }
-    $events = get_events_attended_by($id);
-    $totalHours = get_hours_volunteered_by($id);
     $volunteer = retrieve_person($id);
+    $volunteerName = get_name_from_id($id);
+    $email = get_email_from_id($id);
+    $totalHours = total_hours($email);
+    $hours = retrieve_hours_by_email($email);
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <?php require_once('universal.inc') ?>
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
         <title>ODHS Medicine Tracker | Volunteer History</title>
+        <?php } else { ?>
+        <title>ODHS VMS | Volunteer History</title>
+        <?php } ?>
         <link rel="stylesheet" href="css/hours-report.css">
     </head>
     <body>
@@ -51,53 +59,55 @@
             <?php if (!$volunteer): ?>
                 <p class="error-toast">That volunteer does not exist!</p>
             <?php elseif ($viewingSelf): ?>
-                <h2 class="no-print">Your Volunteer Hours</h2>
+                <h1 class="no-print"><?php echo $volunteerName . "'s Volunteer Hours"?></h2>
             <?php else: ?>
-                <h2 class="no-print">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
+                <h1 class="no-print">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
             <?php endif ?>
-            <h2 class="print-only">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
-            <?php if (count($events)  > 0): ?>
+            <h1 class="print-only">Hours Volunteered by <?php echo $volunteer->get_first_name() . ' ' . $volunteer->get_last_name() ?></h2>
+            
+            <?php if ($hours): ?>
                 <div class="table-wrapper"><table class="general">
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Event</th>
-                            <th>Location</th>
-                            <th class="align-right">Hours</th>
+                            <th>Time</th>
+                            <th>Hours Logged</th>
+                            <th>Delete?</th>
                         </tr>
                     </thead>
                     <tbody class="standout">
-                        <?php 
-                            require_once('include/output.php');
-                            foreach ($events as $event) {
-                                $date = strtotime($event['date']);
-                                $date = date('m/d/Y', $date);
-                                echo '<tr>
-                                    <td>' . $date . '</td>
-                                    <td>' . $event["name"] . '</td>
-                                    <td>' . $event["location"] . '</td>
-                                    <td class="align-right">' . floatPrecision($event["duration"], 2) . '</td>
-                                </tr>';
-                            } 
-                            echo "<tr class='total-hours'><td></td><td></td><td class='total-hours'>Total Hours</td><td class='align-right'>" . floatPrecision($totalHours, 2) . "</td></tr>";
-                        ?>
-                    </tbody></table>
-                    <p class="print-only">I hereby certify that this volunteer has contributed the above volunteer hours to the Gwyneth's Gift organization.</p>
-                    <table id="signature-table" class="print-only">
-                        <tbody>
-                            <tr><td>Admin Signature:  ______________________________________ Date: <?php echo date('m/d/Y') ?></td></tr>
-                            <tr><td>Print Admin Name: _____________________________________</td></tr>
-                        </tbody>
-                    </table></div>
-                    <button class="no-print" onclick="window.print()" style="margin-bottom: -.5rem">Print</button>
-                <?php else: ?>
-                    <p>There are no volunteer hours to report.</p>
-                <?php endif ?>
-                <?php if ($viewingSelf): ?>
-                    <a class="button cancel no-print" href="viewProfile.php">Return to Profile</a>
-                <?php else: ?>
-                    <a class="button cancel no-print" href="viewProfile.php?id=<?php echo htmlspecialchars($_GET['id']) ?>">Return to Profile</a>
-                <?php endif ?>
+
+                <?php
+                require_once('include/output.php');
+                while ($result_row = mysqli_fetch_assoc($hours)) {
+                    $field1name = $result_row["date"];
+                    $field2name = $result_row["time"];
+                    $field3name = $result_row["duration"];
+                    $field4name = $result_row["hourID"];
+                    
+                    //Come back to "deleteHours.php" later, may cause future issues if not tested?
+                    echo 
+                    '<tr>
+                        <td>' . $field1name . '</td>
+                        <td>' . $field2name . '</td>
+                        <td>' . $field3name . '</td>
+                        <td><a href="deleteHours.php?hourID=' . $field4name . '">Delete</a></td>
+                    </tr>';
+                }
+    
+                while ($result_row = mysqli_fetch_assoc($totalHours)) {
+                    $field1name = $result_row["SUM(duration)"];
+                    echo 
+                    '<tr class="total-hours">
+                        <td></td><td class="total-hours">Total Hours</td>
+                        <td>' . $field1name . '</td>
+                    </tr>';
+                }
+                ?>
+
+            <?php else: ?>
+                <?php echo 'Whoops! Looks like you don\'t have any hours to view!'; ?>
+            <?php endif ?>
         </main>
     </body>
 </html>

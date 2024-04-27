@@ -54,7 +54,11 @@
     <head>
         <?php require_once('universal.inc') ?>
         <!-- <link rel="stylesheet" href="css/editprofile.css" type="text/css" /> -->
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
         <title>ODHS Medicine Tracker | View User</title>
+        <?php } else { ?>
+        <title>ODHS VMS | View User</title>
+        <?php } ?>
     </head>
     <body>
         <?php 
@@ -162,60 +166,6 @@
                 <label>Phone Number</label>
                 <p><a href="tel:<?php echo $user->get_contact_num() ?>"><?php echo formatPhoneNumber($user->get_contact_num()) ?></a></p>
             </fieldset>
-            <fieldset>
-                <legend>Volunteer Information</legend>
-                <label>Availability</label>
-                <?php if ($user->get_sunday_availability_start()): ?>
-                    <label>Sundays</label>
-                    <p><?php echo time24hTo12h($user->get_sunday_availability_start()) . ' - ' . time24hTo12h($user->get_sunday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_monday_availability_start()): ?>
-                    <label>Mondays</label>
-                    <p><?php echo time24hTo12h($user->get_monday_availability_start()) . ' - ' . time24hTo12h($user->get_monday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_tuesday_availability_start()): ?>
-                    <label>Tuedays</label>
-                    <p><?php echo time24hTo12h($user->get_tuesday_availability_start()) . ' - ' . time24hTo12h($user->get_tuesday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_wednesday_availability_start()): ?>
-                    <label>Wednesdays</label>
-                    <p><?php echo time24hTo12h($user->get_wednesday_availability_start()) . ' - ' . time24hTo12h($user->get_wednesday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_thursday_availability_start()): ?>
-                    <label>Thursdays</label>
-                    <p><?php echo time24hTo12h($user->get_thursday_availability_start()) . ' - ' . time24hTo12h($user->get_thursday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_friday_availability_start()): ?>
-                    <label>Fridays</label>
-                    <p><?php echo time24hTo12h($user->get_friday_availability_start()) . ' - ' . time24hTo12h($user->get_friday_availability_end()) ?></p>
-                <?php endif ?>
-                <?php if ($user->get_saturday_availability_start()): ?>
-                    <label>Saturdays</label>
-                    <p><?php echo time24hTo12h($user->get_saturday_availability_start()) . ' - ' . time24hTo12h($user->get_saturday_availability_end()) ?></p>
-                <?php endif ?>
-                <label>Skills</label>
-                <p><?php echo str_replace("\r\n", '<br>', $user->get_specialties()) ?></p>
-                <label>Additional Information</label>
-                <p><?php if ($user->get_computer()) echo 'Owns a computer'; else echo 'Does NOT own a computer'; ?></p>
-                <p><?php if ($user->get_camera()) echo 'Owns a camera'; else echo 'Does NOT own a camera'; ?></p>
-                <p><?php if ($user->get_transportation()) echo 'Has access to transportation'; else echo 'Does NOT have access to transportation'; ?></p>
-                <label>T-Shirt Size</label>
-                <p>
-                    <?php 
-                        $sizes = [
-                            null => '',
-                            '' => '',
-                            'S' => 'Small',
-                            'M' => 'Medium',
-                            'L' => 'Large',
-                            'XL' => 'Extra Large',
-                            'XXL' => '2X Large',
-                        ];
-                        $size = $sizes[$user->get_shirt_size()];
-                        echo $size;
-                    ?>
-                </p>
-            </fieldset>
             <a class="button" href="editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>">Edit Profile</a>
             <?php if ($id != $userID): ?>
                 <?php if (($accessLevel == 2 && $user->get_access_level() == 1) || $accessLevel >= 3): ?>
@@ -226,7 +176,12 @@
             <?php else: ?>
                 <a class="button" href="changePassword.php">Change Password</a>
                 <a class="button" href="volunteerReport.php">View Volunteer Hours</a>
+                <a class="button" href="verificationForm.php">Generate Verification Form</a>
+                <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
                 <a class="button cancel" href="index.php">Return to Dashboard</a>
+                <?php } else { ?>
+                <a class="button cancel" href="VMS_index.php">Return to Dashboard</a>
+                <?php } ?>
             <?php endif ?>
         </main>
     </body>

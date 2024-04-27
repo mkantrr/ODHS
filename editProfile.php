@@ -14,7 +14,7 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["modify_access"]) && isset($_POST["id"])) {
         $id = $_POST['id'];
-        header("Location: /gwyneth/modifyUserRole.php?id=$id");
+        header("Location: modifyUserRole.php?id=$id");
     } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["profile-edit-form"])) {
         require_once('domain/Person.php');
         require_once('database/dbPersons.php');
@@ -41,7 +41,6 @@
             'first-name', 'last-name', 'birthdate',
             'address', 'city', 'state', 'zip', 
             'email', 'phone', 'phone-type', 'contact-when', 'contact-method',
-            'shirt-size'
         );
         $errors = false;
         if (!wereRequiredFieldsSubmitted($args, $required)) {
@@ -108,94 +107,6 @@
             echo 'bad gender';
         }
 
-        $skills = '';
-        if (isset($args['skills'])) {
-            $skills = $args['skills'];
-        }
-        $hasComputer = isset($args['has-computer']);
-        $hasCamera = isset($args['has-camera']);
-        $hasTransportation = isset($args['has-transportation']);
-        $shirtSize = $args['shirt-size'];
-        if (!valueConstrainedTo($shirtSize, array('S', 'M', 'L', 'XL', 'XXL'))) {
-            $errors = true;
-            // echo 'bad shirt size';
-        }
-
-        $days = array('sundays', 'mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays');
-        $availability = array();
-        $availabilityCount = 0;
-        foreach ($days as $day) {
-            if (isset($args['available-' . $day])) {
-                $startKey = $day . '-start';
-                $endKey = $day . '-end';
-                if (!isset($args[$startKey]) || !isset($args[$endKey])) {
-                    $errors = true;
-                }
-                $start = $args[$startKey];
-                $end = $args[$endKey];
-                // $range24h = validate12hTimeRangeAndConvertTo24h($start, $end);
-                if (!validate24hTimeRange($start, $end)) {
-                    $range24h = null;
-                } else {
-                    $range24h = [ $start, $end ];
-                }
-                if (!$range24h) {
-                    $errors = true;
-                    // echo "bad $day availability";
-                }
-                $availability[$day] = $range24h;
-                $availabilityCount++;
-            } else {
-                $availability[$day] = null;
-            }
-        }
-        if ($availabilityCount == 0) {
-            $errors = true;
-            // echo 'bad availability - none chosen';
-        }
-        $sundaysStart = '';
-        $sundaysEnd = '';
-        if ($availability['sundays']) {
-            $sundaysStart = $availability['sundays'][0];
-            $sundaysEnd = $availability['sundays'][1];
-        }
-        $mondaysStart = '';
-        $mondaysEnd = '';
-        if ($availability['mondays']) {
-            $mondaysStart = $availability['mondays'][0];
-            $mondaysEnd = $availability['mondays'][1];
-        }
-        $tuesdaysStart = '';
-        $tuesdaysEnd = '';
-        if ($availability['tuesdays']) {
-            $tuesdaysStart = $availability['tuesdays'][0];
-            $tuesdaysEnd = $availability['tuesdays'][1];
-        }
-        $wednesdaysStart = '';
-        $wednesdaysEnd = '';
-        if ($availability['wednesdays']) {
-            $wednesdaysStart = $availability['wednesdays'][0];
-            $wednesdaysEnd = $availability['wednesdays'][1];
-        }
-        $thursdaysStart = '';
-        $thursdaysEnd = '';
-        if ($availability['thursdays']) {
-            $thursdaysStart = $availability['thursdays'][0];
-            $thursdaysEnd = $availability['thursdays'][1];
-        }
-        $fridaysStart = '';
-        $fridaysEnd = '';
-        if ($availability['fridays']) {
-            $fridaysStart = $availability['fridays'][0];
-            $fridaysEnd = $availability['fridays'][1];
-        }
-        $saturdaysStart = '';
-        $saturdaysEnd = '';
-        if ($availability['saturdays']) {
-            $saturdaysStart = $availability['saturdays'][0];
-            $saturdaysEnd = $availability['saturdays'][1];
-        }
-
         if ($errors) {
             $updateSuccess = false;
         }
@@ -203,12 +114,7 @@
         $result = update_person_profile($id,
             $first, $last, $dateOfBirth, $address, $city, $state, $zipcode,
             $email, $phone, $phoneType, $contactWhen, $contactMethod, 
-            $econtactName, $econtactPhone, $econtactRelation,
-            $skills, $hasComputer, $hasCamera, $hasTransportation, $shirtSize,
-            $sundaysStart, $sundaysEnd, $mondaysStart, $mondaysEnd,
-            $tuesdaysStart, $tuesdaysEnd, $wednesdaysStart, $wednesdaysEnd,
-            $thursdaysStart, $thursdaysEnd, $fridaysStart, $fridaysEnd,
-            $saturdaysStart, $saturdaysEnd, $gender
+            $econtactName, $econtactPhone, $econtactRelation, $gender
         );
         if ($result) {
             if ($editingSelf) {
@@ -225,7 +131,11 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
+    <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
     <title>ODHS Medicine Tracker | Manage Profile</title>
+    <?php } else { ?>
+    <title> ODHS VMS | Manage Profile </title>
+    <?php } ?>
 </head>
 <body>
     <?php

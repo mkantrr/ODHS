@@ -21,7 +21,7 @@
 
   require_once('include/input-validation.php');
   require_once('database/dbPersons.php');
-  require_once('database/dbEvents.php');
+  require_once('database/dbAppointments.php');
   require_once('include/output.php');
   require_once('database/dbinfo.php');
   
@@ -29,7 +29,7 @@
 
   if(isset($_GET['animal'])){
     $selected_animal_name = $_GET['animal'];
-    $connection = connect();
+    $connection = connect_md();
     $query = "select * from dbAnimals where name = '$selected_animal_name'";
     $result = mysqli_query($connection, $query);
     $animal_info = mysqli_fetch_assoc($result);
@@ -39,7 +39,11 @@
   
   // Is user authorized to view this page?
   if ($accessLevel < 2) {
-      header('Location: index.php');
+    if ($_SESSION['system_type'] == 'MedTracker') {
+        header('Location: index.php');
+    } else {
+        header('Location: VMS_index.php');
+    }
       die();
   }
   

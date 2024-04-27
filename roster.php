@@ -19,8 +19,12 @@
         header('Location: calendar.php');
         die();
   	}
-  	
-  	include_once('database/dbEvents.php');
+    
+    if ($_SESSION["system_type"] == "MedTracker") {
+        include_once('database/dbAppointments.php');
+    } else {
+  	    include_once('database/dbEvents.php');
+    }
   	
     // We need to check for a bad ID here before we query the db
     // otherwise we may be vulnerable to SQL injection(!)
@@ -58,12 +62,16 @@
     <head>
         <?php require_once('universal.inc') ?>
         <link rel="stylesheet" href="css/roster.css" type="text/css" />
-        <title>ODHS Medicine Tracker | View Event Roster</title>
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
+        <title>ODHS Medicine Tracker | View Appointment Roster</title>
+        <?php } else { ?>
+        <title>ODHS VMS | View Event Roster</title>
+        <?php } ?>
     </head>
     <body>
         <?php require_once('header.php') ?>
         <span class="logo_print">
-          <img src="images/gwynethsgift.png">
+          <img src="images/odhs.png">
         </span>
           <?php
             $event_name = $event_info['name'];
@@ -145,7 +153,6 @@
             } else {
               $type = 'Admin';
             }
-            $shirt_size = $person->get_shirt_size();
             echo '<div id="table-wrapper">'."\n";
             echo '<table class="centered">';
             echo '<tbody>'.
@@ -168,10 +175,6 @@
                     '<tr>'.
                         '<td class="label">Phone</td>'.
                         '<td>'.$phone1.' ('.$phone1_type.')'.'</td>'.
-                    '</tr>'.
-                    '<tr>'.
-                        '<td class="label">Shirt Size</td>'.
-                        '<td>'.$shirt_size.'</td>'.
                     '</tr>'.
                     '<tr>'.
                         '<td class="label"><b>Emergency Contact<b></td>'.

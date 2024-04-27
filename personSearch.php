@@ -17,7 +17,11 @@
     }
     // admin-only access
     if ($accessLevel < 2) {
-        header('Location: index.php');
+        if ($_SESSION['system_type'] == 'MedTracker') {
+            header('Location: index.php');
+        } else {
+            header('Location: VMS_index.php');
+        }
         die();
     }
 ?>
@@ -25,7 +29,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>ODHS Medicine Tracker | User Search</title>
+        <title>ODHS VMS | User Search</title>
     </head>
     <body>
         <?php require_once('header.php') ?>

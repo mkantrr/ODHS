@@ -22,18 +22,26 @@
     $id = $get['id'];
     // Is user authorized to view this page?
     if ($accessLevel < 2) {
-        header('Location: index.php');
+        if ($_SESSION['system_type'] == 'MedTracker') {
+            header('Location: index.php');
+        } else {
+            header('Location: VMS_index.php');
+        }
         die();
     }
     // Was an ID supplied?
     if ($_SERVER["REQUEST_METHOD"] == "GET" && !isset($_GET['id'])) {
-        header('Location: index.php');
+        if ($_SESSION['system_type'] == 'MedTracker') {
+            header('Location: index.php');
+        } else {
+            header('Location: VMS_index.php');
+        }
         die();
     } else if ($_SERVER["REQUEST_METHOD"] == "POST"){
         require_once('database/dbPersons.php');
         $post = sanitize($_POST);
         $new_role = $post['s_role'];
-        if (!valueConstrainedTo($new_role, ['admin', 'superadmin'])) {
+        if (!valueConstrainedTo($new_role, ['admin', 'main'])) {
             die();
         }
         if (empty($new_role)){
@@ -127,7 +135,7 @@
                         // Provides drop down of the role types to select and change the role
 			//other than the person's current role type is displayed
             if ($accessLevel == 3) {
-				$roles = array('admin' => 'Admin', 'superadmin' => 'SuperAdmin');
+				$roles = array('admin' => 'Admin', 'main' => 'Main');
                 echo '<label for="role">Change Role</label><select id="role" class="form-select-sm" name="s_role">' ;
                 // echo '<option value="" SELECTED></option>' ;
                 $currentRole = $thePerson->get_type()[0];
