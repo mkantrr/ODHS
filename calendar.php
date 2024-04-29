@@ -121,7 +121,7 @@ if ($_SESSION['system_type'] == 'MedTracker') {
                         $date = $calendarStart;
                         $start = date('Y-m-d', $calendarStart);
                         $end = date('Y-m-d', $calendarEndEpoch);
-                        require_once('database/dbEvents.php');
+                        require_once('database/dbAppointments.php');
                         $events = fetch_events_in_date_range($start, $end);
                         for ($week = 0; $week < $weeks; $week++) {
                             echo '
@@ -285,7 +285,7 @@ if ($_SESSION['system_type'] == 'MedTracker') {
                 </table>
             </div>
             <div id="calendar-footer">
-                <a class="button cancel" href="index.php">Return to Dashboard</a>
+                <a class="button cancel" href="VMS_index.php">Return to Dashboard</a>
             </div>
         </main>
     </body>

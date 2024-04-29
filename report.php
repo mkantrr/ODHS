@@ -16,13 +16,17 @@
   require_once('database/dbPersons.php');
 
   if ($accessLevel < 2) {
-    header('Location: index.php');
+    if ($_SESSION['system_type'] == 'MedTracker') {
+        header('Location: index.php');
+    } else {
+        header('Location: VMS_index.php');
+    }
     die();
   }
     // get animal data from database for form
     // Connect to database
     include_once('database/dbinfo.php'); 
-    $con=connect();  
+    $con=connect_md();  
     // Get all the animals from animal table
     $sql = "SELECT * FROM `dbAnimals`";
     $all_animals = mysqli_query($con,$sql); 

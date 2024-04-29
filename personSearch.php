@@ -17,7 +17,11 @@
     }
     // admin-only access
     if ($accessLevel < 2) {
-        header('Location: index.php');
+        if ($_SESSION['system_type'] == 'MedTracker') {
+            header('Location: index.php');
+        } else {
+            header('Location: VMS_index.php');
+        }
         die();
     }
 ?>
@@ -25,7 +29,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>ODHS Medicine Tracker | User Search</title>
+        <title>ODHS VMS | User Search</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -49,7 +53,7 @@
                     $status = $args['status'];
                     if (!($name || $id || $phone || $zip || $role || $status)) {
                         echo '<div class="error-toast">At least one search criterion is required.</div>';
-                    } else if (!valueConstrainedTo($role, ['admin', 'main', 'volunteer', ''])) {
+                    } else if (!valueConstrainedTo($role, ['admin', 'superadmin', 'volunteer', ''])) {
                         echo '<div class="error-toast">The system did not understand your request.</div>';
                     } else if (!valueConstrainedTo($status, ['Active', 'Inactive', ''])) {
                         echo '<div class="error-toast">The system did not understand your request.</div>';
@@ -118,22 +122,18 @@
             <input type="text" id="name" name="name" value="<?php if (isset($name)) echo htmlspecialchars($_GET['name']) ?>" placeholder="Enter the user's first and/or last name">
             <label for="id">E-mail</label>
             <input type="text" id="id" name="id" value="<?php if (isset($id)) echo htmlspecialchars($_GET['id']) ?>" placeholder="Enter the user's email address (login ID)">
-           
-		<label for="phone">Phone Number</label>
+            <label for="phone">Phone Number</label>
             <input type="tel" id="phone" name="phone" value="<?php if (isset($phone)) echo htmlspecialchars($_GET['phone']) ?>" placeholder="Enter the user's phone number">
-            
-		<label for="zip">Zip Code</label>
+            <label for="zip">Zip Code</label>
 			<input type="text" id="zip" name="zip" value="<?php if (isset($zip)) echo htmlspecialchars($_GET['zip']) ?>" placeholder="Enter the user's zip code">
 			<label for="role">Role</label>
- 
-           <select id="role" name="role">
+            <select id="role" name="role">
                 <option value="">Any</option>
                 <option value="volunteer" <?php if (isset($role) && $role == 'volunteer') echo 'selected' ?>>Volunteer</option>
                 <option value="admin" <?php if (isset($role) && $role == 'admin') echo 'selected' ?>>Admin</option>
-                <option value="main" <?php if (isset($role) && $role == 'main') echo 'selected' ?>>Main</option>
+                <option value="superadmin" <?php if (isset($role) && $role == 'superadmin') echo 'selected' ?>>Super Admin</option>
             </select>
-  
-          <label for="status">Status</label>
+            <label for="status">Status</label>
             <select id="status" name="status">
                 <option value="">Any</option>
                 <option value="Active" <?php if (isset($status) && $status == 'Active') echo 'selected' ?>>Active</option>

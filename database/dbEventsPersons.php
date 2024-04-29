@@ -14,12 +14,12 @@
  * already exists, return False.
  */
 function sign_up($event_id, $person_id) {
-    $con=connect();
+    $con=connect_vms();
     $query = "SELECT * FROM dbEventsPersons WHERE event_id = $event_id AND person_id = '" . $person_id . "'";
     $result = mysqli_query($con,$query);
     //if there's no entry for this id, add it
     if ($result == null || mysqli_num_rows($result) == 0) {
-        $query = "INSERT INTO dbeventspersons (event_id, person_id) VALUES($event_id, '" . $person_id . "')";
+        $query = "INSERT INTO dbEventsPersons (event_id, person_id) VALUES ($event_id, '" . $person_id . "')";
         mysqli_query($con, $query);
         mysqli_close($con);
         return true;
@@ -32,14 +32,14 @@ function sign_up($event_id, $person_id) {
  * Remove an hour from dbHours table, if it doesn't exist, return false
  */
 function remove_sign_up($event_id, $person_id) {
-    $con=connect();
-    $query = "SELECT * FROM dbeventspersons WHERE event_id = ' . $event_id . ' AND person_id = '" . $person_id . "'";
+    $con=connect_vms();
+    $query = "SELECT * FROM dbEventsPersons WHERE event_id = ' . $event_id . ' AND person_id = '" . $person_id . "'";
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_close($con);
         return false;
     }
-    $query = "DELETE FROM dbeventspersons WHERE event_id = ' . $event_id . ' AND person_id = '" . $person_id . "'";
+    $query = "DELETE FROM dbEventsPersons WHERE event_id = ' . $event_id . ' AND person_id = '" . $person_id . "'";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return true;
@@ -49,7 +49,7 @@ function remove_sign_up($event_id, $person_id) {
  * Return an array of events signed up for by a given person
  */
 function retrieve_events_by_person($person_id) {
-    $query = "SELECT * FROM dbeventspersons WHERE person_id = '" . $person_id .  "'";
+    $query = "SELECT * FROM dbEventsPersons WHERE person_id = '" . $person_id .  "'";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;	
@@ -59,7 +59,7 @@ function retrieve_events_by_person($person_id) {
  * Return an array of persons signed up for a given event
  */
 function retrieve_persons_by_event($event_id) {
-    $query = "SELECT * FROM dbeventspersons WHERE event_id = ' . $event_id .  '";
+    $query = "SELECT * FROM dbEventsPersons WHERE event_id = ' . $event_id .  '";
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return $result;	

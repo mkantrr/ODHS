@@ -98,7 +98,6 @@
         $permission_array['addlocation.php'] = 2;
         $permission_array['viewservice.php'] = 2;
         $permission_array['viewlocation.php'] = 2;
-        $permission_array['viewarchived.php'] = 2;
         $permission_array['animal.php'] = 2;
         $permission_array['editanimal.php'] = 2;
 
@@ -135,6 +134,7 @@
             echo('<a class="navbar-brand" id="vms-logo"> MedTracker </a></span><img id="menu-toggle" src="images/menu.png"></span>');
             echo('<ul>');
             //echo " <br><b>"."Gwyneth's Gift Homebase"."</b>|"; //changed: 'Homebase' to 'Gwyneth's Gift Homebase'
+
             echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'index.php">Home</a></li>');
             //echo('<span class="nav-divider">|</span>');
 
@@ -163,7 +163,6 @@
             echo('<a class="dropdown-item" href="' . $path . 'findAnimal.php">Search</a>');
             echo('<a class="dropdown-item" href="' . $path . 'addAnimal.php">Add</a>');
 	        echo('<a class="dropdown-item" href="' . $path . 'report.php">Reports</a>');
-	        echo('<a class="dropdown-item" href="' . $path . 'viewArchived.php">Archived Animals</a>');
 
             echo('</div>');
             echo('</li>');
@@ -263,6 +262,7 @@
             // pages adoption center can view
             $permission_array['loghours.php'] = 0;
             $permission_array['loghoursform.php'] = 0;
+            $permission_array['verificationform.php'] = 0;
             $permission_array['template.php'] = 0;
     
             //Check if they're at a valid page for their access level.

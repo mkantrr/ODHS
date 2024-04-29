@@ -12,7 +12,7 @@
     $userID = null;
     if (isset($_SESSION['_id'])) {
         $loggedIn = true;
-        // 0 = not logged in, 1 = standard user (Volunteer), 2 = manager (Admin), 3 = vmsroot (Main)
+        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
         $accessLevel = $_SESSION['access_level'];
         $userID = $_SESSION['_id'];
     } 
@@ -40,7 +40,7 @@
             }
             $startTime = $args['start-time'] = $validated[0];
             $date = $args['date'] = validateDate($args["date"]);
-            //$capacity = intval($args["capacity"]);
+            $capacity = intval($args["capacity"]);
             $abbrevLength = strlen($args['abbrev-name']);
             if (!$startTime || !$date || $abbrevLength > 11){
                 echo 'bad args';
@@ -76,7 +76,7 @@
     // get animal data from database for form
     // Connect to database
     include_once('database/dbinfo.php'); 
-    $con=connect();  
+    $con=connect_md();  
     // Get all the animals from animal table
     $sql = "SELECT * FROM `dbAnimals`";
     $all_animals = mysqli_query($con,$sql);
@@ -138,7 +138,8 @@
                         // terminate while loop
                     ?>
                 </select><p></p>
-  
+                <label for="name">* Volunteer Slots</label>
+                <input type="text" id="capacity" name="capacity" pattern="([1-9])|([01][0-9])|(20)" required placeholder="Enter a number up to 20">   
                 <label for="name">* Animal</label>
                 <select for="name" id="animal" name="animal" required>
                     <?php 
@@ -156,7 +157,7 @@
                     ?>
                 </select><br/>
                 <p></p>
-                <input type="submit" value="Create Event">
+                <input type="submit" value="Create Appointment">
             </form>
                 <?php if ($date): ?>
                     <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>

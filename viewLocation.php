@@ -175,8 +175,11 @@
             </form>
             <button onclick="showDeleteConfirmation()">Delete Location</button>
         <?php endif ?>
-
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
         <a href="index.php" class="button cancel" style="margin-top: -.5rem">Return to Dashboard</a>
+        <?php } else { ?>
+        <a href="VMS_index.php" class="button cancel" style="margin-top: -.5rem">Return to Dashboard</a>
+        <?php } ?>
     </main>
 </body>
 

@@ -41,6 +41,7 @@ function displaySearchRow($location){
         require_once('include/input-validation.php');
         require_once('database/dbServices.php');
         $args = sanitize($_POST, null);
+        var_dump($args);
         $required = array(
 			"name", "type", "duration_years"
 		);

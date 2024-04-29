@@ -19,8 +19,12 @@
         header('Location: calendar.php');
         die();
   	}
-  	
-  	include_once('database/dbEvents.php');
+    
+    if ($_SESSION["system_type"] == "MedTracker") {
+        include_once('database/dbAppointments.php');
+    } else {
+  	    include_once('database/dbEvents.php');
+    }
   	
     // We need to check for a bad ID here before we query the db
     // otherwise we may be vulnerable to SQL injection(!)
@@ -149,7 +153,6 @@
             } else {
               $type = 'Admin';
             }
-
             echo '<div id="table-wrapper">'."\n";
             echo '<table class="centered">';
             echo '<tbody>'.

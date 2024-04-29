@@ -26,7 +26,7 @@
 <html>
     <head>
         <?php require('universal.inc'); ?>
-        <title>ODHS Volunteer Management System | Dashboard</title>
+        <title>ODHS VMS | Dashboard</title>
     </head>
     <body>
         <?php require('header.php'); ?>
@@ -102,7 +102,7 @@
                         <span>Create Account</span>
                     </div> 
                     <?php } ?>
-                    <div class="dashboard-item" data-link="report.php">
+                    <div class="dashboard-item" data-link="verificationForm.php">
                         <img src="images/create-report.svg">
                         <span>Create Report</span>
                     </div>

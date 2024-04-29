@@ -44,7 +44,11 @@
             }
             $_SESSION['logged_in'] = true;
             unset($_SESSION['change-password']);
-            header('Location: index.php?pcSuccess');
+            if ($_SESSION['system_type'] == 'MedTracker') {
+                header('Location: index.php?pcSuccess');
+            } else {
+                header('Location: VMS_index.php?pcSuccess');
+            }
             die();
         } else {
             if (!wereRequiredFieldsSubmitted($_POST, array('password', 'new-password'))) {
@@ -61,7 +65,11 @@
             } else {
                 $hash = password_hash($newPassword, PASSWORD_BCRYPT);
                 change_password($userID, $hash);
-                header('Location: index.php?pcSuccess');
+                if ($_SESSION['system_type'] == 'MedTracker') {
+                    header('Location: index.php?pcSuccess');
+                } else {
+                    header('Location: VMS_index.php?pcSuccess');
+                }
                 die();
             }
         }

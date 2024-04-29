@@ -16,7 +16,11 @@
         header('Location: login.php');
         die();
     } else if ($accessLevel < 2) {
-        header('Location: index.php');
+        if ($_SESSION['system_type'] == 'MedTracker') {
+            header('Location: index.php');
+        } else {
+            header('Location: VMS_index.php');
+        }
         die();
     }
     require_once('include/input-validation.php');

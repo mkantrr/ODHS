@@ -22,12 +22,20 @@
     $id = $get['id'];
     // Is user authorized to view this page?
     if ($accessLevel < 2) {
-        header('Location: index.php');
+        if ($_SESSION['system_type'] == 'MedTracker') {
+            header('Location: index.php');
+        } else {
+            header('Location: VMS_index.php');
+        }
         die();
     }
     // Was an ID supplied?
     if ($_SERVER["REQUEST_METHOD"] == "GET" && !isset($_GET['id'])) {
-        header('Location: index.php');
+        if ($_SESSION['system_type'] == 'MedTracker') {
+            header('Location: index.php');
+        } else {
+            header('Location: VMS_index.php');
+        }
         die();
     } else if ($_SERVER["REQUEST_METHOD"] == "POST"){
         require_once('database/dbPersons.php');

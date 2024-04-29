@@ -21,7 +21,7 @@
 
   require_once('include/input-validation.php');
   require_once('database/dbPersons.php');
-  require_once('database/dbEvents.php');
+  require_once('database/dbAppointments.php');
   require_once('include/output.php');
   require_once('database/dbinfo.php');
   
@@ -29,7 +29,7 @@
 
   if(isset($_GET['animal'])){
     $selected_animal_name = $_GET['animal'];
-    $connection = connect();
+    $connection = connect_md();
     $query = "select * from dbAnimals where name = '$selected_animal_name'";
     $result = mysqli_query($connection, $query);
     $animal_info = mysqli_fetch_assoc($result);
@@ -39,7 +39,11 @@
   
   // Is user authorized to view this page?
   if ($accessLevel < 2) {
-      header('Location: index.php');
+    if ($_SESSION['system_type'] == 'MedTracker') {
+        header('Location: index.php');
+    } else {
+        header('Location: VMS_index.php');
+    }
       die();
   }
   
@@ -79,31 +83,31 @@
             }
 
             @media print {
-                tr:nth-child(even) {
-                    background-color: white;
-                }
+    tr:nth-child(even) {
+        background-color: white;
+    }
 
-                button, header {
-                    display: none;
-                }
+    button, 
+    header {
+        display: none !important; /* Ensure the header is hidden */
+    }
 
-                :root {
-                    font-size: 10pt;
-                }
+    :root {
+        font-size: 10pt;
+    }
 
-                label {
-                    color: black;
-                }
+    label {
+        color: black;
+    }
 
-                table {
-                    width: 100%;
-                }
+    table {
+        width: 100%;
+    }
 
-                a {
-                    color: black;
-                }
-            }
-
+    a {
+        color: black;
+    }
+}
             .theB{
                 width: auto;
                 font-size: 15px;
@@ -261,7 +265,15 @@
             </table>   
              </span>
          </div>
-
+        <!-- Print button -->
+        <div class="center_b">
+        <button onclick="printReport()" class="theB">Print Report</button>
+        </div>
+        <script>
+        function printReport() {
+            window.print();
+        }
+        </script>
 	
     </main>
 	<div class="center_a">
@@ -271,6 +283,7 @@
                 <a href="index.php">
                 <button class = "theB">Home Page</button>
                 </a>
+
 	</div>
         </main>
     </body>

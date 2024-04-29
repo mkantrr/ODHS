@@ -10,10 +10,11 @@ class Appointment {
     private $startTime;
     private $description;
     private $location;
+    private $volunteers;
     private $postMedia;
     private $animal;
 
-    function __construct($id, $name, $abbrevName, $date, $startTime, $description, $location, $postMedia, $animal) {
+    function __construct($id, $name, $abbrevName, $date, $startTime, $description, $location, $volunteers, $postMedia, $animal) {
         $this->id = $id;
         $this->name = $name;
         $this->abbrevName = $abbrevName;
@@ -21,6 +22,7 @@ class Appointment {
         $this->startTime = $startTime;
         $this->description = $description;
         $this->location = $location;
+        $this->volunteers = $volunteers;
         $this->postMedia = $postMedia;
         $this->animal = $animal;
     }
@@ -51,6 +53,10 @@ class Appointment {
 
     function getLocation() {
         return $this->location;
+    }
+
+    function getVolunteers() {
+        return $volunteers;
     }
 
     function getPostMedia() {
