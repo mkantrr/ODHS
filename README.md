@@ -14,13 +14,17 @@ The Gwyneth's Gifts VMS code was modified in the Fall of 2023, revamping the cod
 THE ODHS Medicine Tracker code was modified in the Spring of 2024 as an extension of the medicine tracker to revamp it back to a VMS to go along with the tracker, meant to help engage and manage volunteers for ODHS. The team that made these modifications and changes consisted of Matthew Kanter, Byron Williamson, John Leitch, Joseph Vogtli, Niko Toro, and John Smith.
 
 ## User Types
-There are two types of users (also referred to as 'roles') within the ODHS.
-* Admins
-* Main's
+There are four types of users (also referred to as 'roles') within the ODHS.
+1. Main
+2. Admin
+3. Volunteer
+4. Adoption Center
 
 Main's have the ability to manage users, generate reports, assign users to events, reset user passwords, and modify a user's status.
 
-Admins have all of the abilities that Main's have, but they cannot modify other users information.
+Admin's have all of the abilities that Main's have, but they cannot modify other users information.
+
+Main and Admin accounts have access to the Medical Tracker and the Volunteer Management System, while Volunteer accounts only have access to the Volunteer Management System. Adoption Center accounts only is able to access the Log Hours page once logged in.
 
 Users of any type can have their status changed by Main's to Inactive to prevent them from signing up for events. Inactive users will also stop appearing in the list of volunteers available to be assigned. Additionally, the reports page allows staff members to filter out inactive users.
 
