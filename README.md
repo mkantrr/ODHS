@@ -143,21 +143,45 @@ Dr. Polack chose SiteGround as the platform on which to host the project. Below 
 ### SiteGround Dashboard
 Access to the SiteGround Dashboard requires a SiteGround account with access. Access is managed by Dr. Polack.
 
+<!-- 
 ### Localhost to Siteground
 Follow these steps to transfter your localhost version of the ODHS code to Siteground. For a video tutorial on how to complete these steps, contact Dr. Polack.
-1. Create an FTP Account on Siteground, giving you the necessary FTP credentials. (Hostname, Username, Password, Port)
+<!-- 1. Create an FTP Account on Siteground, giving you the necessary FTP credentials. (Hostname, Username, Password, Port)
 2. Use FTP File Transfer Software (Filezilla, etc.) to transfer the files from your localhost folders to your siteground folders using the FTP credentials from step 1.
 3. Create the following database-related credentials on Siteground under the MySQL tab:
   - Database - Create the database for the siteground version under the Databases tab in the MySQL Manager by selecting the 'Create Database' button. Database name is auto-generated and can be changed if you like.
   - User - Create a user for the database by either selecting the 'Create User' button under the Users tab, or by selecting the 'Add New User' button from the newly created database under the Databases tab. User name is auto-generated and can be changed  if you like.
   - Password - Created when user is created. Password is auto generated and can be changed if you like.
 4. Access the newly created database by navigating to the PHPMyAdmin tab and selecting the 'Access PHPMyAdmin' button. This will redirect you to the PHPMyAdmin page for the database you just created. Navigate to the new database by selecting it from the database list on the left side of the page.
-5. Select the 'Import' option from the database options at the top of the page. Select the 'Choose File' button and impor the "vms.sql" file from your software files.
+5. Select the 'Import' option from the database options at the top of the page. Select the 'Choose File' button and import the "vms.sql" file from your software files.
   - Ensure that you're keeping your .sql file up to date in order to reduce errors in your Siteground code. Keep in mind that Siteground is case-sensitive, and your database names in the Siteground files must be identical to the database names in the database.
-6. Navigate to the 'dbInfo.php' page in your Siteground files. Inside the connect() function, you will see a series of PHP variables. ($host, $database, $user, $pass) Change the server name in the 'if' statement to the name of your server, and change the $database, $user, and $pass variables to the database name, user name, and password that you created in step 3. 
+6. Navigate to the 'dbInfo.php' page in your Siteground files. Inside the connect() function, you will see a series of PHP variables. ($host, $database, $user, $pass) Change the server name in the 'if' statement to the name of your server, and change the $database, $user, and $pass variables to the database name, user name, and password that you created in step 3.  --> -->
 
+## Siteground commands in terminal:
+  * Follow these steps to transfter your localhost version of the ODHS code to Siteground. 
+1. Create an SSH key. [https://www.siteground.com/kb/access-site-ssh-connection/](https://www.siteground.com/kb/access-site-ssh-connection/)
+2. If you don't already have one, create a branch on github called 'siteground'
+3. Ensure the changes made to your branch have been merged with main.
+4. Make anew Pull Request for siteground branch from main, and merge ensuring no conflicts.
+5. git checkout siteground
+6. git pull
+7. ssh u1720-cniiwvju5dcj@gvam1034.siteground.biz -p18765
+8. cd www/jenniferp122.sg-host.com/public_html/ (once ssh in server)
+9. rm -rf * (**Be very careful with this command ensure you are in the public_html/ folder**)
+10. Go back to terminal out of SSH, and run the following command from within the ODHS folder will all the code in it to copy all files from your local machine to siteground: scp -P 18765 -r ./ u1720-cniiwvju5dcj@gvam1034.siteground.biz:~/www/jenniferp122.sg-host.com/public_html
+
+## Adding Database to SiteGround 
+1. Once logged into SiteGround, go into the 'Site' tab.
+2. Select 'MySQL'
+3. Under 'DATABASES' you'll see 'Create new Database', enter 'odhsvms' and click 'CREATE DATABASE' button.
+4. Under 'Manage Databases' click on the vertical three dots to the right of 'odhsvms' and select 'Import Database Dump'
+5. Search for where you have saved the odhsmd.sql file.
+6. If you don't have odhsmd.sql saved anywhere, you can export the database from the PHPMyAdmin console and save it to your desktop.
+7. Follow this same process for the odhsvms database.
+
+<!-- 
 ### Clearing the SiteGround cache
-There may occasionally be a hiccup if the caching system provided by SiteGround decides to cache one of the application's pages in an erroneous way. The cache can be cleared via the Dashboard by navigating to Speed -> Caching on the lefthand side of the control panel, choosing the DYNAMIC CACHE option in the center of the screen, and then clicking the Flush Cache option with a small broom icon under Actions.
+There may occasionally be a hiccup if the caching system provided by SiteGround decides to cache one of the application's pages in an erroneous way. The cache can be cleared via the Dashboard by navigating to Speed -> Caching on the lefthand side of the control panel, choosing the DYNAMIC CACHE option in the center of the screen, and then clicking the Flush Cache option with a small broom icon under Actions. -->
 
 ## External Libraries and APIs
 The only outside library utilized by the ODHS Medicine Tracker is the jQuery library. The version of jQuery used by the system is stored locally within the repo, within the lib folder. jQuery was used to implement form validation and the hiding/showing of certain page elements.
