@@ -19,7 +19,7 @@ There are four types of users (also referred to as 'roles') within the ODHS.
 2. Admin
 3. Volunteer
 4. Adoption Center
-
+<!-- ##################### CHANGE THIS ##################### -->
 Main's have the ability to manage users, generate reports, assign users to events, reset user passwords, and modify a user's status.
 
 Admin's have all of the abilities that Main's have, but they cannot modify other users information.
@@ -33,6 +33,7 @@ Users of any type can have their status changed by Main's to Inactive to prevent
 There is also a root admin account with username 'vmsroot'. The default password for this account is 'vmsroot', but it must be changed upon initial log in. This account has hardcoded Main privileges but cannot be assigned to events and does not have a user profile. It is crucial that this account be given a strong password and that the password be easily remembered, as it cannot easily be reset. This account should be used for system administration purposes only.
 
 ## Features
+<!-- ##################### CHANGE THIS ##################### -->
 Below is an in-depth list of features that were implemented within the system
 * User registration and log in
 * Dashboard
@@ -85,7 +86,7 @@ Below is an in-depth list of features that were implemented within the system
   * 
 
 ## Design Documentation
-Several types of diagrams describing the design of the ODHS Medicine Tracker, including sequence diagrams and use case diagrams, are available. Please contact Dr. Polack for access.
+Several types of diagrams describing the design of the ODHS Medicine Tracker and Volunteer Management System, including sequence diagrams and use case diagrams, are available. Please contact Dr. Polack for access.
 
 ## "localhost" Installation
 Below are the steps required to run the project on your local machine for development and/or testing purposes.
@@ -94,29 +95,47 @@ Below are the steps required to run the project on your local machine for develo
   * For Mac, the htdocs path is `/Applications/XAMPP/xamppfiles/htdocs`
   * For Ubuntu, the htdocs path is `/opt/lampp/htdocs/`
   * For Windows, the htdocs path is `C:\xampp\htdocs`
-3. Clone the ODHS Medicine Tracker repo by running the following command: 'https://github.com/crugless54/ODHS-Animal.git'
+3. Clone the ODHS Medicine Tracker repo by running the following command: 'https://github.com/mkantrr/ODHS.git'
 4. Start the XAMPP MySQL server and Apache server
 5. Open the PHPMyAdmin console by navigating to [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
-6. Create a new database named `homebasedb`. With the database created, navigate to it by clicking on it in the lefthand pane
-7. Import the `vms.sql` file located in `htdocs/ODHS-Animal/sql` into this new database
-8. Create a new user by navigating to `Privileges -> New -> Add user account`
-9. Enter the following credentials for the new user:
-  * Name: `homebasedb`
-  * Hostname: `Local`
-  * Password: `homebasedb`
-  * Leave everything else untouched
-10. Navigate to [http://localhost/ODHS-Animal/](http://localhost/ODHS-Animal/) 
-11. Log into the root user account using the username `vmsroot` with password `vmsroot`
-12. Change the root user password to a strong password
+6. Create a new database named `odhsmd`. With the database created, navigate to it by clicking on it in the lefthand pane
+7. Import the `odhsmd.sql` file located in `htdocs/ODHS/sql` into this new database
+8. Create another new database named `odhsvms`. With the database created, navigate to it by clicking on it in the lefthand pane
+9. Import the `odhvms.sql` file located in `htdocs/ODHS/sql` into this new database
+10. Navigate to [http://localhost/ODHS/login.php](http://localhost/ODHS/login.php) 
+11. Log into the root user account using the username `vmsroot` with password `vmsroot` and clicking on the 'Log in' button.
+12. Once logged in, create a new user by clicking on "Go to Volunteer Management System Dashboard" then clicking "Create Account"
+13. When filling out the New Account Registration form, ensure to fill out every field. 
+    * The E-Mail Address entered for the new account will be the username for that account.
+    * The Account Type sets what type of user the person will be, which then determines what permissions they have. 
+    * Once all fields are filled out properly click on the "Submit" button.
+12. You can now click "Log Out" on the top right of the page and log in to the account you just created by entering the account's email in the "username" field along with the password you set for that account.
 
 Installation is now complete.
 
-## Reset root user credentials
+<!-- ## Reset root user credentials            ##################### CHANGE THIS #####################
 In the event of being locked out of the root user, the following steps will allow resetting the root user's login credentials:
 1. Using the PHPMyAdmin console, delete the `vmsroot` user row from the `dbPersons` table
 2. Clear the SiteGround dynamic cache [using the steps outlined below](#clearing-the-siteground-cache)
 3. Navigate to gwyneth/insertAdmin.php. You should see a message that says `ROOT USER CREATION SUCCESS`
-4. You may now log in with the username and password `vmsroot`
+4. You may now log in with the username and password `vmsroot` -->
+
+1. Create a new account on the ODHS website from your local host with "vmsroot" as the username and password.
+2. Using the PHPMyAdmin console, go to 'dbPersons' table in the 'odhsmd' database, and find the account named "vmsroot".
+3. Edit the values for vmsroot:
+  * id = vmsroot
+  * venue = portland
+  * first_name = vmsroot
+  * state = VA
+  * email = vmsroot
+  * password (do not change this, it should already be set to 'vmsroot' from when you created the account. You are seeing an encrypted hash value of the password.)
+  * force_password_change = 0
+  * gender (leave this blank)
+  * type (leave this blank)
+  * All other values should be set to "N/A"
+4. Press "Go"
+5. You may now log in with the username and password `vmsroot`
+
 
 ## Platform
 Dr. Polack chose SiteGround as the platform on which to host the project. Below are some guides on how to manage the live project.
@@ -125,7 +144,7 @@ Dr. Polack chose SiteGround as the platform on which to host the project. Below 
 Access to the SiteGround Dashboard requires a SiteGround account with access. Access is managed by Dr. Polack.
 
 ### Localhost to Siteground
-Follow these steps to transfter your localhost version of the ODHS Medicine Tracker code to Siteground. For a video tutorial on how to complete these steps, contact Dr. Polack.
+Follow these steps to transfter your localhost version of the ODHS code to Siteground. For a video tutorial on how to complete these steps, contact Dr. Polack.
 1. Create an FTP Account on Siteground, giving you the necessary FTP credentials. (Hostname, Username, Password, Port)
 2. Use FTP File Transfer Software (Filezilla, etc.) to transfer the files from your localhost folders to your siteground folders using the FTP credentials from step 1.
 3. Create the following database-related credentials on Siteground under the MySQL tab:
