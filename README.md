@@ -11,7 +11,7 @@ A major overhaul to the existing system took place during the Spring 2023 semest
 
 The Gwyneth's Gifts VMS code was modified in the Fall of 2023, revamping the code into the present ODHS Medicine Tracker code. Many of the existing database tables were reused, and many other tables were added. Some portions of the software's functionality were reused from the Gwyneth's Gifts VMS code. Other functions were created to fill the needs of the ODHS Medicine Tracker. The team that made these modifications and changes consisted of Garrett Moore, Artis Hart, Riley Tugeau, Julia Barnes, Ryan Warren, and Collin Rugless.
 
-THE ODHS Medicine Tracker code was modified in the Spring of 2024 as an extension of the medicine tracker to revamp it back to a VMS to go along with the tracker, meant to help engage and manage volunteers for ODHS. The team that made these modifications and changes consisted of Matthew Kanter, Byron Williamson, John Leitch, Joseph Vogtli, Niko Toro, and John Smith.
+THE ODHS Medicine Tracker code was modified in the Spring of 2024 as an extension of the medicine tracker, to revamp it back to a Volunteer Management System (VMS) to go along with the tracker. The VMS is meant to help engage and manage volunteers for ODHS. The existing database has been split into two seperate databases (odhsmd and odhsvms). The first database (odhsmd), works with the functionality provided with the Medicine Tracker. The second database (odhsvms), works with the functionality provided with the VMS. Most of the tables were reused in both databases. However, some tables were altered to remove any unused or unnecessary columns. Columns were also added to the existing tables to work with the new capabilities added during this semester. The dbHours table was also added to the odhsvms database, and is used in any new functionality associated with logged volunteer hours. Volunteer and Adoption Center user types have been introduced during this semester. Functionalities provided during this semester include: the processes of logging into the Medicine Tracker or VMS Dashboards based on a user's account type, creating events, viewing the events on a calandar, signing up for events, searching for volunteers, logging hours, deleting logged hours, generating a Volunteer verification form PDF, and the ability to change from light to dark mode. The team that made these modifications and changes consisted of Matthew Kanter, Byron Williamson, John Leitch, Joseph Vogtli, Niko Toro, and John Smith.
 
 ## User Types
 There are four types of users (also referred to as 'roles') within the ODHS.
@@ -24,7 +24,9 @@ Main's have the ability to manage users, generate reports, assign users to event
 
 Admin's have all of the abilities that Main's have, but they cannot modify other users information.
 
-Main and Admin accounts have access to the Medical Tracker and the Volunteer Management System, while Volunteer accounts only have access to the Volunteer Management System. Adoption Center accounts only is able to access the Log Hours page once logged in.
+Main and Admin accounts have access to both the Medical Tracker and the Volunteer Management System, while Volunteer accounts only have access to the Volunteer Management System. 
+
+Adoption Center accounts can only access the Log Hours page once logged in, and have the ability to log a volunteer's hours.
 
 Users of any type can have their status changed by Main's to Inactive to prevent them from signing up for events. Inactive users will also stop appearing in the list of volunteers available to be assigned. Additionally, the reports page allows staff members to filter out inactive users.
 
@@ -79,6 +81,8 @@ Below is an in-depth list of features that were implemented within the system
   * Create Location
   * Modify Location
   * Delete Location
+* Volunteer Management
+  * 
 
 ## Design Documentation
 Several types of diagrams describing the design of the ODHS Medicine Tracker, including sequence diagrams and use case diagrams, are available. Please contact Dr. Polack for access.
