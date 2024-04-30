@@ -101,7 +101,7 @@ Below are the steps required to run the project on your local machine for develo
 6. Create a new database named `odhsmd`. With the database created, navigate to it by clicking on it in the lefthand pane
 7. Import the `odhsmd.sql` file located in `htdocs/ODHS/sql` into this new database
 8. Create another new database named `odhsvms`. With the database created, navigate to it by clicking on it in the lefthand pane
-9. Import the `odhvms.sql` file located in `htdocs/ODHS/sql` into this new database
+9. Import the `odhsvms.sql` file located in `htdocs/ODHS/sql` into this new database
 10. Navigate to [http://localhost/ODHS/login.php](http://localhost/ODHS/login.php) 
 11. Log into the root user account using the username `vmsroot` with password `vmsroot` and clicking on the 'Log in' button.
 12. Once logged in, create a new user by clicking on "Go to Volunteer Management System Dashboard" then clicking "Create Account"
@@ -163,12 +163,12 @@ Follow these steps to transfter your localhost version of the ODHS code to Siteg
 2. If you don't already have one, create a branch on github called 'siteground'
 3. Ensure the changes made to your branch have been merged with main.
 4. Make anew Pull Request for siteground branch from main, and merge ensuring no conflicts.
-5. git checkout siteground
-6. git pull
-7. ssh u1720-cniiwvju5dcj@gvam1034.siteground.biz -p18765
-8. cd www/jenniferp122.sg-host.com/public_html/ (once ssh in server)
-9. rm -rf * (**Be very careful with this command ensure you are in the public_html/ folder**)
-10. Go back to terminal out of SSH, and run the following command from within the ODHS folder will all the code in it to copy all files from your local machine to siteground: scp -P 18765 -r ./ u1720-cniiwvju5dcj@gvam1034.siteground.biz:~/www/jenniferp122.sg-host.com/public_html
+5. `git checkout siteground`
+6. `git pull`
+7. The SiteGround dashboard will provide you with the username, hostname, and port to run your SSH command on. This should be in the following format: `ssh <username>@<hostname> -p<port number>`
+8. Once you have successfully gained SSH access to the siteground server, navigate to `www/<website_domain>/public_html`
+9. Run rm -rf * to remove all uploaded code files being hosted so we can replace them with the updated files(**Be very careful with this command ensure you are in the public_html/ folder**).
+10. Exit out of your SSH connection, and run the following `scp` command from within the ODHS folder. This will take all the code in the ODHS directory and copy all files from your local machine to SiteGround: `scp -P <port number> -r ./ <username>@<hostname>:~/www/<website_domain>/public_html`
 
 ## Adding Database to SiteGround 
 1. Once logged into SiteGround, go into the 'Site' tab.
