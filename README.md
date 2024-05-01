@@ -34,7 +34,6 @@ Users of any type can have their status changed by Main's to Inactive to prevent
 There is also a root admin account with username 'vmsroot'. The default password for this account is 'vmsroot', but it must be changed upon initial log in. This account has hardcoded Main privileges but cannot be assigned to events and does not have a user profile. It is crucial that this account be given a strong password and that the password be easily remembered, as it cannot easily be reset. This account should be used for system administration purposes only.
 
 ## Features
-<!-- ##################### CHANGE THIS ##################### -->
 Below is an in-depth list of features that were implemented within the system
 * User Registration And Log In
 * Home Screens
@@ -57,8 +56,6 @@ Below is an in-depth list of features that were implemented within the system
   * Appointment Details Page
   * Volunteer Event Sign Up
   * Assign Volunteer To Event
-  <!-- * Attach event training media (links, pictures, videos)
-  * Attach post-event media (Admin/Main only) -->
   * View Appointment Roster (print-friendly)
   * Modify Appointment Details
   * Create New Appointment
@@ -66,13 +63,6 @@ Below is an in-depth list of features that were implemented within the system
   * Complete Appointment
 * Reports (print-friendly)
   * General Animal Reports
-  <!-- * Notification system, with notifications generated when
-  * A user signs up for an event (sent to all staff members)
-  * A user is assigned to an event by a staff member (sent to that volunteer)
-  * A new event is created by a staff member (sent to all users)
-  * An appointment is close
-  * An appointment is due today
-  * An appointment is overdue -->
 * Animal Management (Main and Admin only)
   * Create Animals
   * Modify Animals
@@ -81,11 +71,9 @@ Below is an in-depth list of features that were implemented within the system
   * Search Animals In The Database
 * Services (Main and Admin only)
   * Create Service
-  <!-- * Modify Service -->
   * Delete Service
 * Locations (Main and Admin only)
   * Create Location
-  <!-- * Modify Location -->
   * Delete Location
 * Volunteer Management
   * Log Volunteer Hours
@@ -131,12 +119,6 @@ Below are the steps required to run the project on your local machine for develo
 
 Installation is now complete.
 
-<!-- ## Reset root user credentials            ##################### CHANGE THIS #####################
-In the event of being locked out of the root user, the following steps will allow resetting the root user's login credentials:
-1. Using the PHPMyAdmin console, delete the `vmsroot` user row from the `dbPersons` table
-2. Clear the SiteGround dynamic cache [using the steps outlined below](#clearing-the-siteground-cache)
-3. Navigate to gwyneth/insertAdmin.php. You should see a message that says `ROOT USER CREATION SUCCESS`
-4. You may now log in with the username and password `vmsroot` -->
 ## Reset Root User Credentials
 In the event of being locked out of the root user, the following steps will allow resetting the root user's login credentials:
 1. Create a new account on the ODHS website from your local host with "vmsroot" as the username and password.
@@ -155,26 +137,11 @@ In the event of being locked out of the root user, the following steps will allo
 4. Press "Go"
 5. You may now log in with the username and password `vmsroot`
 
-
 ## Platform
 Dr. Polack chose SiteGround as the platform on which to host the project. Below are some guides on how to manage the live project.
 
 ### SiteGround Dashboard
 Access to the SiteGround Dashboard requires a SiteGround account with access. Access is managed by Dr. Polack.
-
-<!-- 
-### Localhost to Siteground
-Follow these steps to transfter your localhost version of the ODHS code to Siteground. For a video tutorial on how to complete these steps, contact Dr. Polack.
-1. Create an FTP Account on Siteground, giving you the necessary FTP credentials. (Hostname, Username, Password, Port)
-2. Use FTP File Transfer Software (Filezilla, etc.) to transfer the files from your localhost folders to your siteground folders using the FTP credentials from step 1.
-3. Create the following database-related credentials on Siteground under the MySQL tab:
-  - Database - Create the database for the siteground version under the Databases tab in the MySQL Manager by selecting the 'Create Database' button. Database name is auto-generated and can be changed if you like.
-  - User - Create a user for the database by either selecting the 'Create User' button under the Users tab, or by selecting the 'Add New User' button from the newly created database under the Databases tab. User name is auto-generated and can be changed  if you like.
-  - Password - Created when user is created. Password is auto generated and can be changed if you like.
-4. Access the newly created database by navigating to the PHPMyAdmin tab and selecting the 'Access PHPMyAdmin' button. This will redirect you to the PHPMyAdmin page for the database you just created. Navigate to the new database by selecting it from the database list on the left side of the page.
-5. Select the 'Import' option from the database options at the top of the page. Select the 'Choose File' button and import the "vms.sql" file from your software files.
-  - Ensure that you're keeping your .sql file up to date in order to reduce errors in your Siteground code. Keep in mind that Siteground is case-sensitive, and your database names in the Siteground files must be identical to the database names in the database.
-6. Navigate to the 'dbInfo.php' page in your Siteground files. Inside the connect() function, you will see a series of PHP variables. ($host, $database, $user, $pass) Change the server name in the 'if' statement to the name of your server, and change the $database, $user, and $pass variables to the database name, user name, and password that you created in step 3.  -->
 
 ## SiteGround Dashboard:
 Follow these steps to transfter your localhost version of the ODHS code to Siteground. 
@@ -197,10 +164,6 @@ Follow these steps to transfter your localhost version of the ODHS code to Siteg
 5. Search for where you have saved the odhsmd.sql file.
 6. If you don't have odhsmd.sql saved anywhere, you can export the database from the PHPMyAdmin console and save it to your desktop.
 7. Follow this same process for the odhsvms database.
-
-<!-- 
-### Clearing the SiteGround cache
-There may occasionally be a hiccup if the caching system provided by SiteGround decides to cache one of the application's pages in an erroneous way. The cache can be cleared via the Dashboard by navigating to Speed -> Caching on the lefthand side of the control panel, choosing the DYNAMIC CACHE option in the center of the screen, and then clicking the Flush Cache option with a small broom icon under Actions. -->
 
 ## External Libraries and APIs
 The only outside library utilized by the ODHS Medicine Tracker is the jQuery library. The version of jQuery used by the system is stored locally within the repo, within the lib folder. jQuery was used to implement form validation and the hiding/showing of certain page elements.
