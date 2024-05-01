@@ -99,7 +99,7 @@
         $current_page = substr($current_page, strpos($current_page,"/"));
         if($_SESSION['dark_mode'] == true){
             echo '<script>darkModeToggle();</script>';
-        
+            
         }
         if($permission_array[$current_page]>$_SESSION['access_level']){
             //in this case, the user doesn't have permission to view this page.
@@ -109,6 +109,7 @@
             //so we die().
             die();
         }
+
         
         //This line gives us the path to the html pages in question, useful if the server isn't installed @ root.
         $path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
@@ -128,7 +129,7 @@
 
             echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'index.php">Home</a></li>');
             //echo('<span class="nav-divider">|</span>');
-
+            echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'darkMode.php">darkmode toggle</a></li>');
             echo('<li class="nav-item dropdown">');
             echo('<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Appointments</a>');
             echo('<div class="dropdown-menu" aria-labelledby="navbarDropdown">');
@@ -159,7 +160,7 @@
             echo('</div>');
             echo('</li>');
             echo('<li class = "button">');
-            echo('<button onclick = "darkModeToggle();$_SESSION[dark_mode] = true"> Toggle dark mode </button>');
+            echo('<button onclick = "darkModeToggle();"> Toggle dark mode </button>');
             echo('</li>');
             //echo('<span class="nav-divider">|</span>');
             echo('<li class="nav-item dropdown">');
