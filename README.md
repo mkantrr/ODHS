@@ -113,7 +113,7 @@ Below are the steps required to run the project on your local machine for develo
   * For Mac, the htdocs path is `/Applications/XAMPP/xamppfiles/htdocs`
   * For Ubuntu, the htdocs path is `/opt/lampp/htdocs/`
   * For Windows, the htdocs path is `C:\xampp\htdocs`
-3. Clone the ODHS Medicine Tracker repo by running the following command: 'https://github.com/mkantrr/ODHS.git'
+3. Clone the ODHS Medicine Tracker repo by running the following command: `git clone https://github.com/mkantrr/ODHS.git`
 4. Start the XAMPP MySQL server and Apache server
 5. Open the PHPMyAdmin console by navigating to [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
 6. Create a new database named `odhsmd`. With the database created, navigate to it by clicking on it in the lefthand pane
