@@ -36,15 +36,18 @@ There is also a root admin account with username 'vmsroot'. The default password
 <!-- ##################### CHANGE THIS ##################### -->
 Below is an in-depth list of features that were implemented within the system
 * User registration and log in
-* Dashboard
+* Medicine Tracker Dashboard
+* Volunteer Management System Dashboard
 * User Management
+  * Create Main, Admin, Volunteer, Adoption Center accounts (Main and Admin only)
   * Change own password
   * View volunteer hours (print-friendly)
   * Modify profile
-  * Modify user status
+  * Modify user status (Main only)
   * Modify user role (AKA access level) (Main only)
   * Reset password
   * User search
+  * 
 * Appointments and Appointment Management
   * Calendar with appointment listings
   * Calendar day view with appointment listings
@@ -61,13 +64,13 @@ Below is an in-depth list of features that were implemented within the system
   * Complete appointment
 * Reports (print-friendly)
   * General Animal Reports
-* Notification system, with notifications generated when
+<!-- * Notification system, with notifications generated when
   * A user signs up for an event (sent to all staff members)
   * A user is assigned to an event by a staff member (sent to that volunteer)
   * A new event is created by a staff member (sent to all users)
   * An appointment is close
   * An appointment is due today
-  * An appointment is overdue
+  * An appointment is overdue -->
 * Animal Management
   * Create Animals
   * Modify Animals
@@ -76,11 +79,11 @@ Below is an in-depth list of features that were implemented within the system
   * Search Animals in the database
 * Services
   * Create Service
-  * Modify Service
+  <!-- * Modify Service -->
   * Delete Service
 * Locations
   * Create Location
-  * Modify Location
+  <!-- * Modify Location -->
   * Delete Location
 * Volunteer Management
   * 
@@ -198,7 +201,12 @@ Below is a list of improvements that could be made to the system in subsequent s
   * Additional reports could be added
   * Visual components could be added (graphs)
 * If a better webhosting option was chosen, file upload for pictures and documents would be better than having to use outside resources such as Google Docs or imgur for file upload
-
+* Implement a way to view volunteer statistics.
+  * Graphs, plots, or charts showing the volunteer hours logged per month/year, average number of volunteers who have logged per year/month. etc.
+* Implement a way for volunteers to provide feedback/ideas to better improve the flow of the adoption process.
+  * Only Admin and Main accounts should be able to view the feedback.
+* Implement a "Threads" feature that allows Main/Admin accounts to post resources, articles, or announcements to the ODHS website.
+* Implement a system in which volunteers can earn badges by completing volunteer milestones based on the amount of volunteer hours logged. 
 ## License
 The project remains under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl.txt).
 
