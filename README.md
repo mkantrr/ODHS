@@ -11,6 +11,7 @@ A major overhaul to the existing system took place during the Spring 2023 semest
 
 The Gwyneth's Gifts VMS code was modified in the Fall of 2023, revamping the code into the present ODHS Medicine Tracker code. Many of the existing database tables were reused, and many other tables were added. Some portions of the software's functionality were reused from the Gwyneth's Gifts VMS code. Other functions were created to fill the needs of the ODHS Medicine Tracker. The team that made these modifications and changes consisted of Garrett Moore, Artis Hart, Riley Tugeau, Julia Barnes, Ryan Warren, and Collin Rugless.
 
+<!-- Our group description -->
 THE ODHS Medicine Tracker code was modified in the Spring of 2024 as an extension of the medicine tracker, to revamp it back to a Volunteer Management System (VMS) to go along with the tracker. The VMS is meant to help engage and manage volunteers for ODHS. The existing database has been split into two seperate databases (odhsmd and odhsvms). The first database (odhsmd), works with the functionality provided with the Medicine Tracker. The second database (odhsvms), works with the functionality provided with the VMS. Most of the tables were reused in both databases. However, some tables were altered to remove any unused or unnecessary columns. Columns were also added to the existing tables to work with the new capabilities added during this semester. The dbHours table was also added to the odhsvms database, and is used in any new functionality associated with logged volunteer hours. Volunteer and Adoption Center user types have been introduced during this semester. Functionalities provided during this semester include: the processes of logging into the Medicine Tracker or VMS Dashboards based on a user's account type, creating events, viewing the events on a calandar, signing up for events, searching for volunteers, logging hours, deleting logged hours, generating a Volunteer verification form PDF, and the ability to change from light to dark mode. The team that made these modifications and changes consisted of Matthew Kanter, Byron Williamson, John Leitch, Joseph Vogtli, Niko Toro, and John Smith.
 
 ## User Types
@@ -19,12 +20,12 @@ There are four types of users (also referred to as 'roles') within the ODHS.
 2. Admin
 3. Volunteer
 4. Adoption Center
-<!-- ##################### CHANGE THIS ##################### -->
+
 Main's have the ability to manage users, generate reports, assign users to events, reset user passwords, and modify a user's status.
 
 Admin's have all of the abilities that Main's have, but they cannot modify other users information.
 
-Main and Admin accounts have access to both the Medical Tracker and the Volunteer Management System, while Volunteer accounts only have access to the Volunteer Management System. 
+Main and Admin accounts have access to both the Medicine Tracker dashoboard and the VMS dashboard, while Volunteer accounts can only access the VMS dashboard. 
 
 Adoption Center accounts can only access the Log Hours page once logged in, and have the ability to log a volunteer's hours.
 
@@ -36,8 +37,10 @@ There is also a root admin account with username 'vmsroot'. The default password
 <!-- ##################### CHANGE THIS ##################### -->
 Below is an in-depth list of features that were implemented within the system
 * User registration and log in
-* Medicine Tracker Dashboard
-* Volunteer Management System Dashboard
+* Home Screens
+  * Medicine Tracker Dashboard (Main and Admin only)
+  * Volunteer Management System Dashboard (Main, Admin, Volunteer only)
+  * Adoption Center accounts go directly to Log Hours page after login.
 * User Management
   * Create Main, Admin, Volunteer, Adoption Center accounts (Main and Admin only)
   * Change own password
@@ -46,17 +49,16 @@ Below is an in-depth list of features that were implemented within the system
   * Modify user status (Main only)
   * Modify user role (AKA access level) (Main only)
   * Reset password
-  * User search
-  * 
-* Appointments and Appointment Management
+  * User search (Main and Admin only)
+* Appointments and Appointment Management (Main and Admin only)
   * Calendar with appointment listings
   * Calendar day view with appointment listings
   * Appointment search
   * Appointment details page
   * Volunteer event sign up
   * Assign Volunteer to event
-  * Attach event training media (links, pictures, videos)
-  * Attach post-event media (Admin/Main only)
+  <!-- * Attach event training media (links, pictures, videos)
+  * Attach post-event media (Admin/Main only) -->
   * View Appointment Roster (print-friendly)
   * Modify appointment details
   * Create new appointment
@@ -71,22 +73,35 @@ Below is an in-depth list of features that were implemented within the system
   * An appointment is close
   * An appointment is due today
   * An appointment is overdue -->
-* Animal Management
+* Animal Management (Main and Admin only)
   * Create Animals
   * Modify Animals
   * Delete Animals
   * Archive Animals
   * Search Animals in the database
-* Services
+* Services (Main and Admin only)
   * Create Service
   <!-- * Modify Service -->
   * Delete Service
-* Locations
+* Locations (Main and Admin only)
   * Create Location
   <!-- * Modify Location -->
   * Delete Location
 * Volunteer Management
-  * 
+  * Log Volunteer Hours
+  * View Logged Volunteer Hours (Main, Admin), (Volunteers can view their own hours)
+  * Delete Logged Volunteer Hours (Main, Admin), (Volunteers can delete their own hours)
+  * Generate PDF Verification Form of Logged Hours
+  * Forgot Username Assistance Link
+* Events
+  * Create Events (Main and Admin only)
+  * View Events Calandar
+  * Sign up for Events
+  * Delete Events (Main and Admin only)
+  * Modify Events (Main and Admin only)
+* Display Format
+  * Light and Dark Mode Switch 
+
 
 ## Design Documentation
 Several types of diagrams describing the design of the ODHS Medicine Tracker and Volunteer Management System, including sequence diagrams and use case diagrams, are available. Please contact Dr. Polack for access.
@@ -122,7 +137,7 @@ In the event of being locked out of the root user, the following steps will allo
 2. Clear the SiteGround dynamic cache [using the steps outlined below](#clearing-the-siteground-cache)
 3. Navigate to gwyneth/insertAdmin.php. You should see a message that says `ROOT USER CREATION SUCCESS`
 4. You may now log in with the username and password `vmsroot` -->
-
+In the event of being locked out of the root user, the following steps will allow resetting the root user's login credentials:
 1. Create a new account on the ODHS website from your local host with "vmsroot" as the username and password.
 2. Using the PHPMyAdmin console, go to 'dbPersons' table in the 'odhsmd' database, and find the account named "vmsroot".
 3. Edit the values for vmsroot:
@@ -160,8 +175,8 @@ Follow these steps to transfter your localhost version of the ODHS code to Siteg
   - Ensure that you're keeping your .sql file up to date in order to reduce errors in your Siteground code. Keep in mind that Siteground is case-sensitive, and your database names in the Siteground files must be identical to the database names in the database.
 6. Navigate to the 'dbInfo.php' page in your Siteground files. Inside the connect() function, you will see a series of PHP variables. ($host, $database, $user, $pass) Change the server name in the 'if' statement to the name of your server, and change the $database, $user, and $pass variables to the database name, user name, and password that you created in step 3.  --> -->
 
-## Siteground commands in terminal:
-  * Follow these steps to transfter your localhost version of the ODHS code to Siteground. 
+## SiteGround Dashboard:
+Follow these steps to transfter your localhost version of the ODHS code to Siteground. 
 1. Create an SSH key. [https://www.siteground.com/kb/access-site-ssh-connection/](https://www.siteground.com/kb/access-site-ssh-connection/)
 2. If you don't already have one, create a branch on github called 'siteground'
 3. Ensure the changes made to your branch have been merged with main.
@@ -207,6 +222,7 @@ Below is a list of improvements that could be made to the system in subsequent s
   * Only Admin and Main accounts should be able to view the feedback.
 * Implement a "Threads" feature that allows Main/Admin accounts to post resources, articles, or announcements to the ODHS website.
 * Implement a system in which volunteers can earn badges by completing volunteer milestones based on the amount of volunteer hours logged. 
+
 ## License
 The project remains under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl.txt).
 
