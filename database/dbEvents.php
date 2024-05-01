@@ -224,7 +224,6 @@ function create_event($event) {
         return null;
     }
     $id = mysqli_insert_id($connection);
-    add_services_to_event($id, $services);
     mysqli_commit($connection);
     mysqli_close($connection);
     return $id;
