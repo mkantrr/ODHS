@@ -36,37 +36,37 @@ There is also a root admin account with username 'vmsroot'. The default password
 ## Features
 <!-- ##################### CHANGE THIS ##################### -->
 Below is an in-depth list of features that were implemented within the system
-* User registration and log in
+* User Registration And Log In
 * Home Screens
   * Medicine Tracker Dashboard (Main and Admin only)
   * Volunteer Management System Dashboard (Main, Admin, Volunteer only)
-  * Adoption Center accounts go directly to Log Hours page after login.
+  * Adoption Center Accounts Go Directly To Log Hours Page After Login
 * User Management
   * Create Main, Admin, Volunteer, Adoption Center accounts (Main and Admin only)
-  * Change own password
+  * Change Own Password
   * View volunteer hours (print-friendly)
-  * Modify profile
-  * Modify user status (Main only)
-  * Modify user role (AKA access level) (Main only)
+  * Modify Profile
+  * Modify User Status (Main only)
+  * Modify User Role (AKA access level) (Main only)
   * Reset password
-  * User search (Main and Admin only)
-* Appointments and Appointment Management (Main and Admin only)
-  * Calendar with appointment listings
-  * Calendar day view with appointment listings
-  * Appointment search
-  * Appointment details page
-  * Volunteer event sign up
-  * Assign Volunteer to event
+  * User Search (Main and Admin only)
+* Appointments And Appointment Management (Main and Admin only)
+  * Calendar With Appointment Listings
+  * Calendar Day View With Appointment Listings
+  * Appointment Search
+  * Appointment Details Page
+  * Volunteer Event Sign Up
+  * Assign Volunteer To Event
   <!-- * Attach event training media (links, pictures, videos)
   * Attach post-event media (Admin/Main only) -->
   * View Appointment Roster (print-friendly)
-  * Modify appointment details
-  * Create new appointment
-  * Delete appointment
-  * Complete appointment
+  * Modify Appointment Details
+  * Create New Appointment
+  * Delete Appointment
+  * Complete Appointment
 * Reports (print-friendly)
   * General Animal Reports
-<!-- * Notification system, with notifications generated when
+  <!-- * Notification system, with notifications generated when
   * A user signs up for an event (sent to all staff members)
   * A user is assigned to an event by a staff member (sent to that volunteer)
   * A new event is created by a staff member (sent to all users)
@@ -78,7 +78,7 @@ Below is an in-depth list of features that were implemented within the system
   * Modify Animals
   * Delete Animals
   * Archive Animals
-  * Search Animals in the database
+  * Search Animals In The Database
 * Services (Main and Admin only)
   * Create Service
   <!-- * Modify Service -->
@@ -91,16 +91,16 @@ Below is an in-depth list of features that were implemented within the system
   * Log Volunteer Hours
   * View Logged Volunteer Hours (Main, Admin), (Volunteers can view their own hours)
   * Delete Logged Volunteer Hours (Main, Admin), (Volunteers can delete their own hours)
-  * Generate PDF Verification Form of Logged Hours
+  * Generate PDF Verification Form Of Logged Hours
   * Forgot Username Assistance Link
 * Events
   * Create Events (Main and Admin only)
   * View Events Calandar
-  * Sign up for Events
+  * Sign Up For Events
   * Delete Events (Main and Admin only)
   * Modify Events (Main and Admin only)
 * Display Format
-  * Light and Dark Mode Switch 
+  * Light And Dark Mode Switch 
 
 
 ## Design Documentation
@@ -137,6 +137,7 @@ In the event of being locked out of the root user, the following steps will allo
 2. Clear the SiteGround dynamic cache [using the steps outlined below](#clearing-the-siteground-cache)
 3. Navigate to gwyneth/insertAdmin.php. You should see a message that says `ROOT USER CREATION SUCCESS`
 4. You may now log in with the username and password `vmsroot` -->
+## Reset Root User Credentials
 In the event of being locked out of the root user, the following steps will allow resetting the root user's login credentials:
 1. Create a new account on the ODHS website from your local host with "vmsroot" as the username and password.
 2. Using the PHPMyAdmin console, go to 'dbPersons' table in the 'odhsmd' database, and find the account named "vmsroot".
@@ -164,7 +165,7 @@ Access to the SiteGround Dashboard requires a SiteGround account with access. Ac
 <!-- 
 ### Localhost to Siteground
 Follow these steps to transfter your localhost version of the ODHS code to Siteground. For a video tutorial on how to complete these steps, contact Dr. Polack.
-<!-- 1. Create an FTP Account on Siteground, giving you the necessary FTP credentials. (Hostname, Username, Password, Port)
+1. Create an FTP Account on Siteground, giving you the necessary FTP credentials. (Hostname, Username, Password, Port)
 2. Use FTP File Transfer Software (Filezilla, etc.) to transfer the files from your localhost folders to your siteground folders using the FTP credentials from step 1.
 3. Create the following database-related credentials on Siteground under the MySQL tab:
   - Database - Create the database for the siteground version under the Databases tab in the MySQL Manager by selecting the 'Create Database' button. Database name is auto-generated and can be changed if you like.
@@ -173,19 +174,19 @@ Follow these steps to transfter your localhost version of the ODHS code to Siteg
 4. Access the newly created database by navigating to the PHPMyAdmin tab and selecting the 'Access PHPMyAdmin' button. This will redirect you to the PHPMyAdmin page for the database you just created. Navigate to the new database by selecting it from the database list on the left side of the page.
 5. Select the 'Import' option from the database options at the top of the page. Select the 'Choose File' button and import the "vms.sql" file from your software files.
   - Ensure that you're keeping your .sql file up to date in order to reduce errors in your Siteground code. Keep in mind that Siteground is case-sensitive, and your database names in the Siteground files must be identical to the database names in the database.
-6. Navigate to the 'dbInfo.php' page in your Siteground files. Inside the connect() function, you will see a series of PHP variables. ($host, $database, $user, $pass) Change the server name in the 'if' statement to the name of your server, and change the $database, $user, and $pass variables to the database name, user name, and password that you created in step 3.  --> -->
+6. Navigate to the 'dbInfo.php' page in your Siteground files. Inside the connect() function, you will see a series of PHP variables. ($host, $database, $user, $pass) Change the server name in the 'if' statement to the name of your server, and change the $database, $user, and $pass variables to the database name, user name, and password that you created in step 3.  -->
 
 ## SiteGround Dashboard:
 Follow these steps to transfter your localhost version of the ODHS code to Siteground. 
 1. Create an SSH key. [https://www.siteground.com/kb/access-site-ssh-connection/](https://www.siteground.com/kb/access-site-ssh-connection/)
 2. If you don't already have one, create a branch on github called 'siteground'
 3. Ensure the changes made to your branch have been merged with main.
-4. Make anew Pull Request for siteground branch from main, and merge ensuring no conflicts.
+4. Make a new Pull Request for siteground branch from main, and merge ensuring no conflicts.
 5. `git checkout siteground`
 6. `git pull`
 7. The SiteGround dashboard will provide you with the username, hostname, and port to run your SSH command on. This should be in the following format: `ssh <username>@<hostname> -p<port number>`
 8. Once you have successfully gained SSH access to the siteground server, navigate to `www/<website_domain>/public_html`
-9. Run rm -rf * to remove all uploaded code files being hosted so we can replace them with the updated files(**Be very careful with this command ensure you are in the public_html/ folder**).
+9. Run rm -rf * to remove all uploaded code files being hosted so we can replace them with the updated files (**Be very careful with this command ensure you are in the public_html/ folder**).
 10. Exit out of your SSH connection, and run the following `scp` command from within the ODHS folder. This will take all the code in the ODHS directory and copy all files from your local machine to SiteGround: `scp -P <port number> -r ./ <username>@<hostname>:~/www/<website_domain>/public_html`
 
 ## Adding Database to SiteGround 
