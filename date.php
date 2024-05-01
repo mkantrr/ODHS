@@ -109,7 +109,6 @@ if ($_SESSION['system_type'] == 'MedTracker') {
                 $events = fetch_events_on_date($date);
                 if ($events) {
                     foreach ($events as $event) {
-                        $animal = get_animal($event["animalID"])[0]["name"];
                         $location = get_location($event['locationID'])[0]["name"]; 
                         echo "
                             <table class='event'>
