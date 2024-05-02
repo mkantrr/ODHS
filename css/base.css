@@ -90,7 +90,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --page-background-color: #333333;
     --page-font-color:#ffffff;
 
-    --inactive-font-color: #d0d0d0;
+    --inactive-font-color: #ffffff;
     --inactive-background-color: #2d1717;
     --standout-background: #4e4e4e;
 }
@@ -111,8 +111,8 @@ body {
 }
 
 .dark-mode{
-    background-color: (--page-font-color);
-    color: var(--page-background-color);
+    background-color: var(--page-background-color);
+    color: var(--page-font-color);
 }
 
 header > img {

@@ -5,6 +5,11 @@ if($_SESSION['dark_mode'] == true)
 {$_SESSION['dark_mode'] = false;}
 else
 $_SESSION['dark_mode'] = true;
-header('Location: index.php');
+
+if ($_SESSION['system_type'] == "MedTracker") {
+    header('Location: index.php');
+} else {
+    header('Location: VMS_index.php');
+}
 
 ?>

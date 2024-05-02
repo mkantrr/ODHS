@@ -180,7 +180,7 @@
 	        echo('<a class="dropdown-item" href="' . $path . 'changePassword.php">Change Password</a>');
 
 
-            echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'darkMode.php">darkmode</a></li>');
+            echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'darkMode.php">Toggle Dark Mode</a></li>');
 
             echo('</div>');
             echo('</li>');
@@ -361,6 +361,10 @@
                     
                 //}
                 //echo('<span class="nav-divider">|</span>');
+
+
+                echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'darkMode.php">Toggle Dark Mode</a></li>');
+
                 echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'logout.php">Log out</a></li>');
                 echo '</ul></nav>';
             }
