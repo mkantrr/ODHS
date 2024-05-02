@@ -1,15 +1,12 @@
-
 <?php 
-  
-require('fpdf/fpdf.php'); 
-
 //Created by Joseph Vogtli
 //Table code from Carlos Vasquez Suez (http://www.fpdf.org/en/script/script10.php)
 //PDF code taken from FPDF Tutorials (http://www.fpdf.org/)
     // Template for new VMS pages. Base your new page on this one
-
     // Make session information accessible, allowing us to associate
     // data with the logged-in user.
+    ob_start();
+    require('fpdf/fpdf.php'); 
     session_cache_expire(30);
     session_start();
     ini_set("display_errors",1);
@@ -27,6 +24,8 @@ require('fpdf/fpdf.php');
         header('Location: login.php');
         die();
     }
+
+    require('fpdf/fpdf.php'); 
     $isAdmin = $accessLevel >= 2;
     require_once('database/dbPersons.php');
     require_once('database/dbHours.php');
@@ -178,6 +177,6 @@ $pdf->Cell(40,10,"additional information.");
 
 
 $pdf->Output(); 
-  
+ob_end_flush();
 ?>
 
