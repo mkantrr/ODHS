@@ -7,6 +7,7 @@
     session_start();
 
     $_SESSION['system_type'] = "Menu";
+    $_SESSION['dark_mode'] = false;
     
     ini_set("display_errors",1);
     error_reporting(E_ALL);
