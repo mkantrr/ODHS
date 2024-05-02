@@ -47,6 +47,10 @@
     } else if ($_SESSION['logged_in']) {
 
         if ($_SESSION['system_type'] == 'MedTracker') {
+            if($_SESSION['dark_mode'] == true){
+                echo '<script>darkModeToggle();</script>';
+                
+            }
 
         /*         * Set our permission array.
          * anything a guest can do, a volunteer and manager can also do
@@ -175,6 +179,9 @@
             echo('<a class="dropdown-item" href="' . $path . 'addLocation.php">Add Location</a>');
 	        echo('<a class="dropdown-item" href="' . $path . 'changePassword.php">Change Password</a>');
 
+
+            echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'darkMode.php">Toggle Dark Mode</a></li>');
+
             echo('</div>');
             echo('</li>');
 
@@ -210,6 +217,10 @@
              * can view it. If someone logged into the system attempts to access a page above their
              * permission level, they will be sent back to the home page.
              */
+            if($_SESSION['dark_mode'] == true){
+                echo '<script>darkModeToggle();</script>';
+                
+            }
             //pages guests are allowed to view
             $permission_array['index.php'] = 0;
             $permission_array['about.php'] = 0;
@@ -350,6 +361,10 @@
                     
                 //}
                 //echo('<span class="nav-divider">|</span>');
+
+
+                echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'darkMode.php">Toggle Dark Mode</a></li>');
+
                 echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'logout.php">Log out</a></li>');
                 echo '</ul></nav>';
             }
