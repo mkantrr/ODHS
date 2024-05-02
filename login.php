@@ -71,6 +71,7 @@
                 //$_SESSION['type'] = $user->get_type();
                 $_SESSION['_id'] = $user->get_id();
                 // hard code root privileges
+                $_SESSION['dark_mode'] = false;
                 if ($user->get_id() == 'vmsroot') {
                     $_SESSION['access_level'] = 3;
                     $_SESSION['type'] = 'main';

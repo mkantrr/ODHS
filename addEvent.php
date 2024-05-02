@@ -77,7 +77,7 @@
     }
     // Connect to database to get list of Locations
     include_once('database/dbinfo.php'); 
-    $con=connect();  
+    $con=connect_vms();  
     $sql = "SELECT * FROM `dbLocations`";
     $all_locations = mysqli_query($con,$sql);
 ?>

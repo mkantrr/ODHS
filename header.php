@@ -47,6 +47,10 @@
     } else if ($_SESSION['logged_in']) {
 
         if ($_SESSION['system_type'] == 'MedTracker') {
+            if($_SESSION['dark_mode'] == true){
+                echo '<script>darkModeToggle();</script>';
+                
+            }
 
         /*         * Set our permission array.
          * anything a guest can do, a volunteer and manager can also do
@@ -98,7 +102,6 @@
         $permission_array['addlocation.php'] = 2;
         $permission_array['viewservice.php'] = 2;
         $permission_array['viewlocation.php'] = 2;
-        $permission_array['viewarchived.php'] = 2;
         $permission_array['animal.php'] = 2;
         $permission_array['editanimal.php'] = 2;
 
@@ -135,6 +138,7 @@
             echo('<a class="navbar-brand" id="vms-logo"> MedTracker </a></span><img id="menu-toggle" src="images/menu.png"></span>');
             echo('<ul>');
             //echo " <br><b>"."Gwyneth's Gift Homebase"."</b>|"; //changed: 'Homebase' to 'Gwyneth's Gift Homebase'
+
             echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'index.php">Home</a></li>');
             //echo('<span class="nav-divider">|</span>');
 
@@ -163,7 +167,6 @@
             echo('<a class="dropdown-item" href="' . $path . 'findAnimal.php">Search</a>');
             echo('<a class="dropdown-item" href="' . $path . 'addAnimal.php">Add</a>');
 	        echo('<a class="dropdown-item" href="' . $path . 'report.php">Reports</a>');
-	        echo('<a class="dropdown-item" href="' . $path . 'viewArchived.php">Archived Animals</a>');
 
             echo('</div>');
             echo('</li>');
@@ -175,6 +178,9 @@
             echo('<a class="dropdown-item" href="' . $path . 'addService.php">Add Service</a>');
             echo('<a class="dropdown-item" href="' . $path . 'addLocation.php">Add Location</a>');
 	        echo('<a class="dropdown-item" href="' . $path . 'changePassword.php">Change Password</a>');
+
+
+            echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'darkMode.php">Toggle Dark Mode</a></li>');
 
             echo('</div>');
             echo('</li>');
@@ -211,6 +217,10 @@
              * can view it. If someone logged into the system attempts to access a page above their
              * permission level, they will be sent back to the home page.
              */
+            if($_SESSION['dark_mode'] == true){
+                echo '<script>darkModeToggle();</script>';
+                
+            }
             //pages guests are allowed to view
             $permission_array['index.php'] = 0;
             $permission_array['about.php'] = 0;
@@ -263,6 +273,7 @@
             // pages adoption center can view
             $permission_array['loghours.php'] = 0;
             $permission_array['loghoursform.php'] = 0;
+            $permission_array['verificationform.php'] = 0;
             $permission_array['template.php'] = 0;
     
             //Check if they're at a valid page for their access level.
@@ -350,6 +361,10 @@
                     
                 //}
                 //echo('<span class="nav-divider">|</span>');
+
+
+                echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'darkMode.php">Toggle Dark Mode</a></li>');
+
                 echo('<li><a class="nav-link active" aria-current="page" href="' . $path . 'logout.php">Log out</a></li>');
                 echo '</ul></nav>';
             }

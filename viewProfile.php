@@ -176,7 +176,13 @@
             <?php else: ?>
                 <a class="button" href="changePassword.php">Change Password</a>
                 <a class="button" href="volunteerReport.php">View Volunteer Hours</a>
+                <a class="button" href="verificationForm.php">Generate Verification Form</a>
+                
+            <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
                 <a class="button cancel" href="index.php">Return to Dashboard</a>
+            <?php } else { ?>
+                <a class="button cancel" href="VMS_index.php">Return to Dashboard</a>
+                <?php } ?>
             <?php endif ?>
         </main>
     </body>

@@ -43,7 +43,11 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
+        <?php if ($_SESSION['system_type'] == 'MedTracker') { ?>
         <title>ODHS Medicine Tracker | Volunteer History</title>
+        <?php } else { ?>
+        <title>ODHS VMS | Volunteer History</title>
+        <?php } ?>
         <link rel="stylesheet" href="css/hours-report.css">
     </head>
     <body>
