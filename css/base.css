@@ -87,10 +87,12 @@ table, td, tr, th, form, fieldset, em, button, a {
 }
 
 .dark-mode{
-    
-    background-color: var(--page-font-color);
+    --page-background-color: #333333;
+    --page-font-color:#ffffff;
 
-    color: var(--page-background-color);
+    --inactive-font-color: #d0d0d0;
+    --inactive-background-color: #2d1717;
+    --standout-background: #4e4e4e;
 }
 
 /* Page Sections */
